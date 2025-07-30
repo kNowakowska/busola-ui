@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import CoursesList from "./CoursesList";
 
 export const courses: Course[] = [
@@ -46,5 +47,21 @@ export const courses: Course[] = [
   },
 ];
 export default function Dashboard() {
+  const fetchCourses = async () => {
+    // TODO Example of fetching data from contentful
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/lessons`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    console.log(data);
+  };
+
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
   return <CoursesList courses={courses} />;
 }

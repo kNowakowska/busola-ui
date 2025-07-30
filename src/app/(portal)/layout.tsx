@@ -12,7 +12,7 @@ export default function AppLayout({ children }: Readonly<PropsWithChildren>) {
       <header
         className={`w-full px-12 py-6 flex flex-row ${
           isSignedIn ? "justify-between" : "justify-start"
-        } items-center sticky top-0`}
+        } items-center sticky top-0 bg-white`}
       >
         <div>
           <a href="/">

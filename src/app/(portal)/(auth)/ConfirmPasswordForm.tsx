@@ -8,7 +8,7 @@ import { z } from "zod";
 
 import FormInput from "@/lib/components/form/FormInput";
 import { Button } from "@/lib/components/Button";
-import { confirmPasswordValidationSchema } from "../resetPasswordValidation";
+import { confirmPasswordValidationSchema } from "./reset-password/resetPasswordValidation";
 
 type ConfirmPasswordFormValues = z.infer<
   typeof confirmPasswordValidationSchema
