@@ -16,7 +16,7 @@ export default function CoursesList({ courses }: { courses: Course[] }) {
         </div>
       )}
       {courses.map((course) => (
-        <CourseListItem key={course.id} course={course} />
+        <CourseListItem key={course.uuid} course={course} />
       ))}
     </div>
   );

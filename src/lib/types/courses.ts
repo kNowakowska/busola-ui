@@ -1,11 +1,11 @@
 interface Course {
-  id: number;
+  uuid: number;
   name: string;
   shortDescription: string;
-  longDescription: string;
-  image?: string;
+  description: string;
+  imageCMSId?: string;
   lessons: Lesson[];
-  lessonsCompleted: number;
+  lessonsCompleted?: number;
 }
 
 interface Lesson {

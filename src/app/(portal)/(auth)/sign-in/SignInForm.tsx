@@ -28,9 +28,11 @@ export const SignInForm = () => {
     mode: "onBlur",
   });
 
-  const loginMutation = useMutation({
+  const { mutateAsync: login, isPending } = useMutation({
     mutationFn: async (data: SignInFormValues) =>
-      apiClient("/auth/sign-in", data),
+      apiClient("/auth/sign-in", data, {
+        method: "POST",
+      }),
   });
 
   const router = useRouter();
@@ -41,7 +43,7 @@ export const SignInForm = () => {
         async () => {
           setEmail(data.email);
           setInitialPassword(data.password);
-          const response = await loginMutation.mutateAsync(data);
+          const response = await login(data);
           if (response.shouldResetPassword) {
             router.push("/reset-initial-password");
           } else {
@@ -73,7 +75,7 @@ export const SignInForm = () => {
         placeholder="korkizgegry@gmail.com"
         label="Adres e-mail"
         id="email"
-        disabled={loginMutation.isPending}
+        disabled={isPending}
         error={errors.email}
         {...register("email")}
       />
@@ -82,15 +84,11 @@ export const SignInForm = () => {
         placeholder="********"
         label="Hasło"
         id="password"
-        disabled={loginMutation.isPending}
+        disabled={isPending}
         error={errors.password}
         {...register("password")}
       />
-      <Button
-        text="Zaloguj się"
-        type="submit"
-        disabled={loginMutation.isPending}
-      />
+      <Button text="Zaloguj się" type="submit" disabled={isPending} />
     </form>
   );
 };

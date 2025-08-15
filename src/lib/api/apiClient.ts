@@ -1,15 +1,27 @@
 export const apiClient = async (
   route: string,
-  data?: any,
-  options = {
-    method: "POST",
-    credentials: "include" as RequestCredentials,
-  }
+  data: unknown = {},
+  options: RequestInit = {}
 ) => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${route}`, {
+  const defaultOptions: RequestInit = {
+    method: "GET",
+    credentials: "include" as RequestCredentials,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const mergedOptions: RequestInit = {
+    ...defaultOptions,
     ...options,
-    body: JSON.stringify(data),
-  });
+    body:
+      (options.method ?? "GET") !== "GET" ? JSON.stringify(data) : undefined,
+  };
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}${route}`,
+    mergedOptions
+  );
 
   const responseData = await response.json();
   if (!response.ok) {
