@@ -3,57 +3,60 @@ import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 import { z } from "zod";
 
 import FormInput from "@/lib/components/form/FormInput";
 import { Button } from "@/lib/components/Button";
-import { confirmPasswordValidationSchema } from "./reset-password/resetPasswordValidation";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { confirmPasswordValidationSchema } from "./resetPasswordValidation";
 
 type ConfirmPasswordFormValues = z.infer<
   typeof confirmPasswordValidationSchema
 >;
 
-export const ConfirmPasswordForm = () => {
+type ConfirmPasswordFormProps = {
+  confirmPassword: (password: string) => Promise<void>;
+  disabled: boolean;
+};
+
+export const ConfirmPasswordForm = ({
+  confirmPassword,
+  disabled,
+}: ConfirmPasswordFormProps) => {
   const router = useRouter();
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<ConfirmPasswordFormValues>({
-  //   resolver: zodResolver(confirmPasswordValidationSchema),
-  //   mode: "onSubmit",
-  //   reValidateMode: "onChange",
-  // });
-
-  // const {
-  //   confirmResetMutation: { mutateAsync: confirmPasswordRequest, isPending },
-  // } = useResetPassword();
-
-  // const confirmPassword = useCallback(
-  //   async (password: string) => {
-  //     await confirmPasswordRequest({ password });
-  //     router.push(routes.signIn);
-  //   },
-  //   [confirmPasswordRequest, router]
-  // );
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ConfirmPasswordFormValues>({
+    resolver: zodResolver(confirmPasswordValidationSchema),
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+  });
 
   const onSubmit: SubmitHandler<ConfirmPasswordFormValues> = useCallback(
     async ({ password }: ConfirmPasswordFormValues) => {
-      router.push("/sign-in");
-      // await toast.promise(
-      //   () => confirmPassword(password),
-      //   {
-      //     loading: "Resetowanie hasła...",
-      //     success: "Hasło zostało zresetowane. Możesz się zalogować",
-      //     error: (error) => error.message,
-      //   },
-      //   {
-      //     style: {
-      //       minWidth: "250px",
-      //     },
-      //   }
-      // );
+      try {
+        await toast.promise(
+          async () => {
+            await confirmPassword(password);
+            router.push("/sign-in");
+          },
+          {
+            loading: "Resetowanie hasła...",
+            success: "Hasło zostało zresetowane. Możesz się zalogować",
+            error: (error) => error.message,
+          },
+          {
+            style: {
+              minWidth: "250px",
+            },
+          }
+        );
+      } catch {}
     },
     []
   );
@@ -62,7 +65,7 @@ export const ConfirmPasswordForm = () => {
     <form
       name="confirmPasswordForm"
       noValidate
-      // onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit)}
       className="flex h-full w-full flex-col space-y-7 p-10 justify-center items-center"
     >
       <FormInput
@@ -70,6 +73,9 @@ export const ConfirmPasswordForm = () => {
         placeholder="********"
         label="Nowe hasło"
         id="password"
+        error={errors.password}
+        disabled={disabled}
+        {...register("password")}
       />
 
       <FormInput
@@ -77,14 +83,12 @@ export const ConfirmPasswordForm = () => {
         placeholder="********"
         label="Powtórz nowe hasło"
         id="confirmPassword"
+        error={errors.confirmPassword}
+        disabled={disabled}
+        {...register("confirmPassword")}
       />
 
-      <Button
-        text="Zmień hasło"
-        type="submit"
-        onClick={onSubmit as any}
-        // disabled={isPending}
-      />
+      <Button text="Zmień hasło" type="submit" disabled={disabled} />
     </form>
   );
 };

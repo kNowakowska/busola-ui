@@ -1,6 +1,7 @@
 // "use client";
 import { PropsWithChildren } from "react";
 import Image from "next/image";
+import { Toaster } from "react-hot-toast";
 
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
 
@@ -36,6 +37,7 @@ export default function AppLayout({ children }: Readonly<PropsWithChildren>) {
         {/* Main */}
         <main className="h-full w-4/5 mx-auto py-10">{children}</main>
       </div>
+      <Toaster />
     </ReactQueryProvider>
   );
 }

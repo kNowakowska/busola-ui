@@ -7,6 +7,8 @@ import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import z from "zod";
 
+import { apiClient } from "@/lib/api/apiClient";
+import { useResetPasswordContext } from "@/lib/context/ResetPasswordContext";
 import { Button } from "@/lib/components/Button";
 import FormInput from "@/lib/components/form/FormInput";
 
@@ -15,6 +17,8 @@ import { SignInValidationSchema } from "./signInValidationSchema";
 type SignInFormValues = z.infer<typeof SignInValidationSchema>;
 
 export const SignInForm = () => {
+  const { setEmail, setInitialPassword } = useResetPasswordContext();
+
   const {
     register,
     handleSubmit,
@@ -25,37 +29,36 @@ export const SignInForm = () => {
   });
 
   const loginMutation = useMutation({
-    mutationFn: async (data: SignInFormValues) => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/sign-in`,
-        {
-          method: "POST",
-          body: JSON.stringify(data),
-          credentials: "include",
-        }
-      );
-      return await response.json();
-    },
+    mutationFn: async (data: SignInFormValues) =>
+      apiClient("/auth/sign-in", data),
   });
 
   const router = useRouter();
 
   const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
-    await toast.promise(
-      async () => {
-        await loginMutation.mutateAsync(data);
-        router.push("/dashboard");
-      },
-      {
-        loading: "Logowanie...",
-        error: (error: any) => error.message,
-      },
-      {
-        style: {
-          minWidth: "250px",
+    try {
+      await toast.promise(
+        async () => {
+          setEmail(data.email);
+          setInitialPassword(data.password);
+          const response = await loginMutation.mutateAsync(data);
+          if (response.shouldResetPassword) {
+            router.push("/reset-initial-password");
+          } else {
+            router.push("/dashboard");
+          }
         },
-      }
-    );
+        {
+          loading: "Logowanie...",
+          error: (error: any) => error.message,
+        },
+        {
+          style: {
+            minWidth: "250px",
+          },
+        }
+      );
+    } catch {}
   };
 
   return (
@@ -70,6 +73,8 @@ export const SignInForm = () => {
         placeholder="korkizgegry@gmail.com"
         label="Adres e-mail"
         id="email"
+        disabled={loginMutation.isPending}
+        error={errors.email}
         {...register("email")}
       />
       <FormInput
@@ -77,9 +82,15 @@ export const SignInForm = () => {
         placeholder="********"
         label="Hasło"
         id="password"
+        disabled={loginMutation.isPending}
+        error={errors.password}
         {...register("password")}
       />
-      <Button text="Zaloguj się" type="submit" />
+      <Button
+        text="Zaloguj się"
+        type="submit"
+        disabled={loginMutation.isPending}
+      />
     </form>
   );
 };
