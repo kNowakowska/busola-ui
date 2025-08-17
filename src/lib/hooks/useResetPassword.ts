@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { useResetPasswordContext } from "../context/ResetPasswordContext";
-import { apiClient } from "../api/apiClient";
+import apiClient from "../api/apiClient";
 
 export const useResetPassword = () => {
   const { email, code, setEmail, setCode } = useResetPasswordContext();

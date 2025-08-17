@@ -1,8 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useState, createContext, useContext } from "react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+interface ReactQueryContextState {
+  queryClient: QueryClient;
+}
+
+const defaultState: ReactQueryContextState = {
+  queryClient: new QueryClient(),
+};
+
+const ReactQueryContext = createContext(defaultState);
+export const useReactQueryContext = () => useContext(ReactQueryContext);
 
 export default function ReactQueryProvider({
   children,
@@ -27,9 +38,11 @@ export default function ReactQueryProvider({
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <ReactQueryContext.Provider value={{ queryClient }}>
+      <QueryClientProvider client={queryClient}>
+        {children}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </ReactQueryContext.Provider>
   );
 }

@@ -1,21 +1,35 @@
-interface Course {
+export interface User {
+  uuid: string;
+  email: string;
+  name: string;
+  lastName: string;
+  courses: Course[];
+}
+
+export interface Course {
   uuid: number;
   name: string;
   shortDescription: string;
-  description: string;
   imageCMSId?: string;
-  lessons: Lesson[];
   lessonsCompleted?: number;
 }
 
-interface Lesson {
-  id: number;
+export interface CourseDetails extends Course {
+  description: string;
+  lessons: Lesson[];
+}
+
+export interface Lesson {
+  uuid: string;
   name: string;
+  isCompleted: boolean;
+  courseId: number;
+}
+
+export interface CourseDetailsResponse extends CourseDetails {
   description: string;
   videoUrl?: string;
-  isCompleted: boolean;
   content: string;
-  courseId: number;
   previousLessonId?: number;
   nextLessonId?: number;
 }

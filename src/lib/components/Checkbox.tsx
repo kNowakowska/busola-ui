@@ -8,6 +8,7 @@ interface CheckboxProps {
   onChange?: (checked: boolean) => void;
   label?: string;
   name?: string;
+  readOnly?: boolean;
 }
 
 export default function Checkbox({
@@ -15,6 +16,7 @@ export default function Checkbox({
   onChange,
   label,
   name,
+  readOnly = false,
 }: CheckboxProps) {
   const [checked, setChecked] = useState(defaultChecked);
 
@@ -31,8 +33,9 @@ export default function Checkbox({
       <input
         type="checkbox"
         name={name}
-        checked={checked}
-        onChange={handleClick}
+        {...(readOnly
+          ? { defaultChecked }
+          : { checked, onChange: handleClick })}
         className="hidden"
       />
       <div

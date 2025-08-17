@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import z from "zod";
 
-import { apiClient } from "@/lib/api/apiClient";
+import apiClient from "@/lib/api/apiClient";
 import { useResetPasswordContext } from "@/lib/context/ResetPasswordContext";
 import { Button } from "@/lib/components/Button";
 import FormInput from "@/lib/components/form/FormInput";
@@ -30,7 +30,7 @@ export const SignInForm = () => {
 
   const { mutateAsync: login, isPending } = useMutation({
     mutationFn: async (data: SignInFormValues) =>
-      apiClient("/auth/sign-in", data, {
+      apiClient<{ shouldResetPassword: boolean }>("/auth/sign-in", data, {
         method: "POST",
       }),
   });

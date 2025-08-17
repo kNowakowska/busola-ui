@@ -4,14 +4,20 @@ import { useRouter } from "next/navigation";
 
 import LogoutIcon from "@/lib/icons/LogoutIcon";
 import { useMutation } from "@tanstack/react-query";
-import { apiClient } from "@/lib/api/apiClient";
+import apiClient from "@/lib/api/apiClient";
+import { userKeys } from "@/lib/api/queryKeysFactory";
+import { useReactQueryContext } from "@/lib/providers/ReactQueryProvider";
 
 export default function LogoutButton() {
   const router = useRouter();
+  const { queryClient } = useReactQueryContext();
 
   const { mutateAsync: logout } = useMutation({
     mutationFn: () =>
       apiClient("/auth/sign-out", undefined, { method: "POST" }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: userKeys.currentUser });
+    },
   });
 
   const handleLogout = useCallback(async () => {

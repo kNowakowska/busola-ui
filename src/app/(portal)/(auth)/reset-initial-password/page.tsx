@@ -3,7 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { Title } from "@/lib/components/Title";
-import { apiClient } from "@/lib/api/apiClient";
+import apiClient from "@/lib/api/apiClient";
 import { useResetPasswordContext } from "@/lib/context/ResetPasswordContext";
 
 import { ConfirmPasswordForm } from "../ConfirmPasswordForm";

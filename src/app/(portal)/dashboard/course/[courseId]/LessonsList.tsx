@@ -1,3 +1,5 @@
+import { Lesson } from "@/lib/types/courses";
+
 import LessonListItem from "./LessonListItem";
 
 export default function LessonsList({ lessons }: { lessons: Lesson[] }) {
@@ -9,7 +11,7 @@ export default function LessonsList({ lessons }: { lessons: Lesson[] }) {
         </div>
       )}
       {lessons.map((lesson) => (
-        <LessonListItem key={lesson.id} lesson={lesson} />
+        <LessonListItem key={lesson.uuid} lesson={lesson} />
       ))}
     </div>
   );

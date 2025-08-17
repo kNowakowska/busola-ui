@@ -1,8 +1,8 @@
-export const apiClient = async (
+async function apiClient<T>(
   route: string,
   data: unknown = {},
   options: RequestInit = {}
-) => {
+): Promise<T> {
   const defaultOptions: RequestInit = {
     method: "GET",
     credentials: "include" as RequestCredentials,
@@ -30,5 +30,7 @@ export const apiClient = async (
     throw new Error(responseData.error);
   }
 
-  return responseData;
-};
+  return responseData as T;
+}
+
+export default apiClient;
