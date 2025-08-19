@@ -31,4 +31,6 @@ export interface LessonDetails extends Lesson {
   videoUrl?: string;
   content: object;
   order: number;
+  previousLessonId?: string;
+  nextLessonId?: string;
 }

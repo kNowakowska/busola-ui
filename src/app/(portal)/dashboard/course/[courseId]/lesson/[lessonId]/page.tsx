@@ -47,10 +47,10 @@ export default function LessonPage({
 
   return (
     <div className="flex flex-col gap-y-10 pb-30">
-      {/* <div className="flex flex-row justify-between ">
+      <div className="flex flex-row justify-between ">
         {lesson.previousLessonId ? (
           <Link
-            href={`/user/course/${lesson.courseId}/lesson/${lesson.previousLessonId}`}
+            href={`/dashboard/course/${lesson.courseId}/lesson/${lesson.previousLessonId}`}
           >
             <ArrowLeftIcon /> Poprzednia lekcja
           </Link>
@@ -59,14 +59,14 @@ export default function LessonPage({
         )}
         {lesson.nextLessonId ? (
           <Link
-            href={`/user/course/${lesson.courseId}/lesson/${lesson.nextLessonId}`}
+            href={`/dashboard/course/${lesson.courseId}/lesson/${lesson.nextLessonId}`}
           >
             Następna lekcja <ArrowRightIcon />
           </Link>
         ) : (
           <div></div>
         )}
-      </div> */}
+      </div>
 
       <h2 className="text-4xl font-bold ">{lesson.name}</h2>
       {lesson.videoUrl ? <VideoPlayer url={lesson.videoUrl} /> : undefined}
@@ -75,7 +75,7 @@ export default function LessonPage({
         <button
           className="secondary text-white p-3 rounded-lg w-[200px]"
           onClick={() => {
-            router.push(`/user/course/${lesson.courseId}`);
+            router.push(`/dashboard/course/${lesson.courseId}`);
           }}
         >
           Wróć do listy lekcji
@@ -83,10 +83,15 @@ export default function LessonPage({
         <button
           className="secondary text-white p-3 rounded-lg w-[200px]"
           onClick={() => {
-            // router.push(`/user/course/${courseId}/lesson/${lesson.nextLessonId}`);
+            // TODO: add marking as completed
+            if (lesson.nextLessonId)
+              router.push(
+                `/dashboard/course/${courseId}/lesson/${lesson.nextLessonId}`
+              );
           }}
         >
-          Oznacz lekcję jako ukończoną i przejdź do następnej
+          Oznacz lekcję jako ukończoną{" "}
+          {lesson.nextLessonId ? "i przejdź do następnej" : ""}
         </button>
       </div>
 
