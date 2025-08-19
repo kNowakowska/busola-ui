@@ -26,10 +26,9 @@ export interface Lesson {
   courseId: number;
 }
 
-export interface CourseDetailsResponse extends CourseDetails {
+export interface LessonDetails extends Lesson {
   description: string;
   videoUrl?: string;
-  content: string;
-  previousLessonId?: number;
-  nextLessonId?: number;
+  content: object;
+  order: number;
 }
