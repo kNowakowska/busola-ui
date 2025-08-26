@@ -1,5 +1,6 @@
 "use client";
 import { use, useCallback, useEffect, useMemo, useState } from "react";
+import { isNil } from "lodash";
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -13,7 +14,7 @@ import { ArrowRightIcon } from "@/lib/icons/ArrowRightIcon";
 import VideoPlayer from "@/lib/components/VideoPlayer";
 import { LessonDetails } from "@/lib/types/courses";
 import apiClient from "@/lib/api/apiClient";
-import { lessonKeys } from "@/lib/api/queryKeysFactory";
+import { courseKeys, lessonKeys } from "@/lib/api/queryKeysFactory";
 
 export default function LessonPage({
   params,
@@ -21,7 +22,7 @@ export default function LessonPage({
   params: Promise<{ courseId: string; lessonId: string }>;
 }) {
   const queryClient = useQueryClient();
-  const [notes, setNotes] = useState<string>("");
+  const [notes, setNotes] = useState<string>();
 
   const { courseId, lessonId } = use(params);
   const router = useRouter();
@@ -36,7 +37,7 @@ export default function LessonPage({
 
   useEffect(() => {
     if (lesson) {
-      setNotes(lesson.notes || "");
+      setNotes(lesson.notes);
     }
   }, [lesson]);
 
@@ -54,6 +55,11 @@ export default function LessonPage({
         }
       ),
     onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: courseKeys.all,
+        refetchType: "all",
+      });
+
       queryClient.setQueryData(
         lessonKeys.details(lessonId as string),
         (prevLesson: LessonDetails) => ({
@@ -78,6 +84,11 @@ export default function LessonPage({
           }
         ),
       onSuccess: (data) => {
+        queryClient.invalidateQueries({
+          queryKey: courseKeys.all,
+          refetchType: "all",
+        });
+
         queryClient.setQueryData(
           lessonKeys.details(lessonId as string),
           (prevLesson: LessonDetails) => ({
@@ -90,6 +101,8 @@ export default function LessonPage({
 
   const onNotesChange = useCallback(
     async (notes: string) => {
+      if ((isNil(notes) && isNil(lesson?.notes)) || notes === lesson?.notes)
+        return;
       try {
         await toast.promise(
           () => saveNotes(notes),

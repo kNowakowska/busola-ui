@@ -1,7 +1,7 @@
 "use client";
 import { use } from "react";
 
-import { isNil } from "lodash";
+import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
 import contentfulClient from "@/lib/contentful/contentful";
@@ -17,6 +17,7 @@ export default function CoursePage({
 }: {
   params: Promise<{ courseId: string }>;
 }) {
+  const router = useRouter();
   const { courseId } = use(params);
 
   const { data: course, isPending } = useQuery({
@@ -56,6 +57,14 @@ export default function CoursePage({
         <h2 className="text-4xl font-bold">{course.name}</h2>
         <p className="text-base text-justify">{course.description}</p>
         <LessonsList lessons={course.lessons} />
+        <button
+          className="secondary text-white p-3 rounded-lg w-[200px]"
+          onClick={() => {
+            router.push(`/dashboard`);
+          }}
+        >
+          Wróć do listy kursów
+        </button>
       </div>
       <div className="w-1/5 flex flex-col p-10 gap-y-5">
         <p>

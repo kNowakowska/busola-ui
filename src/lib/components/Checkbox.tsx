@@ -33,10 +33,10 @@ export default function Checkbox({
       <input
         type="checkbox"
         name={name}
-        {...(readOnly
-          ? { defaultChecked }
-          : { checked, onChange: handleClick })}
+        checked={checked}
+        onChange={handleClick}
         className="hidden"
+        disabled={readOnly}
       />
       <div
         className={`flex h-5 w-5 items-center justify-center rounded-full border-2 transition-colors ${
