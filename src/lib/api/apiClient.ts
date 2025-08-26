@@ -45,31 +45,27 @@ async function apiClient<T>(
     mergedOptions
   );
 
+  let responseData = await response.json();
+
   if (response.status === 401) {
     try {
       await refreshToken();
     } catch (error) {
-      setTimeout(() => {
-        window.location.href = Routes.signIn();
-      }, 3000);
-      throw new Error("Sesja wygasła. Zaloguj się ponownie");
+      throw new Error(responseData.error);
     }
     response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}${route}`,
       mergedOptions
     );
+    responseData = await response.json();
   }
 
-  let responseData = await response.json();
   if (!response.ok) {
     if (response.status === 500)
       throw new Error("Coś poszło nie tak. Spróbuj ponownie później");
 
     if (response.status === 401) {
-      setTimeout(() => {
-        window.location.href = Routes.signIn();
-      }, 3000);
-      throw new Error("Sesja wygasła. Zaloguj się ponownie");
+      throw new Error(responseData.error);
     }
 
     throw new Error(responseData.error);
