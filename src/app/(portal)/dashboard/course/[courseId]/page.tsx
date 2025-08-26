@@ -10,6 +10,7 @@ import { ProgressBar } from "@/lib/components/ProgressBar";
 import { courseKeys } from "@/lib/api/queryKeysFactory";
 import apiClient from "@/lib/api/apiClient";
 import { CourseDetails } from "@/lib/types/courses";
+import LoadingSpinner from "@/lib/components/LoadingSpinner";
 
 import LessonsList from "./LessonsList";
 
@@ -40,7 +41,7 @@ export default function CoursePage({
   });
 
   if (isPending) {
-    return <div>Ładowanie...</div>;
+    return <LoadingSpinner message="Wczytywanie kursu" />;
   }
 
   if (error) {

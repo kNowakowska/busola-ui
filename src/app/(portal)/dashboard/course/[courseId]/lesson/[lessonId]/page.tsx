@@ -15,6 +15,7 @@ import VideoPlayer from "@/lib/components/VideoPlayer";
 import { LessonDetails } from "@/lib/types/courses";
 import apiClient from "@/lib/api/apiClient";
 import { courseKeys, lessonKeys } from "@/lib/api/queryKeysFactory";
+import LoadingSpinner from "@/lib/components/LoadingSpinner";
 
 export default function LessonPage({
   params,
@@ -150,7 +151,7 @@ export default function LessonPage({
   );
 
   if (isFetchingLesson) {
-    return <div>Ładowanie...</div>;
+    return <LoadingSpinner message="Wczytywanie lekcji" />;
   }
 
   if (error) {

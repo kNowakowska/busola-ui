@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import apiClient from "@/lib/api/apiClient";
 import { userKeys } from "@/lib/api/queryKeysFactory";
 import { User } from "@/lib/types/courses";
+import LoadingSpinner from "@/lib/components/LoadingSpinner";
 
 import CoursesList from "./CoursesList";
 
@@ -23,7 +24,7 @@ export default function Dashboard() {
   }
 
   if (isPending) {
-    return <div>Ładowanie...</div>;
+    return <LoadingSpinner message="Wczytywanie kursów" />;
   }
   return <CoursesList courses={currentUser?.courses || []} />;
 }
