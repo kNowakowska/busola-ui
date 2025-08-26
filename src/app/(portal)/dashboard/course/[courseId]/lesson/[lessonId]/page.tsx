@@ -1,36 +1,138 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useMemo, useState } from "react";
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 import { ArrowLeftIcon } from "@/lib/icons/ArrowLeftIcon";
 import { ArrowRightIcon } from "@/lib/icons/ArrowRightIcon";
 import VideoPlayer from "@/lib/components/VideoPlayer";
-import { useQuery } from "@tanstack/react-query";
-import { CourseDetails, LessonDetails } from "@/lib/types/courses";
+import { LessonDetails } from "@/lib/types/courses";
 import apiClient from "@/lib/api/apiClient";
 import { lessonKeys } from "@/lib/api/queryKeysFactory";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 export default function LessonPage({
   params,
 }: {
   params: Promise<{ courseId: string; lessonId: string }>;
 }) {
-  const { courseId, lessonId } = use(params);
+  const queryClient = useQueryClient();
+  const [notes, setNotes] = useState<string>("");
 
+  const { courseId, lessonId } = use(params);
   const router = useRouter();
 
-  const { data: lesson, isPending } = useQuery({
+  const { data: lesson, isPending: isFetchingLesson } = useQuery({
     queryKey: lessonKeys.details(lessonId as string),
-    queryFn: () =>
+    queryFn: async () =>
       apiClient<LessonDetails>(
         `/dashboard/course/${courseId}/lesson/${lessonId}`
       ),
   });
 
-  if (isPending) {
+  useEffect(() => {
+    if (lesson) {
+      setNotes(lesson.notes || "");
+    }
+  }, [lesson]);
+
+  const {
+    isPending: isMarkingAsCompletedPending,
+    mutateAsync: markAsCompleted,
+  } = useMutation({
+    mutationKey: lessonKeys.markAsCompleted(lessonId as string),
+    mutationFn: () =>
+      apiClient<LessonDetails>(
+        `/dashboard/course/${courseId}/lesson/${lessonId}/complete`,
+        undefined,
+        {
+          method: "POST",
+        }
+      ),
+    onSuccess: (data) => {
+      queryClient.setQueryData(
+        lessonKeys.details(lessonId as string),
+        (prevLesson: LessonDetails) => ({
+          ...prevLesson,
+          isCompleted: data.isCompleted,
+        })
+      );
+    },
+  });
+
+  const { isPending: isSavingNotesPending, mutateAsync: saveNotes } =
+    useMutation({
+      mutationKey: lessonKeys.saveNotes(lessonId as string),
+      mutationFn: (notes: string) =>
+        apiClient<LessonDetails>(
+          `/dashboard/course/${courseId}/lesson/${lessonId}/notes`,
+          {
+            notes,
+          },
+          {
+            method: "POST",
+          }
+        ),
+      onSuccess: (data) => {
+        queryClient.setQueryData(
+          lessonKeys.details(lessonId as string),
+          (prevLesson: LessonDetails) => ({
+            ...prevLesson,
+            notes: data.notes,
+          })
+        );
+      },
+    });
+
+  const onNotesChange = useCallback(
+    async (notes: string) => {
+      try {
+        await toast.promise(
+          () => saveNotes(notes),
+          {
+            loading: "Zapisywanie notatek...",
+            success: "Notatki zostały zapisane",
+            error: (error) => error.message,
+          },
+          {
+            style: {
+              minWidth: "250px",
+            },
+          }
+        );
+      } catch {}
+    },
+    [saveNotes]
+  );
+
+  const onMarkAsCompleted = useCallback(async () => {
+    try {
+      await toast.promise(
+        () => markAsCompleted(),
+        {
+          loading: "Zapisywanie postępu...",
+          success: "Postęp został zapisany",
+          error: (error) => error.message,
+        },
+        {
+          style: {
+            minWidth: "250px",
+          },
+        }
+      );
+    } catch {}
+  }, [markAsCompleted]);
+
+  const isLoading = useMemo(
+    () => isSavingNotesPending || isMarkingAsCompletedPending,
+    [isSavingNotesPending, isMarkingAsCompletedPending]
+  );
+
+  if (isFetchingLesson) {
     return <div>Ładowanie...</div>;
   }
 
@@ -41,7 +143,7 @@ export default function LessonPage({
 
   const components = documentToReactComponents(lesson.content as any, {
     renderNode: {
-      paragraph: (node, children) => <p>{children}</p>,
+      paragraph: (_node, children) => <p>{children}</p>,
     },
   });
 
@@ -77,18 +179,20 @@ export default function LessonPage({
           onClick={() => {
             router.push(`/dashboard/course/${lesson.courseId}`);
           }}
+          disabled={isLoading}
         >
           Wróć do listy lekcji
         </button>
         <button
           className="secondary text-white p-3 rounded-lg w-[200px]"
-          onClick={() => {
-            // TODO: add marking as completed
+          onClick={async () => {
+            await onMarkAsCompleted();
             if (lesson.nextLessonId)
               router.push(
                 `/dashboard/course/${courseId}/lesson/${lesson.nextLessonId}`
               );
           }}
+          disabled={isLoading}
         >
           Oznacz lekcję jako ukończoną{" "}
           {lesson.nextLessonId ? "i przejdź do następnej" : ""}
@@ -96,11 +200,19 @@ export default function LessonPage({
       </div>
 
       <div className="flex flex-col justify-between items-start">
-        {/* TODO Add saving on blur */}
         <h4 className="text-2xl mb-3">Twoje notatki: </h4>
         <textarea
           className="w-full h-40 border-[var(--light-blue)] border-2 rounded-lg p-2 shadow-md leading-[1.5]"
           rows={20}
+          value={notes}
+          onChange={(e) => {
+            setNotes(e.target.value);
+          }}
+          onBlur={(e) => {
+            onNotesChange(e.target.value);
+          }}
+          disabled={isLoading}
+          placeholder="Dodaj swoje notatki tutaj..."
         />
       </div>
     </div>

@@ -33,4 +33,5 @@ export interface LessonDetails extends Lesson {
   order: number;
   previousLessonId?: string;
   nextLessonId?: string;
+  notes?: string;
 }
