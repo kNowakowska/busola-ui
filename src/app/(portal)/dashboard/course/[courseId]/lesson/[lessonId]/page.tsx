@@ -27,7 +27,11 @@ export default function LessonPage({
   const { courseId, lessonId } = use(params);
   const router = useRouter();
 
-  const { data: lesson, isPending: isFetchingLesson } = useQuery({
+  const {
+    data: lesson,
+    isPending: isFetchingLesson,
+    error,
+  } = useQuery({
     queryKey: lessonKeys.details(lessonId as string),
     queryFn: async () =>
       apiClient<LessonDetails>(
@@ -147,6 +151,10 @@ export default function LessonPage({
 
   if (isFetchingLesson) {
     return <div>Ładowanie...</div>;
+  }
+
+  if (error) {
+    toast.error(error.message);
   }
 
   if (!lesson) {

@@ -3,6 +3,7 @@ import { use } from "react";
 
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 import contentfulClient from "@/lib/contentful/contentful";
 import { ProgressBar } from "@/lib/components/ProgressBar";
@@ -20,7 +21,11 @@ export default function CoursePage({
   const router = useRouter();
   const { courseId } = use(params);
 
-  const { data: course, isPending } = useQuery({
+  const {
+    data: course,
+    isPending,
+    error,
+  } = useQuery({
     queryKey: courseKeys.details(courseId as string),
     queryFn: () => apiClient<CourseDetails>(`/dashboard/course/${courseId}`),
   });
@@ -36,6 +41,10 @@ export default function CoursePage({
 
   if (isPending) {
     return <div>Ładowanie...</div>;
+  }
+
+  if (error) {
+    toast.error(error.message);
   }
 
   if (!course) {
