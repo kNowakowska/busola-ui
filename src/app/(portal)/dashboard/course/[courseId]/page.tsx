@@ -61,16 +61,16 @@ export default function CoursePage({
         <p>
           Zacząłeś pracę nad tym kursem: <b>7 lipca 2025</b>
         </p>
-        {!isNil(course.lessonsCompleted) && (
-          <ProgressBar
-            label="Postęp"
-            progress={
-              course.lessons.length > 0
-                ? (course.lessonsCompleted / course.lessons.length) * 100
-                : 100
-            }
-          />
-        )}
+        <ProgressBar
+          label="Postęp"
+          progress={
+            course.lessonsCount > 0
+              ? Math.round(
+                  (course.lessonsCompleted / course.lessonsCount) * 100
+                )
+              : 100
+          }
+        />
       </div>
     </div>
   );

@@ -6,12 +6,13 @@ import { useQuery } from "@tanstack/react-query";
 import { ProgressBar } from "@/lib/components/ProgressBar";
 import contentfulClient from "@/lib/contentful/contentful";
 import { courseKeys } from "@/lib/api/queryKeysFactory";
+import { Course } from "@/lib/types/courses";
 
 export default function CourseListItem({ course }: { course: Course }) {
   const router = useRouter();
 
   const { data: imageUrl } = useQuery({
-    queryKey: courseKeys.image(course.imageCMSId),
+    queryKey: courseKeys.image(course.imageCMSId!),
     queryFn: async () => {
       const asset = await contentfulClient.getAsset(course.imageCMSId || "");
       return "https:" + asset.fields.file?.url;
@@ -25,28 +26,28 @@ export default function CourseListItem({ course }: { course: Course }) {
       onClick={() => {
         router.push(`/dashboard/course/${course.uuid}`);
       }}
-      className="min-h-[170px] flex flex-row gap-5 rounded-2xl  px-5 py-5 shadow-md cursor-pointer"
+      className="min-h-[170px] flex flex-row gap-5 rounded-2xl  px-5 py-5 shadow-md cursor-pointer items-center"
     >
       <Image
         src={imageUrl || "/busola-korepetycje-logo-puste-2.png"}
         alt={course.name}
         width={200}
         height={150}
-        className="h-[150px] w-[200px]"
+        className="h-[150px] w-[200px] object-cover rounded-lg "
       />
       <div className="flex flex-col gap-2">
         <h2 className="text-2xl font-bold mb-2">{course.name}</h2>
         <p className="text-base">{course.shortDescription}</p>
-        {!isNil(course.lessonsCompleted) && (
-          <ProgressBar
-            label="Postęp"
-            progress={
-              course.lessons.length > 0
-                ? (course.lessonsCompleted / course.lessons.length) * 100
-                : 100
-            }
-          />
-        )}
+        <ProgressBar
+          label="Postęp"
+          progress={
+            course.lessonsCount > 0
+              ? Math.round(
+                  (course.lessonsCompleted / course.lessonsCount) * 100
+                )
+              : 100
+          }
+        />
       </div>
     </div>
   );

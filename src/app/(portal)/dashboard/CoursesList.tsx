@@ -1,5 +1,7 @@
-import CourseListItem from "./CourseListItem";
 import Link from "next/link";
+
+import { Course } from "@/lib/types/courses";
+import CourseListItem from "./CourseListItem";
 
 export default function CoursesList({ courses }: { courses: Course[] }) {
   return (

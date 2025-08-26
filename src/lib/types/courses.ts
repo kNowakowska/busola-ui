@@ -11,7 +11,8 @@ export interface Course {
   name: string;
   shortDescription: string;
   imageCMSId?: string;
-  lessonsCompleted?: number;
+  lessonsCompleted: number;
+  lessonsCount: number;
 }
 
 export interface CourseDetails extends Course {
