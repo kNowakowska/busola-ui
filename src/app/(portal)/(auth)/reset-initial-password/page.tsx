@@ -13,7 +13,7 @@ export default function ResetInitialPassword() {
 
   const confirmResetPasswordMutation = useMutation({
     mutationFn: async (password: string) =>
-      apiClient(
+      apiClient<void>(
         "/auth/reset-initial-password",
         {
           password,

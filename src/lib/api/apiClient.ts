@@ -1,3 +1,5 @@
+import { Routes } from "../routes/routes";
+
 async function refreshToken() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
@@ -48,7 +50,7 @@ async function apiClient<T>(
       await refreshToken();
     } catch (error) {
       setTimeout(() => {
-        window.location.href = "/sign-in";
+        window.location.href = Routes.signIn();
       }, 3000);
       throw new Error("Sesja wygasła. Zaloguj się ponownie");
     }
@@ -65,7 +67,7 @@ async function apiClient<T>(
 
     if (response.status === 401) {
       setTimeout(() => {
-        window.location.href = "/sign-in";
+        window.location.href = Routes.signIn();
       }, 3000);
       throw new Error("Sesja wygasła. Zaloguj się ponownie");
     }

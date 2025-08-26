@@ -10,6 +10,7 @@ import { z } from "zod";
 import FormInput from "@/lib/components/form/FormInput";
 import { Button } from "@/lib/components/Button";
 import { useResetPassword } from "@/lib/hooks/useResetPassword";
+import { Routes } from "@/lib/routes/routes";
 
 import { resetPasswordValidationSchema } from "../resetPasswordValidation";
 
@@ -34,7 +35,7 @@ export const ResetPasswordForm = () => {
   const resetPassword = useCallback(
     async (email: string) => {
       await resetPasswordRequest({ email });
-      router.push("/reset-password/verify-code");
+      router.push(Routes.resetPasswordVerifyCode());
     },
     [resetPasswordRequest, router]
   );

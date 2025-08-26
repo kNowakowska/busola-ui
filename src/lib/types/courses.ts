@@ -7,7 +7,7 @@ export interface User {
 }
 
 export interface Course {
-  uuid: number;
+  uuid: string;
   name: string;
   shortDescription: string;
   imageCMSId?: string;
@@ -24,7 +24,7 @@ export interface Lesson {
   uuid: string;
   name: string;
   isCompleted: boolean;
-  courseId: number;
+  courseId: string;
 }
 
 export interface LessonDetails extends Lesson {

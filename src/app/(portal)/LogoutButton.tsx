@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import apiClient from "@/lib/api/apiClient";
 import { userKeys } from "@/lib/api/queryKeysFactory";
 import { useReactQueryContext } from "@/lib/providers/ReactQueryProvider";
+import { Routes } from "@/lib/routes/routes";
 
 export default function LogoutButton() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function LogoutButton() {
 
   const handleLogout = useCallback(async () => {
     await logout();
-    router.push("/sign-in");
+    router.push(Routes.signIn());
   }, [router, logout]);
 
   return (

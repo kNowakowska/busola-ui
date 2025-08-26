@@ -11,6 +11,7 @@ import { courseKeys } from "@/lib/api/queryKeysFactory";
 import apiClient from "@/lib/api/apiClient";
 import { CourseDetails } from "@/lib/types/courses";
 import LoadingSpinner from "@/lib/components/LoadingSpinner";
+import { Routes } from "@/lib/routes/routes";
 
 import LessonsList from "./LessonsList";
 
@@ -70,7 +71,7 @@ export default function CoursePage({
         <button
           className="secondary text-white p-3 rounded-lg w-[200px]"
           onClick={() => {
-            router.push(`/dashboard`);
+            router.push(Routes.dashboard());
           }}
         >
           Wróć do listy kursów

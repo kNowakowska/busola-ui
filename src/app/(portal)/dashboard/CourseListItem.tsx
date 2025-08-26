@@ -7,6 +7,7 @@ import { ProgressBar } from "@/lib/components/ProgressBar";
 import contentfulClient from "@/lib/contentful/contentful";
 import { courseKeys } from "@/lib/api/queryKeysFactory";
 import { Course } from "@/lib/types/courses";
+import { Routes } from "@/lib/routes/routes";
 
 export default function CourseListItem({ course }: { course: Course }) {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function CourseListItem({ course }: { course: Course }) {
     <div
       key={course.uuid}
       onClick={() => {
-        router.push(`/dashboard/course/${course.uuid}`);
+        router.push(Routes.course(course.uuid));
       }}
       className="min-h-[170px] flex flex-row gap-5 rounded-2xl  px-5 py-5 shadow-md cursor-pointer items-center"
     >

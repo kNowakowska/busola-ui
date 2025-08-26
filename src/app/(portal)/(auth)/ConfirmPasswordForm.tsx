@@ -10,6 +10,7 @@ import { z } from "zod";
 import FormInput from "@/lib/components/form/FormInput";
 import { Button } from "@/lib/components/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Routes } from "@/lib/routes/routes";
 
 import { confirmPasswordValidationSchema } from "./resetPasswordValidation";
 
@@ -43,7 +44,7 @@ export const ConfirmPasswordForm = ({
         await toast.promise(
           async () => {
             await confirmPassword(password);
-            router.push("/sign-in");
+            router.push(Routes.signIn());
           },
           {
             loading: "Resetowanie hasła...",

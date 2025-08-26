@@ -10,6 +10,7 @@ import { z } from "zod";
 import { Button } from "@/lib/components/Button";
 import FormInput from "@/lib/components/form/FormInput";
 import { useResetPassword } from "@/lib/hooks/useResetPassword";
+import { Routes } from "@/lib/routes/routes";
 
 import { verifyCodeValidationSchema } from "../../resetPasswordValidation";
 
@@ -34,7 +35,7 @@ export const VerifyCodeForm = () => {
   const verifyCode = useCallback(
     async (code: string) => {
       await verifyCodeRequest({ code });
-      router.push("/reset-password/confirm");
+      router.push(Routes.resetPasswordConfirm());
     },
     [verifyCodeRequest, router]
   );

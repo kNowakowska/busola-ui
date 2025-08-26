@@ -16,6 +16,7 @@ import { LessonDetails } from "@/lib/types/courses";
 import apiClient from "@/lib/api/apiClient";
 import { courseKeys, lessonKeys } from "@/lib/api/queryKeysFactory";
 import LoadingSpinner from "@/lib/components/LoadingSpinner";
+import { Routes } from "@/lib/routes/routes";
 
 export default function LessonPage({
   params,
@@ -199,7 +200,7 @@ export default function LessonPage({
         <button
           className="secondary text-white p-3 rounded-lg w-[200px]"
           onClick={() => {
-            router.push(`/dashboard/course/${lesson.courseId}`);
+            router.push(Routes.course(lesson.courseId));
           }}
           disabled={isLoading}
         >
@@ -210,9 +211,7 @@ export default function LessonPage({
           onClick={async () => {
             await onMarkAsCompleted();
             if (lesson.nextLessonId)
-              router.push(
-                `/dashboard/course/${courseId}/lesson/${lesson.nextLessonId}`
-              );
+              router.push(Routes.lesson(courseId, lesson.nextLessonId));
           }}
           disabled={isLoading}
         >

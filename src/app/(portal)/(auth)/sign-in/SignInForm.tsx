@@ -11,6 +11,7 @@ import apiClient from "@/lib/api/apiClient";
 import { useResetPasswordContext } from "@/lib/context/ResetPasswordContext";
 import { Button } from "@/lib/components/Button";
 import FormInput from "@/lib/components/form/FormInput";
+import { Routes } from "@/lib/routes/routes";
 
 import { SignInValidationSchema } from "./signInValidationSchema";
 
@@ -45,9 +46,9 @@ export const SignInForm = () => {
           setInitialPassword(data.password);
           const response = await login(data);
           if (response.shouldResetPassword) {
-            router.push("/reset-initial-password");
+            router.push(Routes.resetInitialPassword());
           } else {
-            router.push("/dashboard");
+            router.push(Routes.dashboard());
           }
         },
         {
