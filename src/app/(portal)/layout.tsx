@@ -1,22 +1,18 @@
-// "use client";
 import { PropsWithChildren } from "react";
-import Image from "next/image";
 import { Toaster } from "react-hot-toast";
+import Image from "next/image";
 
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
 
 import LogoutButton from "./LogoutButton";
 
 export default function AppLayout({ children }: Readonly<PropsWithChildren>) {
-  const isSignedIn = true;
   return (
     <ReactQueryProvider>
       <div className="h-full">
         {/* Header */}
         <header
-          className={`w-full px-12 py-6 flex flex-row ${
-            isSignedIn ? "justify-between" : "justify-start"
-          } items-center sticky top-0 bg-white`}
+          className={`w-full px-12 py-6 flex flex-row justify-between items-center sticky top-0 bg-white`}
         >
           <div>
             <a href="/">
@@ -31,8 +27,7 @@ export default function AppLayout({ children }: Readonly<PropsWithChildren>) {
           <h1 className="text-3xl font-extrabold">
             Busola - Korepetycje z geografii
           </h1>
-
-          {isSignedIn && <LogoutButton />}
+          <LogoutButton />
         </header>
         {/* Main */}
         <main className="h-full w-4/5 mx-auto py-10">{children}</main>

@@ -1,17 +1,35 @@
-export const Routes = {
-  // Website
-  home: () => "/",
+const HomeRoutes = {
+  home: "/",
+};
 
-  // Auth
-  signIn: () => "/sign-in",
-  resetPassword: () => "/reset-password",
-  resetPasswordVerifyCode: () => "/reset-password/verify-code",
-  resetPasswordConfirm: () => "/reset-password/confirm",
-  resetInitialPassword: () => "/reset-initial-password",
+const AuthRoutes = {
+  signIn: "/sign-in",
+  resetPassword: "/reset-password",
+  resetPasswordVerifyCode: "/reset-password/verify-code",
+  resetPasswordConfirm: "/reset-password/confirm",
+  resetInitialPassword: "/reset-initial-password",
+};
 
-  // Portal
+const PortalRoutes = {
   dashboard: () => "/dashboard",
   course: (courseId: string) => `/dashboard/course/${courseId}`,
   lesson: (courseId: string, lessonId: string) =>
     `/dashboard/course/${courseId}/lesson/${lessonId}`,
-} as const;
+};
+
+function createRoutes(routes: Record<string, string>) {
+  return Object.fromEntries(
+    Object.entries(routes).map(([key, value]) => [key, () => value])
+  );
+}
+
+export const Routes: Record<string, (...args: any[]) => string> = {
+  // Website
+  ...createRoutes(HomeRoutes),
+
+  // Auth
+  ...createRoutes(AuthRoutes),
+
+  // Portal
+  ...PortalRoutes,
+};

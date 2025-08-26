@@ -1,6 +1,6 @@
 "use client";
 import { useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import LogoutIcon from "@/lib/icons/LogoutIcon";
 import { useMutation } from "@tanstack/react-query";
@@ -10,6 +10,9 @@ import { useReactQueryContext } from "@/lib/providers/ReactQueryProvider";
 import { Routes } from "@/lib/routes/routes";
 
 export default function LogoutButton() {
+  const pathname = usePathname();
+  const isSignedIn = pathname.includes("dashboard");
+
   const router = useRouter();
   const { queryClient } = useReactQueryContext();
 
@@ -17,7 +20,7 @@ export default function LogoutButton() {
     mutationFn: () =>
       apiClient("/auth/sign-out", undefined, { method: "POST" }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: userKeys.currentUser });
+      queryClient.clear();
     },
   });
 
@@ -26,6 +29,9 @@ export default function LogoutButton() {
     router.push(Routes.signIn());
   }, [router, logout]);
 
+  if (!isSignedIn) {
+    return <div></div>;
+  }
   return (
     <button className="justify-self-end" onClick={handleLogout}>
       <LogoutIcon size={40} />
