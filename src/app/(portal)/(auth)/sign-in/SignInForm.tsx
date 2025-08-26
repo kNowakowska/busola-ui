@@ -69,7 +69,7 @@ export const SignInForm = () => {
       name="singInForm"
       noValidate
       onSubmit={handleSubmit(onSubmit)}
-      className="flex h-full w-full flex-col space-y-7 p-10 justify-center items-center"
+      className="flex h-full w-full flex-col space-y-4 md:space-y-7 p-7 md:p-10 justify-center items-center"
     >
       <FormInput
         type="email"

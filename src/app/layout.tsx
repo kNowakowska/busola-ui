@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
   return (
     <html lang="pl">
-      <body className={clsx(montserrat.className, "h-full w-full")}>
+      <body className={clsx(montserrat.className, "h-screen w-full ")}>
         {children}
       </body>
     </html>
