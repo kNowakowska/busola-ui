@@ -11,6 +11,7 @@ import { Button } from "@/lib/components/Button";
 import FormInput from "@/lib/components/form/FormInput";
 import { useResetPassword } from "@/lib/hooks/useResetPassword";
 import { Routes } from "@/lib/routes/routes";
+import Form from "@/lib/components/form/Form";
 
 import { verifyCodeValidationSchema } from "../../resetPasswordValidation";
 
@@ -62,12 +63,7 @@ export const VerifyCodeForm = () => {
   );
 
   return (
-    <form
-      name="verifyCodeForm"
-      noValidate
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex h-full w-full flex-col space-y-7 p-10 justify-center items-center"
-    >
+    <Form name="verifyCodeForm" onSubmit={handleSubmit(onSubmit)}>
       <FormInput
         type="password"
         placeholder="******"
@@ -77,6 +73,6 @@ export const VerifyCodeForm = () => {
         {...register("code")}
       />
       <Button text="Zweryfikuj" type="submit" disabled={isPending} />
-    </form>
+    </Form>
   );
 };

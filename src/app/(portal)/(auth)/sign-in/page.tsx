@@ -1,14 +1,13 @@
 import Link from "next/link";
 
-import { Title } from "@/lib/components/Title";
+import AuthFormContainer from "@/lib/components/AuthFormContainer";
 import { Routes } from "@/lib/routes/routes";
 
 import { SignInForm } from "./SignInForm";
 
 export default function SignIn() {
   return (
-    <div className="flex h-auto w-full md:w-3/5 mx-auto flex-col items-center gap-y-4 rounded-3xl bg-white md:px-5 py-7 md:py-10 shadow-md">
-      <Title>Zaloguj się</Title>
+    <AuthFormContainer title="Zaloguj się">
       <SignInForm />
       <p className="text-center text-sm md:text-base">
         Nie pamiętasz hasła?{" "}
@@ -16,6 +15,6 @@ export default function SignIn() {
           Zresetuj je tutaj
         </Link>
       </p>
-    </div>
+    </AuthFormContainer>
   );
 }

@@ -11,6 +11,7 @@ import FormInput from "@/lib/components/form/FormInput";
 import { Button } from "@/lib/components/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Routes } from "@/lib/routes/routes";
+import Form from "@/lib/components/form/Form";
 
 import { confirmPasswordValidationSchema } from "./resetPasswordValidation";
 
@@ -63,12 +64,7 @@ export const ConfirmPasswordForm = ({
   );
 
   return (
-    <form
-      name="confirmPasswordForm"
-      noValidate
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex h-full w-full flex-col space-y-7 p-10 justify-center items-center"
-    >
+    <Form name="confirmPasswordForm" onSubmit={handleSubmit(onSubmit)}>
       <FormInput
         type="password"
         placeholder="********"
@@ -90,6 +86,6 @@ export const ConfirmPasswordForm = ({
       />
 
       <Button text="Zmień hasło" type="submit" disabled={disabled} />
-    </form>
+    </Form>
   );
 };

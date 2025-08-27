@@ -9,7 +9,7 @@ export const useResetPassword = () => {
   const resetPasswordMutation = useMutation({
     mutationFn: ({ email }: { email: string }) => {
       setEmail(email);
-      return apiClient(
+      return apiClient<void>(
         "/auth/reset-password-request",
         {
           email,
@@ -27,7 +27,7 @@ export const useResetPassword = () => {
         throw new Error("Weryfikacja kodu nie powiodła się");
       }
       setCode(code);
-      return apiClient(
+      return apiClient<void>(
         "/auth/verify-code",
         {
           email,
@@ -45,7 +45,7 @@ export const useResetPassword = () => {
       if (!email || !code) {
         throw new Error("Reset hasła nie powiódł się");
       }
-      return apiClient(
+      return apiClient<void>(
         "/auth/reset-password",
         {
           email,

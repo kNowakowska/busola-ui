@@ -11,6 +11,7 @@ import FormInput from "@/lib/components/form/FormInput";
 import { Button } from "@/lib/components/Button";
 import { useResetPassword } from "@/lib/hooks/useResetPassword";
 import { Routes } from "@/lib/routes/routes";
+import Form from "@/lib/components/form/Form";
 
 import { resetPasswordValidationSchema } from "../resetPasswordValidation";
 
@@ -62,12 +63,7 @@ export const ResetPasswordForm = () => {
   );
 
   return (
-    <form
-      name="resetPasswordForm"
-      noValidate
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex h-full w-full flex-col space-y-7 p-10 justify-center items-center"
-    >
+    <Form name="resetPasswordForm" onSubmit={handleSubmit(onSubmit)}>
       <FormInput
         type="email"
         placeholder="korkizgegry@gmail.com"
@@ -78,6 +74,6 @@ export const ResetPasswordForm = () => {
       />
 
       <Button text="Wyślij kod" type="submit" disabled={isPending} />
-    </form>
+    </Form>
   );
 };

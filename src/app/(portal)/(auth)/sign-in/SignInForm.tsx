@@ -12,6 +12,7 @@ import { useResetPasswordContext } from "@/lib/context/ResetPasswordContext";
 import { Button } from "@/lib/components/Button";
 import FormInput from "@/lib/components/form/FormInput";
 import { Routes } from "@/lib/routes/routes";
+import Form from "@/lib/components/form/Form";
 
 import { SignInValidationSchema } from "./signInValidationSchema";
 
@@ -65,12 +66,7 @@ export const SignInForm = () => {
   };
 
   return (
-    <form
-      name="singInForm"
-      noValidate
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex h-full w-full flex-col space-y-4 md:space-y-7 p-7 md:p-10 justify-center items-center"
-    >
+    <Form name="singInForm" onSubmit={handleSubmit(onSubmit)}>
       <FormInput
         type="email"
         placeholder="korkizgegry@gmail.com"
@@ -90,6 +86,6 @@ export const SignInForm = () => {
         {...register("password")}
       />
       <Button text="Zaloguj się" type="submit" disabled={isPending} />
-    </form>
+    </Form>
   );
 };

@@ -1,22 +1,23 @@
 import Link from "next/link";
 
-import { Title } from "@/lib/components/Title";
+import AuthFormContainer from "@/lib/components/AuthFormContainer";
+import { Routes } from "@/lib/routes/routes";
+
 import { ResetPasswordForm } from "./ResetPasswordForm";
 
 export default function ResetPassword() {
   return (
-    <div className="h-4/5 w-3/5 mx-auto flex flex-col items-center gap-y-4 rounded-3xl px-5 py-10 shadow-md ">
-      <Title size="text-5xl">Zapomniałeś hasła?</Title>
-      <p className="pt-5 text-center ">
-        Podaj swój adres e-mail, aby odzyskać hasło
-      </p>
+    <AuthFormContainer
+      title="Zapomniałeś hasło?"
+      description="Podaj swój adres e-mail, aby odzyskać hasło"
+    >
       <ResetPasswordForm />
-      <p className="text-center ">
+      <p className="text-center text-sm md:text-base">
         Pamiętasz hasło?{" "}
-        <Link className="text-light-blue font-bold" href={"/sign-in"}>
+        <Link className="font-bold" href={Routes.signIn()}>
           Wróć do logowania
         </Link>
       </p>
-    </div>
+    </AuthFormContainer>
   );
 }
