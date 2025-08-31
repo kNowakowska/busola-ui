@@ -5,7 +5,6 @@ import { usePathname, useRouter } from "next/navigation";
 import LogoutIcon from "@/lib/icons/LogoutIcon";
 import { useMutation } from "@tanstack/react-query";
 import apiClient from "@/lib/api/apiClient";
-import { userKeys } from "@/lib/api/queryKeysFactory";
 import { useReactQueryContext } from "@/lib/providers/ReactQueryProvider";
 import { Routes } from "@/lib/routes/routes";
 

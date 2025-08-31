@@ -1,6 +1,6 @@
 export default function LoadingSpinner({ message }: { message?: string }) {
   return (
-    <div className="flex flex-col items-center justify-center h-[200px]">
+    <div className="flex flex-col items-center justify-center h-full md:h-[200px]">
       <div
         className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
         role="status"
@@ -9,7 +9,7 @@ export default function LoadingSpinner({ message }: { message?: string }) {
           Loading...
         </span>
       </div>
-      <p className="text-xl mt-10">{message || "Ładowanie..."}</p>
+      <p className="text-base md:text-xl mt-10">{message || "Ładowanie..."}</p>
     </div>
   );
 }

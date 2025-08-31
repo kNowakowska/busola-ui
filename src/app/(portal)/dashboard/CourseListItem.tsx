@@ -27,7 +27,7 @@ export default function CourseListItem({ course }: { course: Course }) {
       onClick={() => {
         router.push(Routes.course(course.uuid));
       }}
-      className="min-h-[170px] flex flex-row gap-5 rounded-2xl  px-5 py-5 shadow-md cursor-pointer items-center"
+      className="min-h-[170px] flex flex-col md:flex-row gap-5 rounded-2xl  px-5 py-5 shadow-md cursor-pointer items-center"
     >
       <Image
         src={imageUrl || "/busola-korepetycje-logo-puste-2.png"}
@@ -37,8 +37,12 @@ export default function CourseListItem({ course }: { course: Course }) {
         className="h-[150px] w-[200px] object-cover rounded-lg "
       />
       <div className="flex flex-col gap-2">
-        <h2 className="text-2xl font-bold mb-2">{course.name}</h2>
-        <p className="text-base">{course.shortDescription}</p>
+        <h2 className="text-base md:text-2xl font-bold mb-2 text-center md:text-left">
+          {course.name}
+        </h2>
+        <p className="text-sm md:text-base text-justify">
+          {course.shortDescription}
+        </p>
         <ProgressBar
           label="Postęp"
           progress={

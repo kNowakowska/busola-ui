@@ -5,15 +5,15 @@ type ProgressBarProps = {
 
 export function ProgressBar({ progress, label }: ProgressBarProps) {
   return (
-    <div className="w-[200px]">
+    <div className="w-full">
       {label && (
-        <div className="mb-1 text-sm font-medium text-gray-700">
+        <div className="mb-1 text-xs md:text-sm font-medium">
           {label} ({progress}%)
         </div>
       )}
       <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
         <div
-          className="bg-blue-500 h-full transition-all duration-500"
+          className="bg-(--dark-beige) h-full transition-all duration-500"
           style={{ width: `${progress}%` }}
         />
       </div>
