@@ -17,7 +17,7 @@ export default function AppLayout({ children }: Readonly<PropsWithChildren>) {
           </h1>
           <LogoutButton />
         </header>
-        <main className="h-full w-7/10 mx-auto pb-10 flex flex-col justify-center items-center ">
+        <main className="h-full w-full md:w-7/10 mx-auto pb-10 flex flex-col justify-center items-center ">
           {children}
         </main>
       </div>

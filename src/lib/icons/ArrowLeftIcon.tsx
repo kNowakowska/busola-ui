@@ -1,14 +1,14 @@
 import React from "react";
 
-export const ArrowLeftIcon = () => (
+export const ArrowLeftIcon = ({ small }: { small?: boolean }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="var(--dark-blue)"
-    width={30}
-    height={30}
+    width={small ? 20 : 30}
+    height={small ? 20 : 30}
     className="inline-block"
   >
     <path

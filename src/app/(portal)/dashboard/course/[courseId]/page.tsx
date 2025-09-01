@@ -55,8 +55,8 @@ export default function CoursePage({
   }
 
   return (
-    <div className="flex flex-row">
-      <div className="w-4/5 flex flex-col p-10 gap-y-15">
+    <div className="flex flex-col md:flex-row pb-10 md:pb-auto">
+      <div className="w-full md:w-4/5 flex flex-col p-10 gap-y-10 md:gap-y-15 order-2 md:order-1 items-center md:items-start">
         <div
           className="w-full h-[300px] bg-cover bg-center"
           style={{
@@ -65,11 +65,15 @@ export default function CoursePage({
             })`,
           }}
         ></div>
-        <h2 className="text-4xl font-bold">{course.name}</h2>
-        <p className="text-base text-justify">{course.description}</p>
+        <h2 className="text-2xl md:text-4xl font-bold text-center md:text-left">
+          {course.name}
+        </h2>
+        <p className="text-sm md:text-base text-justify">
+          {course.description}
+        </p>
         <LessonsList lessons={course.lessons} />
         <button
-          className="secondary text-white p-3 rounded-lg w-[200px]"
+          className="secondary text-white p-3 rounded-lg w-[200px] text-sm md:text-base"
           onClick={() => {
             router.push(Routes.dashboard());
           }}
@@ -77,8 +81,8 @@ export default function CoursePage({
           Wróć do listy kursów
         </button>
       </div>
-      <div className="w-1/5 flex flex-col p-10 gap-y-5">
-        <p>
+      <div className="w-full md:w-1/5 flex flex-col py-0 px-10 md:p-10 gap-y-0 md:gap-y-5 order-1 md:order-2">
+        <p className="text-center md:text-left text-sm md:text-base">
           Zacząłeś pracę nad tym kursem: <b>7 lipca 2025</b>
         </p>
         <ProgressBar

@@ -1,6 +1,7 @@
 "use client";
 import { useCallback } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { useMediaQuery } from "react-responsive";
 
 import LogoutIcon from "@/lib/icons/LogoutIcon";
 import { useMutation } from "@tanstack/react-query";
@@ -11,6 +12,8 @@ import { Routes } from "@/lib/routes/routes";
 export default function LogoutButton() {
   const pathname = usePathname();
   const isSignedIn = pathname.includes("dashboard");
+
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   const router = useRouter();
   const { queryClient } = useReactQueryContext();
@@ -32,8 +35,8 @@ export default function LogoutButton() {
     return <div></div>;
   }
   return (
-    <button className="justify-self-end" onClick={handleLogout}>
-      <LogoutIcon size={40} />
+    <button className="icon justify-self-end md:m-0 m-2" onClick={handleLogout}>
+      <LogoutIcon size={isMobile ? 30 : 40} />
     </button>
   );
 }

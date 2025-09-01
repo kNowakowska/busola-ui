@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMediaQuery } from "react-responsive";
 
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
@@ -25,6 +26,8 @@ export default function LessonPage({
 }) {
   const queryClient = useQueryClient();
   const [notes, setNotes] = useState<string>();
+
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   const { courseId, lessonId } = use(params);
   const router = useRouter();
@@ -166,39 +169,45 @@ export default function LessonPage({
 
   const components = documentToReactComponents(lesson.content as any, {
     renderNode: {
-      paragraph: (_node, children) => <p>{children}</p>,
+      paragraph: (_node, children) => (
+        <p className="text-justify text-sm md:text-base">{children}</p>
+      ),
     },
   });
 
   return (
-    <div className="flex flex-col gap-y-10 pb-30">
+    <div className="flex flex-col gap-y-7 md:gap-y-10 pb-30 px-10 md:p-auto">
       <div className="flex flex-row justify-between ">
         {lesson.previousLessonId ? (
           <Link
+            className="text-sm md:text-base"
             href={`/dashboard/course/${lesson.courseId}/lesson/${lesson.previousLessonId}`}
           >
-            <ArrowLeftIcon /> Poprzednia lekcja
+            <ArrowLeftIcon small={isMobile} /> Poprzednia lekcja
           </Link>
         ) : (
           <div></div>
         )}
         {lesson.nextLessonId ? (
           <Link
+            className="text-sm md:text-base"
             href={`/dashboard/course/${lesson.courseId}/lesson/${lesson.nextLessonId}`}
           >
-            Następna lekcja <ArrowRightIcon />
+            Następna lekcja <ArrowRightIcon small={isMobile} />
           </Link>
         ) : (
           <div></div>
         )}
       </div>
 
-      <h2 className="text-4xl font-bold ">{lesson.name}</h2>
+      <h2 className="text-2xl md:text-4xl font-bold text-center md:text-left">
+        {lesson.name}
+      </h2>
       {lesson.videoUrl ? <VideoPlayer url={lesson.videoUrl} /> : undefined}
       {components}
-      <div className="flex flex-row justify-between items-center">
+      <div className="flex flex-row justify-between items-center gap-x-2">
         <button
-          className="secondary text-white p-3 rounded-lg w-[200px]"
+          className="secondary text-sm md:text-base text-white p-2 md:p-3 rounded-lg md:w-[200px]"
           onClick={() => {
             router.push(Routes.course(lesson.courseId));
           }}
@@ -207,7 +216,7 @@ export default function LessonPage({
           Wróć do listy lekcji
         </button>
         <button
-          className="secondary text-white p-3 rounded-lg w-[200px]"
+          className="secondary text-sm md:text-base text-white p-2 md:p-3 rounded-lg md:w-[200px]"
           onClick={async () => {
             await onMarkAsCompleted();
             if (lesson.nextLessonId)
@@ -221,9 +230,9 @@ export default function LessonPage({
       </div>
 
       <div className="flex flex-col justify-between items-start">
-        <h4 className="text-2xl mb-3">Twoje notatki: </h4>
+        <h4 className="text-xl md:text-2xl mb-3">Twoje notatki: </h4>
         <textarea
-          className="w-full h-40 border-[var(--light-blue)] border-2 rounded-lg p-2 shadow-md leading-[1.5]"
+          className="w-full h-30 md:h-40 border-[var(--light-blue)] border-2 rounded-lg p-2 shadow-md leading-[1.5] text-sm md:text-base"
           rows={20}
           value={notes}
           onChange={(e) => {

@@ -27,6 +27,12 @@ button {
   cursor: pointer;
 }
 
+button.icon {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 button.secondary {
   background-color: var(--dark-beige);
 }
