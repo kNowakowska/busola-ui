@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { isNil } from "lodash";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
@@ -47,9 +46,9 @@ export function NotesSection({ lesson }: { lesson: LessonDetails }) {
     });
 
   const onNotesChange = useCallback(
-    async (notes: string) => {
-      if ((isNil(notes) && isNil(lesson?.notes)) || notes === lesson?.notes)
-        return;
+    async (e: React.FocusEvent<HTMLTextAreaElement>) => {
+      const notes = e.target.value;
+      if (notes === lesson?.notes) return;
       try {
         await toast.promise(
           () => saveNotes(notes),
@@ -66,7 +65,7 @@ export function NotesSection({ lesson }: { lesson: LessonDetails }) {
         );
       } catch {}
     },
-    [saveNotes]
+    [saveNotes, lesson]
   );
 
   return (
@@ -79,9 +78,7 @@ export function NotesSection({ lesson }: { lesson: LessonDetails }) {
         onChange={(e) => {
           setNotes(e.target.value);
         }}
-        onBlur={(e) => {
-          onNotesChange(e.target.value);
-        }}
+        onBlur={onNotesChange}
         disabled={isSavingNotesPending}
         placeholder="Dodaj swoje notatki tutaj..."
       />
