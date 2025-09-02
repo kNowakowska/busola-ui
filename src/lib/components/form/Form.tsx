@@ -11,7 +11,7 @@ export default function Form({
     <form
       name={name}
       onSubmit={onSubmit}
-      className="flex h-full w-full flex-col space-y-4 md:space-y-7 py-5 md:p-10 justify-center items-center"
+      className="flex h-full w-full flex-col space-y-4 md:space-y-7 py-5 "
     >
       {children}
     </form>

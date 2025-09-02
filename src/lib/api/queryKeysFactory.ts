@@ -14,6 +14,8 @@ export const lessonKeys = {
   all: ["lessons"] as const,
   lists: () => [...lessonKeys.all, "list"] as const,
   details: (uuid: string) => [...lessonKeys.all, "details", uuid] as const,
+  quiz: (lessonUuid: string, uuid: string) =>
+    [...lessonKeys.details(lessonUuid), "quiz"] as const,
   saveNotes: (uuid: string) =>
     [...lessonKeys.details(uuid), "saveNotes"] as const,
   markAsCompleted: (uuid: string) =>

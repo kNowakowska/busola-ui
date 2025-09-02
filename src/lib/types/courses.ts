@@ -35,4 +35,22 @@ export interface LessonDetails extends Lesson {
   previousLessonId?: string;
   nextLessonId?: string;
   notes?: string;
+  quizId?: string;
+}
+
+export interface Answer {
+  uuid: string;
+  text: string;
+}
+
+export interface Question {
+  uuid: string;
+  text: string;
+  options: Answer[];
+}
+
+export interface Quiz {
+  uuid: string;
+  name: string;
+  questions: Question[];
 }
