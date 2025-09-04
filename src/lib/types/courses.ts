@@ -49,8 +49,14 @@ export interface Question {
   options: Answer[];
 }
 
+export interface QuizAttempt {
+  scoreInPercent: number;
+  createdAt: string;
+}
+
 export interface Quiz {
   uuid: string;
   name: string;
   questions: Question[];
+  attempts: QuizAttempt[];
 }

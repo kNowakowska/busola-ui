@@ -1,16 +1,19 @@
+import { useFormContext } from "react-hook-form";
+
 export function RadioOption({
   label,
-  optionId,
-  radioGroupName,
+  value,
+  fieldName,
 }: {
-  optionId: string;
-  radioGroupName: string;
+  value: string;
   label: string;
+  fieldName: string;
 }) {
+  const { register } = useFormContext();
   return (
     <li>
-      <label htmlFor={optionId}>
-        <input type="radio" id={optionId} name={radioGroupName} />
+      <label htmlFor={value}>
+        <input type="radio" id={value} value={value} {...register(fieldName)} />
         <span className="ml-3">{label}</span>
       </label>
     </li>

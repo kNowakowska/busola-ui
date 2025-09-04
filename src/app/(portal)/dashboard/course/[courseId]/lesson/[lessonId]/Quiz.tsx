@@ -1,34 +1,125 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
+
+import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 
 import Form from "@/lib/components/form/Form";
-import { Quiz as QuizType } from "@/lib/types/courses";
+import {
+  QuizAttempt,
+  Quiz as QuizType,
+  Question as QuestionType,
+} from "@/lib/types/courses";
+import apiClient from "@/lib/api/apiClient";
+import { lessonKeys } from "@/lib/api/queryKeysFactory";
 
+import { QuizFormValues, quizValidationSchema } from "./quizValidationSchema";
 import { Question } from "./Question";
 
-export function Quiz({ quiz }: { quiz: QuizType }) {
-  const handleSubmit = useCallback((e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    // TODO: save answers
-    console.log("submit");
+export function Quiz({
+  quiz,
+  lessonId,
+  courseId,
+  closeQuiz,
+}: {
+  quiz: QuizType;
+  lessonId: string;
+  courseId: string;
+  closeQuiz: () => void;
+}) {
+  const queryClient = useQueryClient();
+
+  const defaultValues = useMemo(
+    () => ({
+      questions: quiz.questions.map((question: QuestionType) => ({
+        answer: undefined,
+        uuid: question.uuid,
+      })),
+    }),
+    [quiz]
+  );
+
+  const form = useForm<QuizFormValues>({
+    defaultValues,
+    resolver: zodResolver(quizValidationSchema),
+  });
+
+  const { handleSubmit, control } = form;
+
+  const { fields } = useFieldArray({
+    control,
+    name: "questions",
+  });
+
+  const { mutateAsync: saveAttempt } = useMutation({
+    mutationFn: async (data: QuizFormValues) =>
+      apiClient<QuizAttempt>(
+        `/dashboard/course/${courseId}/lesson/${lessonId}/quiz/${quiz.uuid}`,
+        data,
+        {
+          method: "POST",
+        }
+      ),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: lessonKeys.quiz(lessonId as string, quiz.uuid as string),
+        refetchType: "all",
+      });
+
+      queryClient.setQueryData(
+        lessonKeys.quiz(lessonId as string, quiz.uuid as string),
+        (prevQuiz: QuizType) => ({
+          ...prevQuiz,
+          attempts: [...prevQuiz.attempts, data],
+        })
+      );
+    },
+  });
+
+  const onSubmit = useCallback(async (data: QuizFormValues) => {
+    try {
+      await toast.promise(
+        async () => {
+          await saveAttempt(data);
+          closeQuiz();
+        },
+        {
+          loading: "Zapisywanie wyniku...",
+          error: (error: any) => error.message,
+        },
+        {
+          style: {
+            minWidth: "250px",
+          },
+        }
+      );
+    } catch {}
   }, []);
 
   return (
-    <Form name="quiz" onSubmit={handleSubmit}>
-      <div className="flex flex-col gap-y-3">
-        {quiz.questions.map((question, index) => (
-          <Question
-            key={question.uuid}
-            question={question}
-            number={index + 1}
-          />
-        ))}
-        <button
-          type="submit"
-          className="secondary text-sm md:text-base text-white p-2 md:p-3 mt-3 rounded-lg w-[200px]"
-        >
-          Zakończ test
-        </button>
-      </div>
-    </Form>
+    <FormProvider {...form}>
+      <Form name="quiz" onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-y-3">
+          {fields.map((field, index) => (
+            <Question
+              key={field.uuid}
+              index={index}
+              question={
+                quiz.questions.find(
+                  ({ uuid }) => uuid === field.uuid
+                ) as QuestionType
+              }
+            />
+          ))}
+          <button
+            type="submit"
+            className="secondary text-sm md:text-base text-white p-2 md:p-3 mt-3 rounded-lg w-[200px]"
+          >
+            Zakończ test
+          </button>
+        </div>
+      </Form>
+    </FormProvider>
   );
 }

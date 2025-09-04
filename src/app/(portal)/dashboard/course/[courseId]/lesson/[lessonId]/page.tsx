@@ -2,7 +2,6 @@
 import { use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import { useMediaQuery } from "react-responsive";
 
@@ -11,7 +10,7 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import { ArrowLeftIcon } from "@/lib/icons/ArrowLeftIcon";
 import { ArrowRightIcon } from "@/lib/icons/ArrowRightIcon";
 import VideoPlayer from "@/lib/components/VideoPlayer";
-import { LessonDetails, Quiz } from "@/lib/types/courses";
+import { LessonDetails } from "@/lib/types/courses";
 import apiClient from "@/lib/api/apiClient";
 import { lessonKeys } from "@/lib/api/queryKeysFactory";
 import LoadingSpinner from "@/lib/components/LoadingSpinner";
@@ -44,32 +43,11 @@ export default function LessonPage({
       ),
   });
 
-  const {
-    data: quiz,
-    isPending: isFetchingQuiz,
-    error: errorQuiz,
-  } = useQuery({
-    queryKey: lessonKeys.quiz(lessonId as string, lesson?.quizId as string),
-    queryFn: async () =>
-      apiClient<Quiz>(
-        `/dashboard/course/${courseId}/lesson/${lessonId}/quiz/${lesson?.quizId}`
-      ),
-    enabled: !!lesson?.quizId,
-  });
-
-  if (isFetchingLesson || isFetchingQuiz) {
+  if (isFetchingLesson) {
     return <LoadingSpinner message="Wczytywanie lekcji" />;
   }
 
-  if (error || errorQuiz) {
-    toast.error(
-      error?.message ||
-        errorQuiz?.message ||
-        "Wystąpił błąd. Spróbuj ponownie później."
-    );
-  }
-
-  if (!lesson) {
+  if (!lesson || error) {
     // TODO: add error page
     return <div>Lekcja nie znaleziona</div>;
   }
@@ -114,7 +92,7 @@ export default function LessonPage({
           {lesson.videoUrl ? <VideoPlayer url={lesson.videoUrl} /> : undefined}
           {components}
 
-          {quiz && <QuizSection quiz={quiz} />}
+          <QuizSection lesson={lesson} />
 
           <h3 className="text-2xl font-bold">Komentarz do zadań</h3>
           {lesson.videoUrl ? <VideoPlayer url={lesson.videoUrl} /> : undefined}

@@ -3,22 +3,22 @@ import { Question as QuestionType } from "@/lib/types/courses";
 
 export function Question({
   question,
-  number,
+  index,
 }: {
   question: QuestionType;
-  number: number;
+  index: number;
 }) {
   return (
     <div className="flex flex-col w-full gap-y-3 border border-gray-200 rounded-lg p-6 shadow-md">
       <h4 className="text-base font-bold">
-        {number}. {question.text}
+        {index + 1}. {question.text}
       </h4>
       <RadioGroup
-        options={question.options.map((option) => ({
-          id: option.uuid,
-          label: option.text,
+        options={question.options.map(({ uuid, text }) => ({
+          value: uuid,
+          label: text,
         }))}
-        radioGroupName={question.uuid}
+        fieldName={`questions.${index}.answer`}
       />
     </div>
   );

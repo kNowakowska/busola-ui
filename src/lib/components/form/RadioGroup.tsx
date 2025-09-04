@@ -1,21 +1,23 @@
+import { OptionType } from "@/lib/types/common";
+
 import { RadioOption } from "./RadioOption";
 
 export function RadioGroup({
-  radioGroupName,
   options,
+  fieldName,
 }: {
-  options: { id: string; label: string }[];
-  radioGroupName: string;
+  options: OptionType[];
+  fieldName: string;
 }) {
   return (
-    <fieldset id={radioGroupName}>
+    <fieldset>
       <ul className="flex flex-col gap-y-3">
-        {options.map((option) => (
+        {options.map(({ value, label }) => (
           <RadioOption
-            label={option.label}
-            optionId={option.id}
-            radioGroupName={radioGroupName}
-            key={option.id}
+            label={label}
+            value={value}
+            key={value}
+            fieldName={fieldName}
           />
         ))}
       </ul>
