@@ -45,7 +45,11 @@ export function Quiz({
     resolver: zodResolver(quizValidationSchema),
   });
 
-  const { handleSubmit, control } = form;
+  const {
+    handleSubmit,
+    control,
+    formState: { isValid },
+  } = form;
 
   const { fields } = useFieldArray({
     control,
@@ -115,6 +119,7 @@ export function Quiz({
           <button
             type="submit"
             className="secondary text-sm md:text-base text-white p-2 md:p-3 mt-3 rounded-lg w-[200px]"
+            disabled={!isValid}
           >
             Zakończ test
           </button>

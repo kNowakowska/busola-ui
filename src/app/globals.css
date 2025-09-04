@@ -33,8 +33,9 @@ button.icon {
   cursor: pointer;
 }
 
-button.secondary {
-  background-color: var(--dark-beige);
+button:disabled {
+  background-color: var(--light-blue);
+  cursor: not-allowed;
 }
 
 caption {

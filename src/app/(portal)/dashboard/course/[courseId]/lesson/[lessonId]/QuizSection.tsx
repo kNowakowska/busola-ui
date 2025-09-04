@@ -14,7 +14,7 @@ export function QuizSection({ lesson }: { lesson: LessonDetails | undefined }) {
 
   const {
     data: quiz,
-    isPending,
+    isFetching,
     error,
   } = useQuery({
     queryKey: lessonKeys.quiz(lesson?.uuid as string, lesson?.quizId as string),
@@ -33,8 +33,12 @@ export function QuizSection({ lesson }: { lesson: LessonDetails | undefined }) {
     setShowQuiz(false);
   }, []);
 
-  if (isPending) {
+  if (isFetching) {
     return <LoadingSpinner message="Wczytywanie testu" />;
+  }
+
+  if (!quiz) {
+    return;
   }
 
   if (error) {
