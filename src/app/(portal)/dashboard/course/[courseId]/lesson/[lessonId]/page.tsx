@@ -61,7 +61,7 @@ export default function LessonPage({
   });
 
   return (
-    <div className="flex flex-col gap-y-7 pb-30 px-10 md:p-auto">
+    <div className=" flex flex-col gap-y-7 pb-30 px-10 md:p-auto">
       <div className="flex flex-row justify-between">
         {lesson.previousLessonId ? (
           <Link
@@ -99,7 +99,7 @@ export default function LessonPage({
 
           <NotesSection lesson={lesson} />
         </div>
-        <div className="flex flex-col w-1/5 gap-y-7 md:gap-y-10 sticky">
+        <div className="flex flex-col w-1/5 gap-y-7 md:gap-y-10">
           <div className="flex flex-col justify-between items-center gap-y-7 p-5">
             <button
               className="secondary text-sm md:text-base text-white p-2 md:p-3 rounded-lg w-full"
