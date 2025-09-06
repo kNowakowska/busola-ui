@@ -3,11 +3,11 @@ const HomeRoutes = {
 };
 
 const AuthRoutes = {
-  signIn: "/sign-in",
-  resetPassword: "/reset-password",
-  resetPasswordVerifyCode: "/reset-password/verify-code",
-  resetPasswordConfirm: "/reset-password/confirm",
-  resetInitialPassword: "/reset-initial-password",
+  signIn: "/auth/sign-in",
+  resetPassword: "/auth/reset-password",
+  resetPasswordVerifyCode: "/auth/reset-password/verify-code",
+  resetPasswordConfirm: "/auth/reset-password/confirm",
+  resetInitialPassword: "/auth/reset-initial-password",
 };
 
 const PortalRoutes = {

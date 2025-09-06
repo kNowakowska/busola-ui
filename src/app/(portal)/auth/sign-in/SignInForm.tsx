@@ -13,6 +13,8 @@ import { Button } from "@/lib/components/Button";
 import FormInput from "@/lib/components/form/FormInput";
 import { Routes } from "@/lib/routes/routes";
 import Form from "@/lib/components/form/Form";
+import { useReactQueryContext } from "@/lib/providers/ReactQueryProvider";
+import { authKeys } from "@/lib/api/queryKeysFactory";
 
 import { SignInValidationSchema } from "./signInValidationSchema";
 
@@ -38,6 +40,7 @@ export const SignInForm = () => {
   });
 
   const router = useRouter();
+  const { queryClient } = useReactQueryContext();
 
   const onSubmit: SubmitHandler<SignInFormValues> = async (data) => {
     try {
@@ -48,9 +51,12 @@ export const SignInForm = () => {
           const response = await login(data);
           if (response.shouldResetPassword) {
             router.push(Routes.resetInitialPassword());
+            router.refresh();
           } else {
             router.push(Routes.dashboard());
+            router.refresh();
           }
+          await queryClient.invalidateQueries({ queryKey: authKeys.session });
         },
         {
           loading: "Logowanie...",

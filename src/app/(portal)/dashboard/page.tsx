@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 import apiClient from "@/lib/api/apiClient";
-import { userKeys } from "@/lib/api/queryKeysFactory";
+import { authKeys } from "@/lib/api/queryKeysFactory";
 import { User } from "@/lib/types/courses";
 import LoadingSpinner from "@/lib/components/LoadingSpinner";
 
@@ -15,7 +15,7 @@ export default function Dashboard() {
     isPending,
     error,
   } = useQuery({
-    queryKey: userKeys.currentUser,
+    queryKey: authKeys.currentUser,
     queryFn: () => apiClient<User>("/dashboard/current-user"),
   });
 

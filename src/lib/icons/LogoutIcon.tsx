@@ -1,5 +1,3 @@
-"use client";
-
 export default function LogoutIcon({ size }: { size: number }) {
   return (
     <svg

@@ -6,6 +6,10 @@ import { Montserrat } from "next/font/google";
 import clsx from "clsx";
 import "./globals.css";
 
+import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
+import AuthProvider from "@/lib/providers/AuthProvider";
+import Header from "./Header";
+
 const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "700", "800"],
@@ -17,11 +21,18 @@ export const metadata: Metadata = {
     "Doświadczony nauczyciel geografii, który przygotuje Cię na matury i olimpiady.",
 };
 
-export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
+export default async function RootLayout({
+  children,
+}: Readonly<PropsWithChildren>) {
   return (
     <html lang="pl">
       <body className={clsx(montserrat.className, "h-screen w-full ")}>
-        {children}
+        <ReactQueryProvider>
+          <AuthProvider>
+            <Header />
+            {children}
+          </AuthProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

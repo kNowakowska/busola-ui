@@ -1,5 +1,6 @@
-export const userKeys = {
+export const authKeys = {
   currentUser: ["currentUser"] as const,
+  session: ["session"] as const,
 };
 
 export const courseKeys = {
