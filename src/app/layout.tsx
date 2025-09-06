@@ -12,7 +12,7 @@ import Header from "./Header";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["400", "700", "800"],
+  weight: ["400", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default async function RootLayout({
 }: Readonly<PropsWithChildren>) {
   return (
     <html lang="pl">
-      <body className={clsx(montserrat.className, "h-screen w-full ")}>
+      <body className={clsx(montserrat.className, "h-full w-full ")}>
         <ReactQueryProvider>
           <AuthProvider>
             <Header />

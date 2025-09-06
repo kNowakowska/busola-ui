@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@import "@splidejs/react-splide/css";
+
 :root {
   --dark-blue: #013172;
   --light-blue: #9fb1ca;
@@ -16,26 +18,28 @@ html {
   background-color: var(--white);
 }
 
-a {
-  color: var(--dark-blue);
-  text-decoration: none;
-}
-
 button {
   color: var(--white);
   background-color: var(--dark-beige);
   cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
 button.icon {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  box-shadow: none;
 }
 
 button:disabled {
   background-color: var(--light-blue);
   cursor: not-allowed;
+}
+
+img.shadow {
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
 }
 
 caption {
@@ -52,8 +56,22 @@ p {
   color: var(--dark-blue);
 }
 
-.wp-content {
-  p {
-    margin-bottom: 10px;
-  }
+p.whiteText {
+  color: var(--white);
+}
+
+p.customShadow,
+div.customShadow {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.splide__arrow {
+  background-color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

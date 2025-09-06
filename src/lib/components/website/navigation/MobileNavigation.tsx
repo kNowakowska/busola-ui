@@ -33,26 +33,26 @@ export default function MobileNavigation() {
         <button onClick={handleCloseMenu} className="absolute top-10 right-10">
           <CloseIcon size={30} />
         </button>
-        <a href="#" className="text-xl">
+        <a href="#" className="text-base">
           O mnie
         </a>
 
-        <a href="#" className="text-xl">
+        <a href="#" className="text-base">
           Oferta
         </a>
 
-        <a href="#" className="text-xl">
+        <a href="#" className="text-base">
           Opinie
         </a>
 
-        <a href="#" className="text-xl">
+        <a href="#" className="text-base">
           Kontakt
         </a>
 
-        <a href="#" className="text-xl">
+        <a href="#" className="text-base">
           Blog
         </a>
-        <a href={Routes.signIn()} className="text-xl">
+        <a href={Routes.signIn()} className="text-base">
           Zaloguj się
         </a>
       </nav>

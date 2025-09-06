@@ -21,10 +21,7 @@ export const Button = ({
     <button
       type={type}
       onClick={onClick}
-      className={clsx(
-        "rounded-xl p-3 md:p-5 font-medium shadow-md w-1/2 text-sm md:text-base mt-2",
-        className
-      )}
+      className={`rounded-xl p-3 md:p-5 w-1/2 md:text-base mt-2 uppercase font-bold tracking-widest ${className}`}
       disabled={disabled}
       {...props}
     >
