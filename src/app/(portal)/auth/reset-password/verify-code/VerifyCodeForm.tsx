@@ -63,7 +63,11 @@ export const VerifyCodeForm = () => {
   );
 
   return (
-    <Form name="verifyCodeForm" onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      name="verifyCodeForm"
+      onSubmit={handleSubmit(onSubmit)}
+      className="items-center"
+    >
       <FormInput
         type="password"
         placeholder="******"

@@ -7,14 +7,14 @@ export default function PreviousResults({
 }) {
   return (
     <>
-      <h4 className="font-bold">Poprzednie 5 wyników</h4>
+      <h4 className="md:text-base text-sm font-bold">Poprzednie 5 wyników</h4>
       {results
         .sort(
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         )
         .map((result) => (
-          <div key={result.createdAt}>
+          <div key={result.createdAt} className="md:text-base text-sm">
             {new Date(result.createdAt).toLocaleString()} -{" "}
             <span className="font-bold text-[var(--dark-beige)]">
               {result.scoreInPercent}%

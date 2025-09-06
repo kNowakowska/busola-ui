@@ -1,49 +1,55 @@
+"use client";
+import { useMediaQuery } from "react-responsive";
+
 import Container from "@/lib/components/website/Container";
 import EmailIcon from "@/lib/icons/EmailIcon";
 import FacebookIcon from "@/lib/icons/FacebookIcon";
 import InstagramIcon from "@/lib/icons/InstagramIcon";
 import PhoneIcon from "@/lib/icons/PhoneIcon";
 
-const CONTACT_ITEMS = [
+const CONTACT_ITEMS = (isMobile: boolean) => [
   {
-    icon: <PhoneIcon size={30} />,
+    icon: <PhoneIcon size={isMobile ? 20 : 30} />,
     href: "tel:508808422",
     text: "508 808 422",
   },
   {
-    icon: <EmailIcon size={30} />,
+    icon: <EmailIcon size={isMobile ? 20 : 30} />,
     href: "mailto:korkizgegry.krakow@gmail.com",
     text: "korkizgegry.krakow@gmail.com",
   },
   {
-    icon: <FacebookIcon size={30} />,
+    icon: <FacebookIcon size={isMobile ? 20 : 30} />,
     href: "https://www.facebook.com/busolakorepetycja",
     text: "Busola Facebook",
   },
   {
-    icon: <InstagramIcon size={30} />,
+    icon: <InstagramIcon size={isMobile ? 20 : 30} />,
     href: "https://www.instagram.com/busolakorepetycja",
     text: "Busola Instagram",
   },
 ];
 
 export default function Contact() {
+  const isMobile = useMediaQuery({ maxWidth: 768 });
   return (
-    <div className="h-auto w-full">
-      <Container className="space-y-20 py-20">
-        <h2 className="text-4xl font-black tracking-wide">Kontakt</h2>
-        <div className="flex flex-row items-center gap-5">
-          <div className="w-1/2">
-            <div className="p-15 rounded-xl text-xl font-medium tracking-wider leading-8 customShadow flex flex-col space-y-10 items-center bg-linear-to-br from-[var(--light-blue)] to-white">
+    <div id="contact" className="h-auto w-full">
+      <Container className="md:space-y-20 space-y-5 md:py-20 py-5">
+        <h2 className="md:text-4xl text-3xl font-black tracking-wide">
+          Kontakt
+        </h2>
+        <div className="flex md:flex-row flex-col items-center gap-5">
+          <div className="md:w-1/2 w-full md:order-1 order-2">
+            <div className="md:p-15 p-10 rounded-xl md:text-xl text-base font-medium tracking-wider leading-6 customShadow flex flex-col md:space-y-10 space-y-5 items-center bg-linear-to-br from-[var(--light-blue)] to-white ">
               <ul className="space-y-5">
-                {CONTACT_ITEMS.map((item) => (
+                {CONTACT_ITEMS(isMobile).map((item) => (
                   <ContactItem key={item.text} {...item} />
                 ))}
               </ul>
             </div>
           </div>
-          <div className="w-1/2">
-            <p className="p-15 text-xl font-medium tracking-wider leading-8">
+          <div className="md:w-1/2 w-full md:order-2 order-1">
+            <p className="md:p-15 p-10 md:text-xl text-base font-medium tracking-wider leading-6">
               <b>Masz pytania lub chcesz umówić się na korepetycje?</b>
               <br />
               Napisz do mnie – chętnie pomogę i wspólnie zaplanujemy Twoją drogę
@@ -66,7 +72,7 @@ function ContactItem({
   text: string;
 }) {
   return (
-    <li className="group hover:cursor-pointer transition-transform duration-150 hover:scale-105">
+    <li className="group hover:cursor-pointer transition-transform duration-150 hover:scale-105 md:text-base text-sm">
       <a href={href} className="flex flex-row items-center gap-5">
         <span className="inline-block">{icon}</span>
         <span className="inline-grid">

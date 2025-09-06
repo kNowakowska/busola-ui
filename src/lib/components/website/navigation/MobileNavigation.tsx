@@ -1,3 +1,4 @@
+"use client";
 import { useCallback, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
@@ -26,33 +27,40 @@ export default function MobileNavigation() {
     <>
       <MobileMenuButton onClick={handleOpenMenu} />
       <nav
-        className={`w-[100vw] h-[100vh] bg-white flex flex-col items-center pt-30 space-y-5 absolute top-0 left-0 ${
+        className={`w-screen h-screen bg-white flex flex-col items-center pt-30 space-y-5 absolute top-0 left-0 ${
           isOpen ? "block" : "hidden"
-        }`}
+        } `}
       >
-        <button onClick={handleCloseMenu} className="absolute top-10 right-10">
+        <button
+          onClick={handleCloseMenu}
+          className="icon absolute top-10 right-10"
+        >
           <CloseIcon size={30} />
         </button>
-        <a href="#" className="text-base">
+        <a href="#about-me" className="text-base" onClick={handleCloseMenu}>
           O mnie
         </a>
 
-        <a href="#" className="text-base">
+        <a href="#services" className="text-base" onClick={handleCloseMenu}>
           Oferta
         </a>
 
-        <a href="#" className="text-base">
+        <a href="#testimony" className="text-base" onClick={handleCloseMenu}>
           Opinie
         </a>
 
-        <a href="#" className="text-base">
+        <a href="#contact" className="text-base" onClick={handleCloseMenu}>
           Kontakt
         </a>
 
-        <a href="#" className="text-base">
+        {/* <a href="#blog" className="text-base">
           Blog
-        </a>
-        <a href={Routes.signIn()} className="text-base">
+        </a> */}
+        <a
+          href={Routes.signIn()}
+          className="text-base"
+          // onClick={handleCloseMenu}
+        >
           Zaloguj się
         </a>
       </nav>

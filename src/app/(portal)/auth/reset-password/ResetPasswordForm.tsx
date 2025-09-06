@@ -63,7 +63,11 @@ export const ResetPasswordForm = () => {
   );
 
   return (
-    <Form name="resetPasswordForm" onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      name="resetPasswordForm"
+      onSubmit={handleSubmit(onSubmit)}
+      className="items-center"
+    >
       <FormInput
         type="email"
         placeholder="korkizgegry@gmail.com"

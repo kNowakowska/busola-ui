@@ -118,7 +118,7 @@ export function Quiz({
           ))}
           <button
             type="submit"
-            className="secondary text-sm md:text-base text-white p-2 md:p-3 mt-3 rounded-lg w-[200px]"
+            className="secondary text-sm md:text-base text-white p-2 md:p-3 mt-3 rounded-lg md:w-[200px] w-full"
             disabled={!isValid}
           >
             Zakończ test

@@ -50,12 +50,12 @@ export function QuizSection({ lesson }: { lesson: LessonDetails | undefined }) {
   }
 
   return (
-    <div className="flex flex-col gap-y-7 ">
-      <h3 className="text-xl font-bold">{quiz.name}</h3>
+    <div className="flex flex-col space-y-7 ">
+      <h3 className="md:text-xl text-base font-bold">{quiz.name}</h3>
 
       {!showQuiz && (
         <button
-          className="secondary text-sm md:text-base text-white p-2 md:p-3 rounded-lg w-[200px]"
+          className="secondary text-sm md:text-base text-white p-2 md:p-3 rounded-lg md:w-[200px] w-full"
           onClick={startQuiz}
         >
           Rozpocznij test

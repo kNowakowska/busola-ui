@@ -12,7 +12,7 @@ export function RadioOption({
   const { register } = useFormContext();
   return (
     <li>
-      <label htmlFor={value}>
+      <label htmlFor={value} className="md:text-base text-sm">
         <input type="radio" id={value} value={value} {...register(fieldName)} />
         <span className="ml-3">{label}</span>
       </label>

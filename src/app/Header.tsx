@@ -1,5 +1,5 @@
 "use client";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useMediaQuery } from "react-responsive";
 
@@ -14,6 +14,8 @@ import MobileNavigation from "@/lib/components/website/navigation/MobileNavigati
 
 export default function Header() {
   const pathname = usePathname();
+
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const { isSignedIn } = useAuthProviderContext();
   const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -35,12 +37,27 @@ export default function Header() {
       return <MobileNavigation />;
     }
     return <div></div>;
-  }, [isSignedIn, isAuthPage]);
+  }, [isSignedIn, isAuthPage, isMobile]);
+
+  useEffect(() => {
+    function handleScroll() {
+      setIsScrolled(window.scrollY > 0);
+    }
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <header className="w-full px-5 md:px-12 py-6 flex flex-row justify-between items-center sticky top-0 bg-white z-20 shadow-md">
+    <header
+      className={`w-full px-5 md:px-12 py-6 flex flex-row justify-between items-center sticky top-0 bg-white z-20  ${
+        isScrolled ? "shadow-md" : ""
+      }`}
+    >
       <Logo isSignedIn={isSignedIn} isMobile={isMobile} />
-      {!isMobile && (!isMainPage ? <WebsiteTitle /> : <Navigation />)}
+      {!isMainPage ? <WebsiteTitle /> : !isMobile ? <Navigation /> : undefined}
       {RightSideIcon}
     </header>
   );

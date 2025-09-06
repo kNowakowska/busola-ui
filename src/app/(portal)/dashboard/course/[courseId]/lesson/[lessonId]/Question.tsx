@@ -10,7 +10,7 @@ export function Question({
 }) {
   return (
     <div className="flex flex-col w-full gap-y-3 border border-gray-200 rounded-lg p-6 shadow-md">
-      <h4 className="text-base font-bold">
+      <h4 className="md:text-base text-sm font-bold">
         {index + 1}. {question.text}
       </h4>
       <RadioGroup

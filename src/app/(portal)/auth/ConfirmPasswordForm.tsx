@@ -64,7 +64,11 @@ export const ConfirmPasswordForm = ({
   );
 
   return (
-    <Form name="confirmPasswordForm" onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      name="confirmPasswordForm"
+      onSubmit={handleSubmit(onSubmit)}
+      className="items-center"
+    >
       <FormInput
         type="password"
         placeholder="********"

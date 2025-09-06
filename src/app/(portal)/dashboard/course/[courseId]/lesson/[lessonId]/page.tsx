@@ -84,8 +84,8 @@ export default function LessonPage({
           <div></div>
         )}
       </div>
-      <div className="flex flex-row gap-x-3">
-        <div className="flex flex-col w-4/5 gap-y-7 md:gap-y-10">
+      <div className="flex flex-col md:flex-row gap-x-3">
+        <div className="flex flex-col md:w-4/5 w-full gap-y-7 md:gap-y-10 ">
           <h2 className="text-2xl md:text-4xl font-bold text-center md:text-left">
             {lesson.name}
           </h2>
@@ -99,7 +99,7 @@ export default function LessonPage({
 
           <NotesSection lesson={lesson} />
         </div>
-        <div className="flex flex-col w-1/5 gap-y-7 md:gap-y-10">
+        <div className="flex flex-col md:w-1/5 w-full gap-y-7 md:gap-y-10 pt-10 md:pt-0">
           <div className="flex flex-col justify-between items-center gap-y-7 p-5">
             <button
               className="secondary text-sm md:text-base text-white p-2 md:p-3 rounded-lg w-full"
@@ -110,7 +110,7 @@ export default function LessonPage({
               Wróć do listy lekcji
             </button>
             <MarkAsCompletedButton lesson={lesson} />
-            <p>
+            <p className="text-sm md:text-base">
               Do tego kursu przygotowano dodatkowe zadania, mozesz pobrać je
               ponizej:
             </p>
@@ -122,7 +122,7 @@ export default function LessonPage({
             >
               Pobierz zadania <DownloadIcon />
             </button>
-            <p>
+            <p className="text-sm md:text-base">
               Dodatkowe informacje na temat zadań znajdziesz w filmiku na końcu
               lekcji
             </p>

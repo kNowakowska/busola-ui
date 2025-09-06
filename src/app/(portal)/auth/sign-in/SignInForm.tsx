@@ -72,7 +72,11 @@ export const SignInForm = () => {
   };
 
   return (
-    <Form name="singInForm" onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      name="singInForm"
+      onSubmit={handleSubmit(onSubmit)}
+      className="items-center"
+    >
       <FormInput
         type="email"
         placeholder="korkizgegry@gmail.com"

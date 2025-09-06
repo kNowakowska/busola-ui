@@ -1,8 +1,6 @@
 import { PropsWithChildren } from "react";
 import { Toaster } from "react-hot-toast";
 
-import Logo from "@/lib/components/Logo";
-
 export default function AppLayout({ children }: Readonly<PropsWithChildren>) {
   return (
     <>
