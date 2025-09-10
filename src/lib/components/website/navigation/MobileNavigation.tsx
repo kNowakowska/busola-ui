@@ -2,6 +2,7 @@
 import { useCallback, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
+import { useAuthProviderContext } from "@/lib/providers/AuthProvider";
 import CloseIcon from "@/lib/icons/CloseIcon";
 import { Routes } from "@/lib/routes/routes";
 
@@ -9,6 +10,7 @@ import MobileMenuButton from "../MobileMenuButton";
 
 export default function MobileNavigation() {
   const isMobile = useMediaQuery({ maxWidth: 768 });
+  const { isSignedIn } = useAuthProviderContext();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenMenu = useCallback(() => {
@@ -53,15 +55,11 @@ export default function MobileNavigation() {
           Kontakt
         </a>
 
-        {/* <a href="#blog" className="text-base">
-          Blog
-        </a> */}
         <a
-          href={Routes.signIn()}
+          href={isSignedIn ? Routes.dashboard() : Routes.signIn()}
           className="text-base"
-          // onClick={handleCloseMenu}
         >
-          Zaloguj się
+          {isSignedIn ? "Twoje kursy" : "Zaloguj się"}
         </a>
       </nav>
     </>

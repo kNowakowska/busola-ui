@@ -24,20 +24,21 @@ export default function Header() {
   const isAuthPage = useMemo(() => pathname.includes("/auth"), [pathname]);
 
   const RightSideIcon = useMemo(() => {
-    if (isSignedIn) {
-      return <LogoutButton />;
-    }
-    if (!isAuthPage && !isMobile) {
-      return <LoginButton />;
-    }
     if (isAuthPage) {
       return <div></div>;
     }
-    if (isMobile) {
+    if (isMobile && isMainPage) {
       return <MobileNavigation />;
     }
-    return <div></div>;
-  }, [isSignedIn, isAuthPage, isMobile]);
+    if (isMainPage) {
+      return <LoginButton />;
+    }
+    if (isSignedIn) {
+      return <LogoutButton />;
+    }
+
+    return <LoginButton />;
+  }, [isSignedIn, isAuthPage, isMobile, isMainPage]);
 
   useEffect(() => {
     function handleScroll() {
@@ -56,7 +57,7 @@ export default function Header() {
         isScrolled ? "shadow-md" : ""
       }`}
     >
-      <Logo isSignedIn={isSignedIn} isMobile={isMobile} />
+      <Logo isMobile={isMobile} />
       {!isMainPage ? <WebsiteTitle /> : !isMobile ? <Navigation /> : undefined}
       {RightSideIcon}
     </header>
