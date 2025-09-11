@@ -11,7 +11,7 @@ export default function Footer() {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   return (
     <div className="h-[10vh] w-full flex flex-col items-center justify-center py-30 space-y-10 mb-20">
-      <Logo isSignedIn={false} isMobile={false} />
+      <Logo isMobile={false} />
       <div className="flex flex-row space-x-5 items-center justify-center">
         <div>
           <a href="https://www.facebook.com/busolakorepetycja">

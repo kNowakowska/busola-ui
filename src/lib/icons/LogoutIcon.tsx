@@ -1,4 +1,10 @@
-export default function LogoutIcon({ size }: { size: number }) {
+export default function LogoutIcon({
+  size,
+  className,
+}: {
+  size: number;
+  className?: string;
+}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,7 +12,7 @@ export default function LogoutIcon({ size }: { size: number }) {
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="var(--dark-blue)"
-      className="bg-white"
+      className={`bg-white hoverScale ${className}`}
       width={size}
       height={size}
     >

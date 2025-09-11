@@ -13,6 +13,7 @@ import {
 } from "@/lib/types/courses";
 import apiClient from "@/lib/api/apiClient";
 import { lessonKeys } from "@/lib/api/queryKeysFactory";
+import { Button } from "@/lib/components/Button";
 
 import { QuizFormValues, quizValidationSchema } from "./quizValidationSchema";
 import { Question } from "./Question";
@@ -116,13 +117,13 @@ export function Quiz({
               }
             />
           ))}
-          <button
+          <Button
             type="submit"
-            className="secondary text-sm md:text-base text-white p-2 md:p-3 mt-3 rounded-lg md:w-[200px] w-full"
+            className="md:w-[200px] w-full"
             disabled={!isValid}
           >
             Zakończ test
-          </button>
+          </Button>
         </div>
       </Form>
     </FormProvider>

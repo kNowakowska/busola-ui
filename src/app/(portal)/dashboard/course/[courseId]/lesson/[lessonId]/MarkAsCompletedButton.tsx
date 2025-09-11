@@ -7,6 +7,7 @@ import apiClient from "@/lib/api/apiClient";
 import { courseKeys, lessonKeys } from "@/lib/api/queryKeysFactory";
 import { Routes } from "@/lib/routes/routes";
 import { LessonDetails } from "@/lib/types/courses";
+import { Button } from "@/lib/components/Button";
 
 export function MarkAsCompletedButton({ lesson }: { lesson: LessonDetails }) {
   const router = useRouter();
@@ -60,8 +61,7 @@ export function MarkAsCompletedButton({ lesson }: { lesson: LessonDetails }) {
   }, [markAsCompleted]);
 
   return (
-    <button
-      className="secondary text-sm md:text-base text-white p-2 md:p-3 rounded-lg w-full"
+    <Button
       onClick={async () => {
         await onMarkAsCompleted();
         if (lesson.nextLessonId)
@@ -71,6 +71,6 @@ export function MarkAsCompletedButton({ lesson }: { lesson: LessonDetails }) {
     >
       Oznacz lekcję jako ukończoną{" "}
       {lesson.nextLessonId ? "i przejdź do następnej" : ""}
-    </button>
+    </Button>
   );
 }

@@ -11,7 +11,7 @@ export default function LessonListItem({ lesson }: { lesson: Lesson }) {
 
   return (
     <div
-      className="group h-auto w-full flex flex-row items-center gap-3 md:gap-5 rounded-2xl px-3 py-3 md:py-5 shadow-md transition-all duration-200 hover:bg-slate-50 hover:shadow-lg"
+      className="group h-auto w-full flex flex-row items-center gap-3 md:gap-5 rounded-2xl px-3 py-3 md:py-5 shadow-md hoverScaleSmall"
       onClick={() => {
         router.push(Routes.lesson(lesson.courseId, lesson.uuid));
       }}

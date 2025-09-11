@@ -1,7 +1,7 @@
 "use client";
-import { useCallback } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 
 import { Button } from "@/lib/components/Button";
 import Container from "@/lib/components/website/Container";
@@ -24,7 +24,9 @@ export default function Hero() {
             Doświadczony nauczyciel <b>geografii</b>, który przygotuje Cię na
             matury i olimpiady.
           </p>
-          <Button text="umów się!" onClick={handleBook} className="w-[200px]" />
+          <Button onClick={handleBook} className="w-[200px]">
+            UMÓW SIĘ!
+          </Button>
         </div>
         <div className="w-full md:w-1/2 h-full flex flex-col justify-center items-center">
           <Image src="/hero-final.jpg" alt="Busola" width={500} height={500} />

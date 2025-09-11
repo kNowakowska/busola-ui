@@ -10,6 +10,8 @@ import { useReactQueryContext } from "@/lib/providers/ReactQueryProvider";
 import { Routes } from "@/lib/routes/routes";
 import { authKeys } from "@/lib/api/queryKeysFactory";
 
+import Tooltip from "../Tooltip";
+
 export default function LogoutButton() {
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
@@ -33,8 +35,13 @@ export default function LogoutButton() {
   }, [logout]);
 
   return (
-    <button className="icon justify-self-end md:m-0 m-2" onClick={handleLogout}>
-      <LogoutIcon size={isMobile ? 30 : 40} />
-    </button>
+    <Tooltip text={"Wyloguj się"}>
+      <button
+        className="icon justify-self-end md:m-0 m-2"
+        onClick={handleLogout}
+      >
+        <LogoutIcon size={isMobile ? 30 : 40} />
+      </button>
+    </Tooltip>
   );
 }

@@ -14,7 +14,10 @@ export default function ResetPassword() {
       <ResetPasswordForm />
       <p className="text-center text-sm md:text-base">
         Pamiętasz hasło?{" "}
-        <Link className="font-bold" href={Routes.signIn()}>
+        <Link
+          className="font-bold inline-block ml-1 hoverScaleSmall"
+          href={Routes.signIn()}
+        >
           Wróć do logowania
         </Link>
       </p>

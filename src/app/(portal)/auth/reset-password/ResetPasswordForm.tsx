@@ -77,7 +77,9 @@ export const ResetPasswordForm = () => {
         {...register("email")}
       />
 
-      <Button text="Wyślij kod" type="submit" disabled={isPending} />
+      <Button type="submit" disabled={isPending}>
+        Wyślij kod
+      </Button>
     </Form>
   );
 };

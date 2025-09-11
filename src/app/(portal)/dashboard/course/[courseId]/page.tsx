@@ -12,6 +12,7 @@ import apiClient from "@/lib/api/apiClient";
 import { CourseDetails } from "@/lib/types/courses";
 import LoadingSpinner from "@/lib/components/LoadingSpinner";
 import { Routes } from "@/lib/routes/routes";
+import { Button } from "@/lib/components/Button";
 
 import LessonsList from "./LessonsList";
 
@@ -72,14 +73,13 @@ export default function CoursePage({
           {course.description}
         </p>
         <LessonsList lessons={course.lessons} />
-        <button
-          className="secondary text-white p-3 rounded-lg w-[200px] text-sm md:text-base"
+        <Button
           onClick={() => {
             router.push(Routes.dashboard());
           }}
         >
           Wróć do listy kursów
-        </button>
+        </Button>
       </div>
       <div className="w-full md:w-1/5 flex flex-col py-0 px-10 md:p-10 gap-y-0 md:gap-y-5 order-1 md:order-2">
         <p className="text-center md:text-left text-sm md:text-base">
