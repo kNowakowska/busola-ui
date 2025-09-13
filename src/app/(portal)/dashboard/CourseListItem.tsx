@@ -1,4 +1,3 @@
-import isNil from "lodash/isNil";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -34,13 +33,13 @@ export default function CourseListItem({ course }: { course: Course }) {
         alt={course.name}
         width={200}
         height={150}
-        className="h-[150px] w-[200px] object-cover rounded-lg "
+        className="h-[150px] w-[200px] rounded-lg object-cover"
       />
       <div className="flex flex-col gap-2">
-        <h2 className="text-base md:text-2xl font-bold mb-2 text-center md:text-left">
+        <h2 className="mb-2 text-center text-base font-bold md:text-left md:text-2xl">
           {course.name}
         </h2>
-        <p className="text-sm md:text-base text-justify">
+        <p className="text-justify text-sm md:text-base">
           {course.shortDescription}
         </p>
         <ProgressBar

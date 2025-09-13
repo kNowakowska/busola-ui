@@ -58,7 +58,9 @@ export const ConfirmPasswordForm = ({
             },
           }
         );
-      } catch {}
+      } catch {
+        console.error("Error resetting password");
+      }
     },
     []
   );

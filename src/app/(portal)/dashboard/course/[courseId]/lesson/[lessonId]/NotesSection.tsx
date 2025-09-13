@@ -63,16 +63,18 @@ export function NotesSection({ lesson }: { lesson: LessonDetails }) {
             },
           }
         );
-      } catch {}
+      } catch {
+        console.error("Error saving notes");
+      }
     },
     [saveNotes, lesson]
   );
 
   return (
-    <div className="flex flex-col justify-between items-start">
-      <h4 className="text-xl md:text-2xl mb-3">Twoje notatki: </h4>
+    <div className="flex flex-col items-start justify-between">
+      <h4 className="mb-3 text-xl md:text-2xl">Twoje notatki: </h4>
       <textarea
-        className="w-full h-30 md:h-40 border-[var(--light-blue)] border-2 rounded-lg p-2 shadow-md leading-[1.5] text-sm md:text-base"
+        className="h-30 w-full rounded-lg border-2 border-[var(--light-blue)] p-2 text-sm leading-[1.5] shadow-md md:h-40 md:text-base"
         rows={20}
         value={notes}
         onChange={(e) => {

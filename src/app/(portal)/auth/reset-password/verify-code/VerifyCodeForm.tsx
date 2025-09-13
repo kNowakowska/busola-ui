@@ -57,7 +57,9 @@ export const VerifyCodeForm = () => {
             },
           }
         );
-      } catch {}
+      } catch {
+        console.error("Error verifying code");
+      }
     },
     []
   );

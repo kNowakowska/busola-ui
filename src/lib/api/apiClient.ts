@@ -1,5 +1,3 @@
-import { Routes } from "../routes/routes";
-
 async function refreshToken() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
@@ -50,7 +48,7 @@ async function apiClient<T>(
   if (response.status === 401) {
     try {
       await refreshToken();
-    } catch (error) {
+    } catch {
       throw new Error(responseData.error);
     }
     response = await fetch(

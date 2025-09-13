@@ -59,7 +59,7 @@ export const SignInForm = () => {
         },
         {
           loading: "Logowanie...",
-          error: (error: any) => error.message,
+          error: (error: Error) => error.message,
         },
         {
           style: {
@@ -67,7 +67,9 @@ export const SignInForm = () => {
           },
         }
       );
-    } catch {}
+    } catch {
+      console.error("Error logging in");
+    }
   };
 
   return (

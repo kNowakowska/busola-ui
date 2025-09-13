@@ -57,7 +57,9 @@ export function MarkAsCompletedButton({ lesson }: { lesson: LessonDetails }) {
           },
         }
       );
-    } catch {}
+    } catch {
+      console.error("Error marking lesson as completed");
+    }
   }, [markAsCompleted]);
 
   return (

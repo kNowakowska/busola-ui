@@ -91,7 +91,7 @@ export function Quiz({
         },
         {
           loading: "Zapisywanie wyniku...",
-          error: (error: any) => error.message,
+          error: (error: Error) => error.message,
         },
         {
           style: {
@@ -99,7 +99,9 @@ export function Quiz({
           },
         }
       );
-    } catch {}
+    } catch {
+      console.error("Error saving quiz attempt");
+    }
   }, []);
 
   return (

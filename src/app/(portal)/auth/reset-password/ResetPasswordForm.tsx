@@ -57,7 +57,9 @@ export const ResetPasswordForm = () => {
             },
           }
         );
-      } catch {}
+      } catch {
+        console.error("Error resetting password");
+      }
     },
     []
   );
