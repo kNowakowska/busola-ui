@@ -1,7 +1,8 @@
 "use client";
 
 import { ArrowRightIcon } from "@/lib/icons/ArrowRightIcon";
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 
 export default function PhotoSlider({ images }: { images: string[] }) {
@@ -17,7 +18,7 @@ export default function PhotoSlider({ images }: { images: string[] }) {
     >
       <SplideTrack>
         {images.map((image, index) => (
-          <SplideSlide className="flex justify-center items-center" key={index}>
+          <SplideSlide className="flex items-center justify-center" key={index}>
             <img src={image} alt={`Image ${index + 1}`} />
           </SplideSlide>
         ))}

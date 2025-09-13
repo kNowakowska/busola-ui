@@ -56,12 +56,14 @@ export function MarkAsCompletedButton({ lesson }: { lesson: LessonDetails }) {
           },
         }
       );
-    } catch {}
+    } catch {
+      console.error("Error marking lesson as completed");
+    }
   }, [markAsCompleted]);
 
   return (
     <button
-      className="secondary text-sm md:text-base text-white p-2 md:p-3 rounded-lg w-full"
+      className="secondary w-full rounded-lg p-2 text-sm text-white md:p-3 md:text-base"
       onClick={async () => {
         await onMarkAsCompleted();
         if (lesson.nextLessonId)

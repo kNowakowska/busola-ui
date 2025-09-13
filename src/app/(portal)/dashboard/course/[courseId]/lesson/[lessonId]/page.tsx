@@ -52,6 +52,7 @@ export default function LessonPage({
     return <div>Lekcja nie znaleziona</div>;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const components = documentToReactComponents(lesson.content as any, {
     renderNode: {
       paragraph: (_node, children) => (
@@ -61,7 +62,7 @@ export default function LessonPage({
   });
 
   return (
-    <div className=" flex flex-col gap-y-7 pb-30 px-10 md:p-auto">
+    <div className="md:p-auto flex flex-col gap-y-7 px-10 pb-30">
       <div className="flex flex-row justify-between">
         {lesson.previousLessonId ? (
           <Link
@@ -84,9 +85,9 @@ export default function LessonPage({
           <div></div>
         )}
       </div>
-      <div className="flex flex-col md:flex-row gap-x-3">
-        <div className="flex flex-col md:w-4/5 w-full gap-y-7 md:gap-y-10 ">
-          <h2 className="text-2xl md:text-4xl font-bold text-center md:text-left">
+      <div className="flex flex-col gap-x-3 md:flex-row">
+        <div className="flex w-full flex-col gap-y-7 md:w-4/5 md:gap-y-10">
+          <h2 className="text-center text-2xl font-bold md:text-left md:text-4xl">
             {lesson.name}
           </h2>
           {lesson.videoUrl ? <VideoPlayer url={lesson.videoUrl} /> : undefined}
@@ -99,10 +100,10 @@ export default function LessonPage({
 
           <NotesSection lesson={lesson} />
         </div>
-        <div className="flex flex-col md:w-1/5 w-full gap-y-7 md:gap-y-10 pt-10 md:pt-0">
-          <div className="flex flex-col justify-between items-center gap-y-7 p-5">
+        <div className="flex w-full flex-col gap-y-7 pt-10 md:w-1/5 md:gap-y-10 md:pt-0">
+          <div className="flex flex-col items-center justify-between gap-y-7 p-5">
             <button
-              className="secondary text-sm md:text-base text-white p-2 md:p-3 rounded-lg w-full"
+              className="secondary w-full rounded-lg p-2 text-sm text-white md:p-3 md:text-base"
               onClick={() => {
                 router.push(Routes.course(lesson.courseId));
               }}
@@ -115,7 +116,7 @@ export default function LessonPage({
               ponizej:
             </p>
             <button
-              className="secondary text-sm md:text-base text-white p-2 md:p-3 rounded-lg w-full align-middle"
+              className="secondary w-full rounded-lg p-2 align-middle text-sm text-white md:p-3 md:text-base"
               onClick={() => {
                 console.log("Download tasks");
               }}

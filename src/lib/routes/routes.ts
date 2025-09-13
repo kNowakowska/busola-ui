@@ -23,7 +23,7 @@ function createRoutes(routes: Record<string, string>) {
   );
 }
 
-export const Routes: Record<string, (...args: any[]) => string> = {
+export const Routes: Record<string, (...args: string[]) => string> = {
   // Website
   ...createRoutes(HomeRoutes),
 

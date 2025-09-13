@@ -1,4 +1,3 @@
-import isNil from "lodash/isNil";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -27,20 +26,20 @@ export default function CourseListItem({ course }: { course: Course }) {
       onClick={() => {
         router.push(Routes.course(course.uuid));
       }}
-      className="min-h-[170px] flex flex-col md:flex-row gap-5 rounded-2xl  px-5 py-5 shadow-md cursor-pointer items-center"
+      className="flex min-h-[170px] cursor-pointer flex-col items-center gap-5 rounded-2xl px-5 py-5 shadow-md md:flex-row"
     >
       <Image
         src={imageUrl || "/busola-korepetycje-logo-puste-2.png"}
         alt={course.name}
         width={200}
         height={150}
-        className="h-[150px] w-[200px] object-cover rounded-lg "
+        className="h-[150px] w-[200px] rounded-lg object-cover"
       />
       <div className="flex flex-col gap-2">
-        <h2 className="text-base md:text-2xl font-bold mb-2 text-center md:text-left">
+        <h2 className="mb-2 text-center text-base font-bold md:text-left md:text-2xl">
           {course.name}
         </h2>
-        <p className="text-sm md:text-base text-justify">
+        <p className="text-justify text-sm md:text-base">
           {course.shortDescription}
         </p>
         <ProgressBar

@@ -90,7 +90,7 @@ export function Quiz({
         },
         {
           loading: "Zapisywanie wyniku...",
-          error: (error: any) => error.message,
+          error: (error: Error) => error.message,
         },
         {
           style: {
@@ -98,7 +98,9 @@ export function Quiz({
           },
         }
       );
-    } catch {}
+    } catch {
+      console.error("Error saving quiz attempt");
+    }
   }, []);
 
   return (
@@ -118,7 +120,7 @@ export function Quiz({
           ))}
           <button
             type="submit"
-            className="secondary text-sm md:text-base text-white p-2 md:p-3 mt-3 rounded-lg md:w-[200px] w-full"
+            className="secondary mt-3 w-full rounded-lg p-2 text-sm text-white md:w-[200px] md:p-3 md:text-base"
             disabled={!isValid}
           >
             Zakończ test
