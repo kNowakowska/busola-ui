@@ -18,6 +18,7 @@ export interface Course {
 export interface CourseDetails extends Course {
   description: string;
   lessons: Lesson[];
+  startedAt: string;
 }
 
 export interface Lesson {

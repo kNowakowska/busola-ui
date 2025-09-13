@@ -56,20 +56,20 @@ export default function CoursePage({
   }
 
   return (
-    <div className="flex flex-col md:flex-row pb-10 md:pb-auto">
-      <div className="w-full md:w-4/5 flex flex-col p-10 gap-y-10 md:gap-y-15 order-2 md:order-1 items-center md:items-start">
+    <div className="md:pb-auto flex flex-col pb-10 md:flex-row">
+      <div className="order-2 flex w-full flex-col items-center gap-y-10 p-10 md:order-1 md:w-4/5 md:items-start md:gap-y-15">
         <div
-          className="w-full h-[300px] bg-cover bg-center"
+          className="h-[300px] w-full bg-cover bg-center"
           style={{
             backgroundImage: `url(${
               imageUrl || "/pexels-karolina-grabowska-6958563.jpg"
             })`,
           }}
         ></div>
-        <h2 className="text-2xl md:text-4xl font-bold text-center md:text-left">
+        <h2 className="text-center text-2xl font-bold md:text-left md:text-4xl">
           {course.name}
         </h2>
-        <p className="text-sm md:text-base text-justify">
+        <p className="text-justify text-sm md:text-base">
           {course.description}
         </p>
         <LessonsList lessons={course.lessons} />
@@ -81,9 +81,14 @@ export default function CoursePage({
           Wróć do listy kursów
         </Button>
       </div>
-      <div className="w-full md:w-1/5 flex flex-col py-0 px-10 md:p-10 gap-y-0 md:gap-y-5 order-1 md:order-2">
-        <p className="text-center md:text-left text-sm md:text-base">
-          Zacząłeś pracę nad tym kursem: <b>7 lipca 2025</b>
+      <div className="order-1 flex w-full flex-col gap-y-0 px-10 py-0 md:order-2 md:w-1/5 md:gap-y-5 md:p-10">
+        <p className="text-center text-sm md:text-left md:text-base">
+          Kupiłeś ten kurs: <br />
+          <b>
+            {new Date(course.startedAt).toLocaleDateString("pl-PL", {
+              dateStyle: "long",
+            })}
+          </b>
         </p>
         <ProgressBar
           label="Postęp"
