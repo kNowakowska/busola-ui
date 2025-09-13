@@ -16,6 +16,7 @@ import { lessonKeys } from "@/lib/api/queryKeysFactory";
 import LoadingSpinner from "@/lib/components/LoadingSpinner";
 import { Routes } from "@/lib/routes/routes";
 import { DownloadIcon } from "@/lib/icons/DownloadIcon";
+import { Button } from "@/lib/components/Button";
 
 import { NotesSection } from "./NotesSection";
 import { MarkAsCompletedButton } from "./MarkAsCompletedButton";
@@ -66,7 +67,7 @@ export default function LessonPage({
       <div className="flex flex-row justify-between">
         {lesson.previousLessonId ? (
           <Link
-            className="text-sm md:text-base"
+            className="text-sm md:text-base hoverScaleSmall"
             href={`/dashboard/course/${lesson.courseId}/lesson/${lesson.previousLessonId}`}
           >
             <ArrowLeftIcon small={isMobile} /> Poprzednia lekcja
@@ -76,7 +77,7 @@ export default function LessonPage({
         )}
         {lesson.nextLessonId ? (
           <Link
-            className="text-sm md:text-base"
+            className="text-sm md:text-base hoverScaleSmall"
             href={`/dashboard/course/${lesson.courseId}/lesson/${lesson.nextLessonId}`}
           >
             Następna lekcja <ArrowRightIcon small={isMobile} />
@@ -100,29 +101,27 @@ export default function LessonPage({
 
           <NotesSection lesson={lesson} />
         </div>
-        <div className="flex w-full flex-col gap-y-7 pt-10 md:w-1/5 md:gap-y-10 md:pt-0">
-          <div className="flex flex-col items-center justify-between gap-y-7 p-5">
-            <button
-              className="secondary w-full rounded-lg p-2 text-sm text-white md:p-3 md:text-base"
+        <div className="flex flex-col md:w-1/5 w-full gap-y-7 md:gap-y-10 pt-10 md:pt-0">
+          <div className="flex flex-col justify-between items-center gap-y-7 p-5">
+            <Button
               onClick={() => {
                 router.push(Routes.course(lesson.courseId));
               }}
             >
               Wróć do listy lekcji
-            </button>
+            </Button>
             <MarkAsCompletedButton lesson={lesson} />
             <p className="text-sm md:text-base">
               Do tego kursu przygotowano dodatkowe zadania, mozesz pobrać je
               ponizej:
             </p>
-            <button
-              className="secondary w-full rounded-lg p-2 align-middle text-sm text-white md:p-3 md:text-base"
+            <Button
               onClick={() => {
                 console.log("Download tasks");
               }}
             >
               Pobierz zadania <DownloadIcon />
-            </button>
+            </Button>
             <p className="text-sm md:text-base">
               Dodatkowe informacje na temat zadań znajdziesz w filmiku na końcu
               lekcji

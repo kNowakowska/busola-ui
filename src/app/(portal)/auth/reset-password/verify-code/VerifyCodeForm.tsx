@@ -78,7 +78,9 @@ export const VerifyCodeForm = () => {
         error={errors.code}
         {...register("code")}
       />
-      <Button text="Zweryfikuj" type="submit" disabled={isPending} />
+      <Button type="submit" disabled={isPending}>
+        Zweryfikuj
+      </Button>
     </Form>
   );
 };

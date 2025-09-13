@@ -5,6 +5,7 @@ import { LessonDetails, Quiz as QuizType } from "@/lib/types/courses";
 import { lessonKeys } from "@/lib/api/queryKeysFactory";
 import apiClient from "@/lib/api/apiClient";
 import LoadingSpinner from "@/lib/components/LoadingSpinner";
+import { Button } from "@/lib/components/Button";
 
 import { Quiz } from "./Quiz";
 import PreviousResults from "./QuizAttemptsResults";
@@ -54,12 +55,9 @@ export function QuizSection({ lesson }: { lesson: LessonDetails | undefined }) {
       <h3 className="md:text-xl text-base font-bold">{quiz.name}</h3>
 
       {!showQuiz && (
-        <button
-          className="secondary text-sm md:text-base text-white p-2 md:p-3 rounded-lg md:w-[200px] w-full"
-          onClick={startQuiz}
-        >
+        <Button className="md:w-[200px] w-full" onClick={startQuiz}>
           Rozpocznij test
-        </button>
+        </Button>
       )}
       {showQuiz && (
         <Quiz

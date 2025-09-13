@@ -66,6 +66,20 @@ div.customShadow {
     rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
+.hoverScale:hover {
+  transform: scale(1.2);
+  transition-duration: 300ms;
+  transition-property: transform;
+  transition-timing-function: ease;
+}
+
+.hoverScaleSmall:hover {
+  transform: scale(1.05);
+  transition-duration: 300ms;
+  transition-property: transform;
+  transition-timing-function: ease;
+}
+
 .splide__arrow {
   background-color: white;
   border-radius: 50%;

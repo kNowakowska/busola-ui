@@ -51,11 +51,10 @@ export const SignInForm = () => {
           const response = await login(data);
           if (response.shouldResetPassword) {
             router.push(Routes.resetInitialPassword());
-            router.refresh();
           } else {
             router.push(Routes.dashboard());
-            router.refresh();
           }
+          router.refresh();
           await queryClient.invalidateQueries({ queryKey: authKeys.session });
         },
         {
@@ -97,7 +96,9 @@ export const SignInForm = () => {
         error={errors.password}
         {...register("password")}
       />
-      <Button text="Zaloguj się" type="submit" disabled={isPending} />
+      <Button type="submit" disabled={isPending}>
+        Zaloguj się
+      </Button>
     </Form>
   );
 };

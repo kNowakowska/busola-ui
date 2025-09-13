@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from "react";
 
 type Props = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> & {
-  text: string;
+  children: React.ReactNode;
   type?: string;
   className?: string;
   disabled?: boolean;
@@ -9,7 +9,7 @@ type Props = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> & {
 };
 
 export const Button = ({
-  text,
+  children,
   type,
   className,
   disabled,
@@ -20,11 +20,13 @@ export const Button = ({
     <button
       type={type}
       onClick={onClick}
-      className={`mt-2 w-1/2 rounded-xl p-3 font-medium tracking-widest uppercase md:p-5 md:text-base md:font-bold ${className}`}
+      className={`rounded-xl p-3 md:p-5 md:text-base mt-2 font-medium tracking-wide ${
+        !disabled && "hoverScaleSmall"
+      } ${className}`}
       disabled={disabled}
       {...props}
     >
-      {text}
+      {children}
     </button>
   );
 };

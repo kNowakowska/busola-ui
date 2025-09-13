@@ -1,11 +1,17 @@
-export default function InstagramIcon({ size }: { size: number }) {
+export default function InstagramIcon({
+  size,
+  className,
+}: {
+  size: number;
+  className?: string;
+}) {
   return (
     <svg
       fill="var(--dark-blue)"
       viewBox="0 0 24 24"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
-      className="bg-transparent"
+      className={`bg-transparent hoverScale ${className}`}
       width={size}
       height={size}
     >

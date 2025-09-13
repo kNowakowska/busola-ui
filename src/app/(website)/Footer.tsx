@@ -10,9 +10,9 @@ import InstagramIcon from "@/lib/icons/InstagramIcon";
 export default function Footer() {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   return (
-    <div className="mb-20 flex h-[10vh] w-full flex-col items-center justify-center space-y-10 py-30">
+    <div className="h-[10vh] w-full flex flex-col items-center justify-center py-30 space-y-10 mb-20">
       <Logo isMobile={false} />
-      <div className="flex flex-row items-center justify-center space-x-5">
+      <div className="flex flex-row space-x-5 items-center justify-center">
         <div>
           <a href="https://www.facebook.com/busolakorepetycja">
             <FacebookIcon size={isMobile ? 20 : 30} />

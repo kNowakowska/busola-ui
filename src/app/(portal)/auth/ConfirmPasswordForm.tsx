@@ -91,7 +91,9 @@ export const ConfirmPasswordForm = ({
         {...register("confirmPassword")}
       />
 
-      <Button text="Zmień hasło" type="submit" disabled={disabled} />
+      <Button type="submit" disabled={disabled}>
+        Zmień hasło
+      </Button>
     </Form>
   );
 };

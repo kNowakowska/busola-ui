@@ -1,4 +1,10 @@
-export default function FacebookIcon({ size }: { size: number }) {
+export default function FacebookIcon({
+  size,
+  className,
+}: {
+  size: number;
+  className?: string;
+}) {
   return (
     <svg
       fill="var(--dark-blue)"
@@ -6,7 +12,7 @@ export default function FacebookIcon({ size }: { size: number }) {
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
-      className="text-center bg-transparent"
+      className={`text-center bg-transparent hoverScale ${className}`}
     >
       <path
         fillRule="evenodd"

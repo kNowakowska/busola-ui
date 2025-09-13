@@ -1,10 +1,16 @@
-export default function LoginIcon({ size }: { size: number }) {
+export default function LoginIcon({
+  size,
+  className,
+}: {
+  size: number;
+  className?: string;
+}) {
   return (
     <svg
       fill="var(--dark-blue)"
       viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
-      className="bg-white"
+      className={`bg-white hoverScale ${className}`}
       width={size}
       height={size}
     >

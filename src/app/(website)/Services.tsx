@@ -50,11 +50,9 @@ export default function Services() {
                   description="Od 100 zł za 60 min lekcji"
                 />
               </ul>
-              <Button
-                text="Umów się!"
-                onClick={handleClick}
-                className="w-[200px]"
-              />
+              <Button onClick={handleClick} className="w-[200px]">
+                UMÓW SIĘ!
+              </Button>
             </div>
           </div>
           <div className="md:w-2/5 w-full">
