@@ -139,7 +139,7 @@ export default function LessonPage({
             {lesson.tasksFileCMSId ? (
               <>
                 <p className="text-sm md:text-base">
-                  Do tego kursu przygotowano dodatkowe zadania, mozesz pobrać je
+                  Do tego kursu przygotowano dodatkowe zadania, możesz pobrać je
                   ponizej:
                 </p>
                 <Button disabled={isFetchingFile} onClick={handleDownloadTasks}>
