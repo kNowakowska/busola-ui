@@ -140,7 +140,7 @@ export default function LessonPage({
               <>
                 <p className="text-sm md:text-base">
                   Do tego kursu przygotowano dodatkowe zadania, możesz pobrać je
-                  ponizej:
+                  poniżej:
                 </p>
                 <Button disabled={isFetchingFile} onClick={handleDownloadTasks}>
                   Pobierz zadania <DownloadIcon />
