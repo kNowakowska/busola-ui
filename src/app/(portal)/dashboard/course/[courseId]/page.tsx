@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
+import { ContentfulRichTextContent } from "@/lib/components/contentful/ContentfulRichTextContent";
 import contentfulClient from "@/lib/contentful/contentful";
 import { ProgressBar } from "@/lib/components/ProgressBar";
 import { courseKeys } from "@/lib/api/queryKeysFactory";
@@ -59,7 +60,7 @@ export default function CoursePage({
     <div className="md:pb-auto flex flex-col pb-10 md:flex-row">
       <div className="order-2 flex w-full flex-col items-center gap-y-10 p-10 md:order-1 md:w-4/5 md:items-start md:gap-y-15">
         <div
-          className="h-[300px] w-full bg-cover bg-center"
+          className="h-[500px] w-full bg-cover bg-center"
           style={{
             backgroundImage: `url(${
               imageUrl || "/pexels-karolina-grabowska-6958563.jpg"
@@ -69,9 +70,9 @@ export default function CoursePage({
         <h2 className="text-center text-2xl font-bold md:text-left md:text-4xl">
           {course.name}
         </h2>
-        <p className="text-justify text-sm md:text-base">
-          {course.description}
-        </p>
+        <div className="flex flex-col gap-y-5">
+          <ContentfulRichTextContent content={course.description} />
+        </div>
         <LessonsList lessons={course.lessons} />
         <Button
           onClick={() => {

@@ -16,7 +16,7 @@ export interface Course {
 }
 
 export interface CourseDetails extends Course {
-  description: string;
+  description: object;
   lessons: Lesson[];
   startedAt: string;
 }
@@ -31,6 +31,8 @@ export interface Lesson {
 export interface LessonDetails extends Lesson {
   description: string;
   videoUrl?: string;
+  tasksFileCMSId?: string;
+  tasksVideoUrl?: string;
   content: object;
   order: number;
   previousLessonId?: string;

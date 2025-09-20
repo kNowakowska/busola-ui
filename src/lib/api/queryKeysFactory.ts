@@ -21,4 +21,6 @@ export const lessonKeys = {
     [...lessonKeys.details(uuid), "saveNotes"] as const,
   markAsCompleted: (uuid: string) =>
     [...lessonKeys.details(uuid), "markAsCompleted"] as const,
+  tasksFile: (lessonUuid: string, cmsId: string) =>
+    [...lessonKeys.details(lessonUuid), "tasksFile", cmsId] as const,
 };
