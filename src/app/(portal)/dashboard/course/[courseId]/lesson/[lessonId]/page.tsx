@@ -54,7 +54,7 @@ export default function LessonPage({
         return "";
       }
       const asset = await contentfulClient.getAsset(lesson.tasksFileCMSId);
-      return "https:" + asset.fields.file?.url;
+      return asset.fields.file?.url ? "https:" + asset.fields.file?.url : "";
     },
     enabled: shouldDownloadTasks,
   });

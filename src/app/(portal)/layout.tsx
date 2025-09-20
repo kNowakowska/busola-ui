@@ -4,8 +4,8 @@ import { Toaster } from "react-hot-toast";
 export default function AppLayout({ children }: Readonly<PropsWithChildren>) {
   return (
     <>
-      <div className="h-auto flex flex-col ">
-        <main className="h-full w-full md:w-7/10 mx-auto pb-10 flex flex-col justify-center items-center">
+      <div className="flex h-auto flex-col">
+        <main className="mx-auto flex h-full w-full flex-col items-center justify-center pb-10 md:w-7/10">
           {children}
         </main>
       </div>

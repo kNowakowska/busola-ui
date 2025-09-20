@@ -16,7 +16,7 @@ export interface Course {
 }
 
 export interface CourseDetails extends Course {
-  description: string;
+  description: object;
   lessons: Lesson[];
   startedAt: string;
 }
