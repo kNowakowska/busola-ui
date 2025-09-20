@@ -10,15 +10,17 @@ import InstagramIcon from "@/lib/icons/InstagramIcon";
 export default function Footer() {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   return (
-    <div className="flex h-auto w-full flex-col space-y-10 border-t border-gray-200 py-10 text-center">
-      <div className="mx-auto flex h-full w-8/10 flex-row">
-        <div className="flex h-full w-1/3 flex-col items-center justify-center space-y-5">
+    <div className="flex h-auto w-full flex-col space-y-10 border-t border-gray-200 py-10 text-center md:space-y-0">
+      <div className="mx-auto flex h-full w-8/10 flex-col space-y-10 md:flex-row md:space-y-0">
+        <div className="flex h-full w-full flex-col items-center justify-center space-y-5 md:w-1/3">
           <Logo isMobile={false} />
         </div>
-        <div className="flex h-full w-1/3 flex-col items-center justify-center">
-          <ul className="space-y-2">
+        <div className="flex h-full w-full flex-col items-center justify-center md:w-1/3">
+          <ul className="space-y-2 text-sm md:text-base">
             <li>
-              <h5 className="text-lg font-bold">Grzegorz Natanek</h5>
+              <h5 className="text-base font-bold md:text-lg">
+                Grzegorz Natanek
+              </h5>
             </li>
             <li>
               <p>Korepetycje z geografii</p>
@@ -34,8 +36,8 @@ export default function Footer() {
             </li>
           </ul>
         </div>
-        <div className="flex h-full w-1/3 flex-col items-center justify-center space-y-5">
-          <ul className="space-y-2">
+        <div className="flex h-full w-full flex-col items-center justify-center space-y-5 md:w-1/3">
+          <ul className="space-y-2 text-sm md:text-base">
             <li className="hoverScaleSmall hover:font-bold">
               <a href="#">Polityka prywatności</a>
             </li>
@@ -68,7 +70,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="text-center text-sm">
+      <div className="text-center text-xs md:text-sm">
         © Copyright 2025 Busola. All rights reserved.
       </div>
     </div>
