@@ -1,12 +1,12 @@
 "use client";
-import { use } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { useMediaQuery } from "react-responsive";
 
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-
+import { ContentfulRichTextContent } from "@/lib/components/contentful/ContentfulRichTextContent";
+import contentfulClient from "@/lib/contentful/contentful";
 import { ArrowLeftIcon } from "@/lib/icons/ArrowLeftIcon";
 import { ArrowRightIcon } from "@/lib/icons/ArrowRightIcon";
 import VideoPlayer from "@/lib/components/VideoPlayer";
@@ -31,6 +31,7 @@ export default function LessonPage({
 
   const { courseId, lessonId } = use(params);
   const router = useRouter();
+  const [shouldDownloadTasks, setShouldDownloadTasks] = useState(false);
 
   const {
     data: lesson,
@@ -44,6 +45,35 @@ export default function LessonPage({
       ),
   });
 
+  const { data: fileUrl, isFetching: isFetchingFile } = useQuery({
+    queryKey: lesson?.tasksFileCMSId
+      ? lessonKeys.tasksFile(lessonId, lesson.tasksFileCMSId)
+      : [],
+    queryFn: async () => {
+      if (!lesson?.tasksFileCMSId) {
+        return "";
+      }
+      const asset = await contentfulClient.getAsset(lesson.tasksFileCMSId);
+      return "https:" + asset.fields.file?.url;
+    },
+    enabled: shouldDownloadTasks,
+  });
+
+  const handleDownloadTasks = useCallback(() => {
+    if (fileUrl) {
+      window.open(fileUrl, "_blank");
+      return;
+    }
+    setShouldDownloadTasks(true);
+  }, [fileUrl]);
+
+  useEffect(() => {
+    if (fileUrl && shouldDownloadTasks) {
+      setShouldDownloadTasks(false);
+      window.open(fileUrl, "_blank");
+    }
+  }, [fileUrl, shouldDownloadTasks]);
+
   if (isFetchingLesson) {
     return <LoadingSpinner message="Wczytywanie lekcji" />;
   }
@@ -53,21 +83,12 @@ export default function LessonPage({
     return <div>Lekcja nie znaleziona</div>;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const components = documentToReactComponents(lesson.content as any, {
-    renderNode: {
-      paragraph: (_node, children) => (
-        <p className="text-justify text-sm md:text-base">{children}</p>
-      ),
-    },
-  });
-
   return (
     <div className="md:p-auto flex flex-col gap-y-7 px-10 pb-30">
       <div className="flex flex-row justify-between">
         {lesson.previousLessonId ? (
           <Link
-            className="text-sm md:text-base hoverScaleSmall"
+            className="hoverScaleSmall text-sm md:text-base"
             href={`/dashboard/course/${lesson.courseId}/lesson/${lesson.previousLessonId}`}
           >
             <ArrowLeftIcon small={isMobile} /> Poprzednia lekcja
@@ -77,7 +98,7 @@ export default function LessonPage({
         )}
         {lesson.nextLessonId ? (
           <Link
-            className="text-sm md:text-base hoverScaleSmall"
+            className="hoverScaleSmall text-sm md:text-base"
             href={`/dashboard/course/${lesson.courseId}/lesson/${lesson.nextLessonId}`}
           >
             Następna lekcja <ArrowRightIcon small={isMobile} />
@@ -92,17 +113,21 @@ export default function LessonPage({
             {lesson.name}
           </h2>
           {lesson.videoUrl ? <VideoPlayer url={lesson.videoUrl} /> : undefined}
-          {components}
+          <ContentfulRichTextContent content={lesson?.content} />
 
           <QuizSection lesson={lesson} />
 
-          <h3 className="text-2xl font-bold">Komentarz do zadań</h3>
-          {lesson.videoUrl ? <VideoPlayer url={lesson.videoUrl} /> : undefined}
+          {lesson.tasksVideoUrl ? (
+            <>
+              <h3 className="text-2xl font-bold">Komentarz do zadań</h3>
+              <VideoPlayer url={lesson.tasksVideoUrl} />
+            </>
+          ) : undefined}
 
           <NotesSection lesson={lesson} />
         </div>
-        <div className="flex flex-col md:w-1/5 w-full gap-y-7 md:gap-y-10 pt-10 md:pt-0">
-          <div className="flex flex-col justify-between items-center gap-y-7 p-5">
+        <div className="flex w-full flex-col gap-y-7 pt-10 md:w-1/5 md:gap-y-10 md:pt-0">
+          <div className="flex flex-col items-center justify-between gap-y-7 p-5">
             <Button
               onClick={() => {
                 router.push(Routes.course(lesson.courseId));
@@ -111,21 +136,21 @@ export default function LessonPage({
               Wróć do listy lekcji
             </Button>
             <MarkAsCompletedButton lesson={lesson} />
-            <p className="text-sm md:text-base">
-              Do tego kursu przygotowano dodatkowe zadania, mozesz pobrać je
-              ponizej:
-            </p>
-            <Button
-              onClick={() => {
-                console.log("Download tasks");
-              }}
-            >
-              Pobierz zadania <DownloadIcon />
-            </Button>
-            <p className="text-sm md:text-base">
-              Dodatkowe informacje na temat zadań znajdziesz w filmiku na końcu
-              lekcji
-            </p>
+            {lesson.tasksFileCMSId ? (
+              <>
+                <p className="text-sm md:text-base">
+                  Do tego kursu przygotowano dodatkowe zadania, mozesz pobrać je
+                  ponizej:
+                </p>
+                <Button disabled={isFetchingFile} onClick={handleDownloadTasks}>
+                  Pobierz zadania <DownloadIcon />
+                </Button>
+                <p className="text-sm md:text-base">
+                  Dodatkowe informacje na temat zadań znajdziesz w filmie na
+                  końcu lekcji
+                </p>
+              </>
+            ) : undefined}
           </div>
         </div>
       </div>
