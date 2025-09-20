@@ -1,16 +1,18 @@
 export default function EmailIcon({
   size,
   className,
+  fill,
 }: {
   size: number;
   className?: string;
+  fill?: string;
 }) {
   return (
     <svg
-      fill="var(--dark-blue)"
+      fill={fill || "var(--dark-blue)"}
       viewBox="0 0 1920 1920"
       xmlns="http://www.w3.org/2000/svg"
-      className={`bg-transparent hoverScale ${className}`}
+      className={`hoverScale bg-transparent ${className}`}
       width={size}
       height={size}
     >

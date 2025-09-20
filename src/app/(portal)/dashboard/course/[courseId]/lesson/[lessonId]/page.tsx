@@ -130,7 +130,7 @@ export default function LessonPage({
           <div className="flex flex-col items-center justify-between gap-y-7 p-5">
             <Button
               onClick={() => {
-                router.push(Routes.course(lesson.courseId));
+                router.push(Routes.course(lesson.courseId), { scroll: true });
               }}
             >
               Wróć do listy lekcji

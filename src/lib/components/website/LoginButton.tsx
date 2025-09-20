@@ -16,16 +16,16 @@ export default function LoginButton() {
 
   const handleLogin = useCallback(async () => {
     if (isSignedIn) {
-      router.push(Routes.dashboard());
+      router.push(Routes.dashboard(), { scroll: true });
     } else {
-      router.push(Routes.signIn());
+      router.push(Routes.signIn(), { scroll: true });
     }
   }, [router, isSignedIn]);
 
   return (
     <Tooltip text={isSignedIn ? "Twoje kursy" : "Zaloguj się"}>
       <button
-        className="icon justify-self-end md:m-0 m-2"
+        className="icon m-2 justify-self-end md:m-0"
         onClick={handleLogin}
       >
         <LoginIcon size={isMobile ? 30 : 40} />

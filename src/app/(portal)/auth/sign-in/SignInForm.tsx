@@ -50,9 +50,9 @@ export const SignInForm = () => {
           setInitialPassword(data.password);
           const response = await login(data);
           if (response.shouldResetPassword) {
-            router.push(Routes.resetInitialPassword());
+            router.push(Routes.resetInitialPassword(), { scroll: true });
           } else {
-            router.push(Routes.dashboard());
+            router.push(Routes.dashboard(), { scroll: true });
           }
           router.refresh();
           await queryClient.invalidateQueries({ queryKey: authKeys.session });

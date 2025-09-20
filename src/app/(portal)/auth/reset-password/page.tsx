@@ -15,7 +15,7 @@ export default function ResetPassword() {
       <p className="text-center text-sm md:text-base">
         Pamiętasz hasło?{" "}
         <Link
-          className="font-bold inline-block ml-1 hoverScaleSmall"
+          className="hoverScaleSmall ml-1 inline-block font-bold"
           href={Routes.signIn()}
         >
           Wróć do logowania
