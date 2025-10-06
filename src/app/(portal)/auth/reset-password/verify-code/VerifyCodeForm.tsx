@@ -36,7 +36,7 @@ export const VerifyCodeForm = () => {
   const verifyCode = useCallback(
     async (code: string) => {
       await verifyCodeRequest({ code });
-      router.push(Routes.resetPasswordConfirm());
+      router.push(Routes.resetPasswordConfirm(), { scroll: true });
     },
     [verifyCodeRequest, router]
   );

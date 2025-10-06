@@ -24,9 +24,9 @@ export default function CourseListItem({ course }: { course: Course }) {
     <div
       key={course.uuid}
       onClick={() => {
-        router.push(Routes.course(course.uuid));
+        router.push(Routes.course(course.uuid), { scroll: true });
       }}
-      className="min-h-[170px] flex flex-col md:flex-row gap-5 rounded-2xl  px-5 py-5 shadow-md cursor-pointer items-center hoverScaleSmall"
+      className="hoverScaleSmall flex min-h-[170px] cursor-pointer flex-col items-center gap-5 rounded-2xl px-5 py-5 shadow-md md:flex-row"
     >
       <Image
         src={imageUrl || "/busola-korepetycje-logo-puste-2.png"}
