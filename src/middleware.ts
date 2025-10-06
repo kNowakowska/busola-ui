@@ -6,7 +6,6 @@ import { Routes } from "./lib/routes/routes";
 export function middleware(request: NextRequest) {
   const refreshToken = request.cookies.get("refresh_token")?.value;
 
-  console.log("refreshToken", refreshToken);
   if (!refreshToken) {
     return NextResponse.redirect(new URL(Routes.signIn(), request.url));
   }
