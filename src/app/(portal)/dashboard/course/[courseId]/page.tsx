@@ -76,7 +76,7 @@ export default function CoursePage({
         <LessonsList lessons={course.lessons} />
         <Button
           onClick={() => {
-            router.push(Routes.dashboard());
+            router.push(Routes.dashboard(), { scroll: true });
           }}
         >
           Wróć do listy kursów

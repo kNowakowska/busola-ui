@@ -67,7 +67,9 @@ export function MarkAsCompletedButton({ lesson }: { lesson: LessonDetails }) {
       onClick={async () => {
         await onMarkAsCompleted();
         if (lesson.nextLessonId)
-          router.push(Routes.lesson(lesson.courseId, lesson.nextLessonId));
+          router.push(Routes.lesson(lesson.courseId, lesson.nextLessonId), {
+            scroll: true,
+          });
       }}
       disabled={isMarkingAsCompletedPending}
     >

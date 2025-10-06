@@ -9,6 +9,7 @@ import "./globals.css";
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
 import AuthProvider from "@/lib/providers/AuthProvider";
 import Header from "./Header";
+import Footer from "./Footer";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -26,11 +27,12 @@ export default async function RootLayout({
 }: Readonly<PropsWithChildren>) {
   return (
     <html lang="pl">
-      <body className={clsx(montserrat.className, "h-full w-full ")}>
+      <body className={clsx(montserrat.className, "min-h-screen w-full")}>
         <ReactQueryProvider>
           <AuthProvider>
             <Header />
             {children}
+            <Footer />
           </AuthProvider>
         </ReactQueryProvider>
       </body>

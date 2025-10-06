@@ -36,7 +36,7 @@ export const ResetPasswordForm = () => {
   const resetPassword = useCallback(
     async (email: string) => {
       await resetPasswordRequest({ email });
-      router.push(Routes.resetPasswordVerifyCode());
+      router.push(Routes.resetPasswordVerifyCode(), { scroll: true });
     },
     [resetPasswordRequest, router]
   );

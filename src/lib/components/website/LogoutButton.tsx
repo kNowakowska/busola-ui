@@ -22,7 +22,7 @@ export default function LogoutButton() {
     mutationFn: () =>
       apiClient("/auth/sign-out", undefined, { method: "POST" }),
     onSuccess: async () => {
-      router.push(Routes.home());
+      router.push(Routes.home(), { scroll: true });
       router.refresh();
 
       queryClient.clear();
@@ -37,7 +37,7 @@ export default function LogoutButton() {
   return (
     <Tooltip text={"Wyloguj się"}>
       <button
-        className="icon justify-self-end md:m-0 m-2"
+        className="icon m-2 justify-self-end md:m-0"
         onClick={handleLogout}
       >
         <LogoutIcon size={isMobile ? 30 : 40} />

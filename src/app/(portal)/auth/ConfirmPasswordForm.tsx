@@ -45,7 +45,7 @@ export const ConfirmPasswordForm = ({
         await toast.promise(
           async () => {
             await confirmPassword(password);
-            router.push(Routes.signIn());
+            router.push(Routes.signIn(), { scroll: true });
           },
           {
             loading: "Resetowanie hasła...",
