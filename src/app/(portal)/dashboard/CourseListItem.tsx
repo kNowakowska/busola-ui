@@ -33,7 +33,7 @@ export default function CourseListItem({ course }: { course: Course }) {
         alt={course.name}
         width={200}
         height={150}
-        className="h-[150px] w-[200px] rounded-lg object-cover"
+        className="rounded-lg object-cover"
       />
       <div className="flex flex-col gap-2">
         <h2 className="mb-2 text-center text-base font-bold md:text-left md:text-2xl">

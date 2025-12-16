@@ -145,10 +145,6 @@ export default function LessonPage({
                 <Button disabled={isFetchingFile} onClick={handleDownloadTasks}>
                   Pobierz zadania <DownloadIcon />
                 </Button>
-                <p className="text-sm md:text-base">
-                  Dodatkowe informacje na temat zadań znajdziesz w filmie na
-                  końcu lekcji
-                </p>
               </>
             ) : undefined}
           </div>

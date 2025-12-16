@@ -33,14 +33,14 @@ const CONTACT_ITEMS = (isMobile: boolean) => [
 export default function Contact() {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   return (
-    <div id="contact" className="h-auto w-full">
-      <Container className="md:space-y-20 space-y-5 md:py-20 py-5">
-        <h2 className="md:text-4xl text-3xl font-black tracking-wide">
+    <div id="contact" className="mb-10 h-auto w-full">
+      <Container className="space-y-5 py-5 md:space-y-20 md:py-20">
+        <h2 className="text-3xl font-black tracking-wide md:text-4xl">
           Kontakt
         </h2>
-        <div className="flex md:flex-row flex-col items-center gap-5">
-          <div className="md:w-1/2 w-full md:order-1 order-2">
-            <div className="md:p-15 p-10 rounded-xl md:text-xl text-base font-medium tracking-wider leading-6 customShadow flex flex-col md:space-y-10 space-y-5 items-center bg-linear-to-br from-[var(--light-blue)] to-white ">
+        <div className="flex flex-col items-center gap-5 md:flex-row">
+          <div className="order-2 w-full md:order-1 md:w-1/2">
+            <div className="customShadow flex flex-col items-center space-y-5 rounded-xl bg-linear-to-br from-[var(--light-blue)] to-white p-10 text-base leading-6 font-medium tracking-wider md:space-y-10 md:p-15 md:text-xl">
               <ul className="space-y-5">
                 {CONTACT_ITEMS(isMobile).map((item) => (
                   <ContactItem key={item.text} {...item} />
@@ -48,8 +48,8 @@ export default function Contact() {
               </ul>
             </div>
           </div>
-          <div className="md:w-1/2 w-full md:order-2 order-1">
-            <p className="md:p-15 p-10 md:text-xl text-base font-medium tracking-wider leading-6">
+          <div className="order-1 w-full md:order-2 md:w-1/2">
+            <p className="p-10 text-base leading-6 font-medium tracking-wider md:p-15 md:text-xl">
               <b>Masz pytania lub chcesz umówić się na korepetycje?</b>
               <br />
               Napisz do mnie – chętnie pomogę i wspólnie zaplanujemy Twoją drogę
@@ -72,13 +72,13 @@ function ContactItem({
   text: string;
 }) {
   return (
-    <li className="group hover:cursor-pointer transition-transform duration-150 hover:scale-105 md:text-base text-sm">
+    <li className="group text-sm transition-transform duration-150 hover:scale-105 hover:cursor-pointer md:text-base">
       <a href={href} className="flex flex-row items-center gap-5">
         <span className="inline-block">{icon}</span>
         <span className="inline-grid">
           <span
             aria-hidden
-            className="font-bold opacity-0 col-start-1 row-start-1"
+            className="col-start-1 row-start-1 font-bold opacity-0"
           >
             {text}
           </span>

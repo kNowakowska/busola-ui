@@ -27,7 +27,12 @@ export default async function RootLayout({
 }: Readonly<PropsWithChildren>) {
   return (
     <html lang="pl">
-      <body className={clsx(montserrat.className, "min-h-screen w-full")}>
+      <body
+        className={clsx(
+          montserrat.className,
+          "flex min-h-screen w-full flex-col justify-between"
+        )}
+      >
         <ReactQueryProvider>
           <AuthProvider>
             <Header />
