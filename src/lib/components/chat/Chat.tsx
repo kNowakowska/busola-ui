@@ -1,9 +1,9 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import apiClient from "@/lib/api/apiClient";
-import { authKeys } from "@/lib/api/queryKeysFactory";
+import { authKeys, chatKeys } from "@/lib/api/queryKeysFactory";
 import { User } from "@/lib/types/courses";
 import { useChatContext } from "@/lib/context/ChatContext";
 import { Message as MessageInterface } from "@/lib/types/chat";
@@ -12,88 +12,17 @@ import { ChatHeader } from "./ChatHeader";
 import { ChatInput } from "./ChatInput";
 import { MessagesContainer } from "./MessagesContainer";
 
-const initialMessages: MessageInterface[] = [
-  {
-    id: "1",
-    content: "Cześć! Jak się masz?",
-    fromTeacher: true,
-    createdAt: "2024-01-15T10:30:00Z",
-  },
-  {
-    id: "2",
-    content: "Dzień dobry! Wszystko w porządku, dziękuję za pytanie.",
-    fromTeacher: false,
-    createdAt: "2024-01-15T10:32:00Z",
-  },
-  {
-    id: "3",
-    content: "Świetnie! Czy masz jakieś pytania dotyczące kursu?",
-    fromTeacher: true,
-    createdAt: "2024-01-15T10:33:00Z",
-  },
-  {
-    id: "4",
-    content: "Rozwieje wszystkie Twoje wątpliwości.",
-    fromTeacher: true,
-    createdAt: "2024-01-15T10:33:00Z",
-  },
-  {
-    id: "5",
-    content: "Tak, chciałbym lepiej zrozumieć materiał z ostatniej lekcji.",
-    fromTeacher: false,
-    createdAt: "2024-01-15T10:35:00Z",
-  },
-  {
-    id: "6",
-    content: "Oczywiście! Która część sprawia Ci największą trudność?",
-    fromTeacher: true,
-    createdAt: "2024-01-15T10:36:00Z",
-  },
-  {
-    id: "7",
-    content: "Cześć! Jak się masz?",
-    fromTeacher: true,
-    createdAt: "2024-01-15T10:30:00Z",
-  },
-  {
-    id: "8",
-    content: "Dzień dobry! Wszystko w porządku, dziękuję za pytanie.",
-    fromTeacher: false,
-    createdAt: "2024-01-15T10:32:00Z",
-  },
-  {
-    id: "9",
-    content: "Świetnie! Czy masz jakieś pytania dotyczące kursu?",
-    fromTeacher: true,
-    createdAt: "2024-01-15T10:33:00Z",
-  },
-  {
-    id: "10",
-    content: "Rozwieje wszystkie Twoje wątpliwości.",
-    fromTeacher: true,
-    createdAt: "2024-01-15T10:33:00Z",
-  },
-  {
-    id: "11",
-    content: "Tak, chciałbym lepiej zrozumieć materiał z ostatniej lekcji.",
-    fromTeacher: false,
-    createdAt: "2024-01-15T10:35:00Z",
-  },
-  {
-    id: "12",
-    content: "Oczywiście! Która część sprawia Ci największą trudność?",
-    fromTeacher: true,
-    createdAt: "2024-01-15T10:36:00Z",
-  },
-];
-
 export function Chat() {
   const { isOpen, setIsOpen } = useChatContext();
-  const [messages, setMessages] = useState<MessageInterface[]>(initialMessages);
 
   const { data: currentUser } = useQuery({
     queryKey: authKeys.currentUser,
     queryFn: () => apiClient<User>("/dashboard/current-user"),
+  });
+
+  const { data: messages, isFetching: isFetchingMessages } = useQuery({
+    queryKey: chatKeys.messages(),
+    queryFn: async () => apiClient<MessageInterface[]>(`/chat/message`),
   });
 
   const currentUserName = useMemo(
@@ -109,15 +38,7 @@ export function Chat() {
   }, [setIsOpen]);
 
   const handleSubmit = useCallback((value: string) => {
-    setMessages((prev) => [
-      ...prev,
-      {
-        id: Date.now().toString(),
-        content: value,
-        fromTeacher: false,
-        createdAt: new Date().toISOString(),
-      },
-    ]);
+    console.log("handleSubmit", value);
   }, []);
 
   return (
@@ -137,9 +58,10 @@ export function Chat() {
         <ChatHeader onClose={onClose} />
 
         <MessagesContainer
-          messages={messages}
+          messages={messages || []}
           currentUserName={currentUserName}
           isOpen={isOpen}
+          isLoading={isFetchingMessages}
         />
 
         <ChatInput handleSubmit={handleSubmit} />

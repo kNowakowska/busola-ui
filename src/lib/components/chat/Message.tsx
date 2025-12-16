@@ -25,7 +25,7 @@ export function Message({ message, currentUserName }: MessageProps) {
   );
   return (
     <div
-      key={message.id}
+      key={message.uuid}
       className={`flex ${isCurrentUser ? "justify-end" : "justify-start"}`}
     >
       <div
@@ -38,7 +38,7 @@ export function Message({ message, currentUserName }: MessageProps) {
         <div className="mb-1 text-xs opacity-75">
           {isCurrentUser ? currentUserName : "Grzegorz Natanek"}
         </div>
-        <div className="text-sm md:text-base">{message.content}</div>
+        <div className="text-sm md:text-base">{message.message}</div>
         <div className="mt-1 text-xs opacity-60">
           {formatDateTime(message.createdAt)}
         </div>

@@ -1,6 +1,6 @@
 export interface Message {
-  id: string;
-  content: string;
+  uuid: string;
+  message: string;
   fromTeacher: boolean;
   createdAt: string;
 }
