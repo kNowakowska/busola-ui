@@ -15,7 +15,8 @@ import { ChatInput } from "./ChatInput";
 import { MessagesContainer } from "./MessagesContainer";
 
 export function Chat() {
-  const { isOpen, setIsOpen, messages, isFetchingMessages } = useChatContext();
+  const { isOpen, setIsOpen, messages, isFetchingMessages, fetchNextPage } =
+    useChatContext();
   const { currentUser } = useAuthContext();
 
   const { queryClient } = useReactQueryContext();
@@ -77,6 +78,7 @@ export function Chat() {
           currentUserName={currentUserName}
           isOpen={isOpen}
           isLoading={isFetchingMessages}
+          fetchNextPage={fetchNextPage}
         />
 
         <ChatInput handleSubmit={handleSubmit} />

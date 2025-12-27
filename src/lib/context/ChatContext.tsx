@@ -5,11 +5,15 @@ import {
   PropsWithChildren,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { Message as MessageInterface } from "@/lib/types/chat";
+import {
+  Message as MessageInterface,
+  MessagesResponse,
+} from "@/lib/types/chat";
 
 import { useChatSubscription } from "../hooks/useChatSubscription";
 import apiClient from "../api/apiClient";
@@ -21,6 +25,7 @@ interface ChatContextState {
   messages: MessageInterface[];
   isFetchingMessages: boolean;
   notViewedMessagesCount: number;
+  fetchNextPage: () => void;
 }
 
 const defaultState: ChatContextState = {
@@ -29,6 +34,7 @@ const defaultState: ChatContextState = {
   messages: [],
   isFetchingMessages: false,
   notViewedMessagesCount: 0,
+  fetchNextPage: () => {},
 };
 
 const ChatContext = createContext(defaultState);
@@ -39,10 +45,23 @@ export function ChatContextProvider({ children }: PropsWithChildren) {
 
   useChatSubscription();
 
-  const { data: messages, isFetching: isFetchingMessages } = useQuery({
+  const {
+    data,
+    isFetchingNextPage: isFetchingMessages,
+    fetchNextPage,
+  } = useInfiniteQuery({
     queryKey: chatKeys.messages(),
-    queryFn: async () => apiClient<MessageInterface[]>(`/chat/message`),
+    queryFn: async ({ pageParam }: { pageParam: number }) =>
+      apiClient<MessagesResponse>(`/chat/message?skip=${pageParam}`),
+    getNextPageParam: (lastPage) =>
+      lastPage.data.length > 0 ? lastPage.nextCursor : undefined,
+    initialPageParam: 0,
   });
+
+  const messages = useMemo(
+    () => data?.pages.reverse().flatMap(({ data }) => data) || [],
+    [data]
+  );
 
   useEffect(() => {
     const notViewedMessages = (messages || [])?.filter(
@@ -56,9 +75,10 @@ export function ChatContextProvider({ children }: PropsWithChildren) {
       value={{
         isOpen,
         setIsOpen,
-        messages: messages || [],
+        messages,
         isFetchingMessages,
         notViewedMessagesCount,
+        fetchNextPage,
       }}
     >
       {children}

@@ -5,3 +5,8 @@ export interface Message {
   createdAt: string;
   isViewed: boolean;
 }
+
+export interface MessagesResponse {
+  data: Message[];
+  nextCursor: number;
+}

@@ -1,7 +1,14 @@
 import { useEffect } from "react";
-import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  QueryClient,
+  useQueryClient,
+} from "@tanstack/react-query";
 
-import { Message as MessageInterface } from "@/lib/types/chat";
+import {
+  Message as MessageInterface,
+  MessagesResponse,
+} from "@/lib/types/chat";
 
 import { useAuthContext } from "../providers/AuthProvider";
 import { chatKeys } from "../api/queryKeysFactory";
@@ -9,7 +16,18 @@ import { chatKeys } from "../api/queryKeysFactory";
 function handleNewMessage(queryClient: QueryClient, message: MessageInterface) {
   queryClient.setQueryData(
     chatKeys.messages(),
-    (prevMessages: MessageInterface[]) => [...prevMessages, message]
+    (prevData: InfiniteData<MessagesResponse>) => ({
+      pages: prevData.pages.map((page, index) =>
+        index === 0
+          ? {
+              ...page,
+              nextCursor: page.nextCursor + 1,
+              data: [...page.data, message],
+            }
+          : { ...page, nextCursor: page.nextCursor + 1 }
+      ),
+      pageParams: prevData.pageParams,
+    })
   );
 }
 

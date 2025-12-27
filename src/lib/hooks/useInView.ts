@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
-export function useInView<T extends HTMLElement>() {
+export function useInView<T extends HTMLElement>(
+  options?: IntersectionObserverInit,
+  onlyOnce = false
+) {
   const ref = useRef<T | null>(null);
   const [inView, setInView] = useState(false);
 
@@ -11,11 +14,15 @@ export function useInView<T extends HTMLElement>() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          observer.disconnect();
+          if (onlyOnce) {
+            observer.disconnect();
+          }
+        } else {
+          setInView(false);
         }
       },
       {
-        threshold: 0.5,
+        ...(options || {}),
       }
     );
 

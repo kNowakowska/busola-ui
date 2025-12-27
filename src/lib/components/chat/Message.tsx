@@ -1,7 +1,14 @@
 import { useEffect, useMemo } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
-import { Message as MessageInterface } from "@/lib/types/chat";
+import {
+  Message as MessageInterface,
+  MessagesResponse,
+} from "@/lib/types/chat";
 import { useInView } from "@/lib/hooks/useInView";
 import apiClient from "@/lib/api/apiClient";
 import { chatKeys } from "@/lib/api/queryKeysFactory";
@@ -24,7 +31,7 @@ const formatDateTime = (dateString: string) => {
 
 export function Message({ message, currentUserName }: MessageProps) {
   const queryClient = useQueryClient();
-  const { ref, inView } = useInView<HTMLDivElement>();
+  const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.5 }, true);
 
   const isFromCurrentUser = useMemo(
     () => !message.fromTeacher,
@@ -41,12 +48,19 @@ export function Message({ message, currentUserName }: MessageProps) {
         }
       ),
     onSuccess: () => {
-      queryClient.setQueryData(chatKeys.messages(), (old: MessageInterface[]) =>
-        old.map((message) =>
-          message.uuid === message.uuid
-            ? { ...message, isViewed: true }
-            : message
-        )
+      queryClient.setQueryData(
+        chatKeys.messages(),
+        (prevData: InfiniteData<MessagesResponse>) => ({
+          pages: prevData.pages.map((page) => ({
+            ...page,
+            data: page.data.map((message) =>
+              message.uuid === message.uuid
+                ? { ...message, isViewed: true }
+                : message
+            ),
+          })),
+          pageParams: prevData.pageParams,
+        })
       );
     },
   });
