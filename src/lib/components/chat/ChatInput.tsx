@@ -1,16 +1,17 @@
 import { useCallback, useState } from "react";
 
 interface ChatInputProps {
-  handleSubmit: (value: string) => void;
+  handleSubmit: (value: string) => Promise<void>;
 }
 export function ChatInput({ handleSubmit }: ChatInputProps) {
   const [inputValue, setInputValue] = useState("");
 
   const handleFormSubmit = useCallback(
-    (e: React.FormEvent) => {
+    async (e: React.FormEvent) => {
       e.preventDefault();
       if (!inputValue.trim()) return;
-      handleSubmit(inputValue);
+      await handleSubmit(inputValue);
+      setInputValue("");
     },
     [inputValue, handleSubmit]
   );

@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { authKeys } from "../api/queryKeysFactory";
 
-type AuthSession = { isSignedIn: boolean };
+type AuthSession = { isSignedIn: boolean; token: string };
 
 export function useAuthSession() {
   return useQuery<AuthSession>({

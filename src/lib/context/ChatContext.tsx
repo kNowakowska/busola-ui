@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { useChatSubscription } from "../hooks/useChatSubscription";
 
 interface ChatContextState {
   isOpen: boolean;
@@ -16,6 +17,8 @@ const ChatContext = createContext(defaultState);
 
 export function ChatContextProvider({ children }: PropsWithChildren) {
   const [isOpen, setIsOpen] = useState(false);
+
+  useChatSubscription();
 
   return (
     <ChatContext.Provider value={{ isOpen, setIsOpen }}>

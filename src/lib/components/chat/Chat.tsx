@@ -1,6 +1,8 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
+
+import { useReactQueryContext } from "@/lib/providers/ReactQueryProvider";
 
 import apiClient from "@/lib/api/apiClient";
 import { authKeys, chatKeys } from "@/lib/api/queryKeysFactory";
@@ -15,6 +17,8 @@ import { MessagesContainer } from "./MessagesContainer";
 export function Chat() {
   const { isOpen, setIsOpen } = useChatContext();
 
+  const { queryClient } = useReactQueryContext();
+
   const { data: currentUser } = useQuery({
     queryKey: authKeys.currentUser,
     queryFn: () => apiClient<User>("/dashboard/current-user"),
@@ -23,6 +27,19 @@ export function Chat() {
   const { data: messages, isFetching: isFetchingMessages } = useQuery({
     queryKey: chatKeys.messages(),
     queryFn: async () => apiClient<MessageInterface[]>(`/chat/message`),
+  });
+
+  const sendMessageMutation = useMutation({
+    mutationFn: async (message: string) =>
+      apiClient<void>(
+        "/chat/message",
+        {
+          message,
+        },
+        {
+          method: "POST",
+        }
+      ),
   });
 
   const currentUserName = useMemo(
@@ -37,9 +54,16 @@ export function Chat() {
     setIsOpen(false);
   }, [setIsOpen]);
 
-  const handleSubmit = useCallback((value: string) => {
-    console.log("handleSubmit", value);
-  }, []);
+  const handleSubmit = useCallback(
+    async (message: string) => {
+      const createdMessage = await sendMessageMutation.mutateAsync(message);
+      queryClient.setQueryData(
+        chatKeys.messages(),
+        (old: MessageInterface[]) => [...old, createdMessage]
+      );
+    },
+    [sendMessageMutation]
+  );
 
   return (
     <>
