@@ -11,7 +11,7 @@ export default function Logo({ isMobile }: { isMobile: boolean }) {
       <a href={Routes.home()}>
         <Image
           src="/busola-korepetycje-logo-puste-2.png"
-          alt="Busola"
+          alt="Busola Logo"
           width={logoSize}
           height={logoSize}
         />

@@ -1,12 +1,12 @@
 "use client";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
 
 import { useReactQueryContext } from "@/lib/providers/ReactQueryProvider";
 
 import apiClient from "@/lib/api/apiClient";
-import { authKeys, chatKeys } from "@/lib/api/queryKeysFactory";
-import { User } from "@/lib/types/courses";
+import { chatKeys } from "@/lib/api/queryKeysFactory";
+import { useAuthContext } from "@/lib/providers/AuthProvider";
 import { useChatContext } from "@/lib/context/ChatContext";
 import { Message as MessageInterface } from "@/lib/types/chat";
 
@@ -15,19 +15,10 @@ import { ChatInput } from "./ChatInput";
 import { MessagesContainer } from "./MessagesContainer";
 
 export function Chat() {
-  const { isOpen, setIsOpen } = useChatContext();
+  const { isOpen, setIsOpen, messages, isFetchingMessages } = useChatContext();
+  const { currentUser } = useAuthContext();
 
   const { queryClient } = useReactQueryContext();
-
-  const { data: currentUser } = useQuery({
-    queryKey: authKeys.currentUser,
-    queryFn: () => apiClient<User>("/dashboard/current-user"),
-  });
-
-  const { data: messages, isFetching: isFetchingMessages } = useQuery({
-    queryKey: chatKeys.messages(),
-    queryFn: async () => apiClient<MessageInterface[]>(`/chat/message`),
-  });
 
   const sendMessageMutation = useMutation({
     mutationFn: async (message: string) =>
@@ -76,13 +67,13 @@ export function Chat() {
 
       <div
         className={`fixed top-0 right-0 z-50 h-full w-full transform bg-white shadow-lg transition-transform duration-300 ease-in-out md:w-120 ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+          isOpen ? "display-block translate-x-0" : "hidden translate-x-full"
         }`}
       >
         <ChatHeader onClose={onClose} />
 
         <MessagesContainer
-          messages={messages || []}
+          messages={messages}
           currentUserName={currentUserName}
           isOpen={isOpen}
           isLoading={isFetchingMessages}

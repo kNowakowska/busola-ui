@@ -3,4 +3,5 @@ export interface Message {
   message: string;
   fromTeacher: boolean;
   createdAt: string;
+  isViewed: boolean;
 }

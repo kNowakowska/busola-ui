@@ -3,7 +3,7 @@ import { QueryClient, useQueryClient } from "@tanstack/react-query";
 
 import { Message as MessageInterface } from "@/lib/types/chat";
 
-import { useAuthProviderContext } from "../providers/AuthProvider";
+import { useAuthContext } from "../providers/AuthProvider";
 import { chatKeys } from "../api/queryKeysFactory";
 
 function handleNewMessage(queryClient: QueryClient, message: MessageInterface) {
@@ -15,13 +15,13 @@ function handleNewMessage(queryClient: QueryClient, message: MessageInterface) {
 
 export function useChatSubscription() {
   const queryClient = useQueryClient();
-  const { token } = useAuthProviderContext();
+  const { token } = useAuthContext();
 
   useEffect(() => {
     if (!token) return;
 
     const websocket = new WebSocket(
-      `${process.env.NEXT_PUBLIC_WEBSOCKET_URL}/webhook/websocket?token=${token}`
+      `${process.env.NEXT_PUBLIC_WEBSOCKET_URL}?token=${token}`
     );
 
     websocket.onmessage = (event) => {

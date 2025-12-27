@@ -2,7 +2,7 @@
 import { useCallback, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
-import { useAuthProviderContext } from "@/lib/providers/AuthProvider";
+import { useAuthContext } from "@/lib/providers/AuthProvider";
 import CloseIcon from "@/lib/icons/CloseIcon";
 import { Routes } from "@/lib/routes/routes";
 
@@ -10,7 +10,7 @@ import MobileMenuButton from "../MobileMenuButton";
 
 export default function MobileNavigation() {
   const isMobile = useMediaQuery({ maxWidth: 768 });
-  const { isSignedIn } = useAuthProviderContext();
+  const { isSignedIn } = useAuthContext();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenMenu = useCallback(() => {
@@ -29,7 +29,7 @@ export default function MobileNavigation() {
     <>
       <MobileMenuButton onClick={handleOpenMenu} />
       <nav
-        className={`w-screen h-screen bg-white flex flex-col items-center pt-30 space-y-5 absolute top-0 left-0 ${
+        className={`absolute top-0 left-0 flex h-screen w-screen flex-col items-center space-y-5 bg-white pt-30 ${
           isOpen ? "block" : "hidden"
         } `}
       >

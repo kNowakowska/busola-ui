@@ -10,7 +10,7 @@ import Tooltip from "../Tooltip";
 export default function ChatButton() {
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
-  const { setIsOpen } = useChatContext();
+  const { setIsOpen, notViewedMessagesCount } = useChatContext();
 
   const handleOpenChat = useCallback(() => {
     setIsOpen(true);
@@ -22,6 +22,11 @@ export default function ChatButton() {
         className="icon m-2 justify-self-end md:m-0"
         onClick={handleOpenChat}
       >
+        {notViewedMessagesCount > 0 && (
+          <div className="z-index-1000 absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 align-middle text-xs">
+            {notViewedMessagesCount}
+          </div>
+        )}
         <ChatIcon size={isMobile ? 30 : 40} />
       </button>
     </Tooltip>

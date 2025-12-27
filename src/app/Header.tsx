@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useMediaQuery } from "react-responsive";
 
-import { useAuthProviderContext } from "@/lib/providers/AuthProvider";
+import { useAuthContext } from "@/lib/providers/AuthProvider";
 
 import Logo from "@/lib/components/Logo";
 import WebsiteTitle from "@/lib/components/website/WebsiteTitle";
@@ -18,7 +18,7 @@ export default function Header() {
 
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const { isSignedIn } = useAuthProviderContext();
+  const { isSignedIn } = useAuthContext();
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
   const isMainPage = useMemo(() => pathname === "/", [pathname]);
