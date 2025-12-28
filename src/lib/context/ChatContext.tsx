@@ -18,6 +18,7 @@ import {
 import { useChatSubscription } from "../hooks/useChatSubscription";
 import apiClient from "../api/apiClient";
 import { chatKeys } from "../api/queryKeysFactory";
+import { useAuthContext } from "../providers/AuthProvider";
 
 interface ChatContextState {
   isOpen: boolean;
@@ -43,11 +44,13 @@ export function ChatContextProvider({ children }: PropsWithChildren) {
   const [isOpen, setIsOpen] = useState(false);
   const [notViewedMessagesCount, setNotViewedMessagesCount] = useState(0);
 
+  const { isSignedIn } = useAuthContext();
+
   useChatSubscription();
 
   const {
     data,
-    isFetchingNextPage: isFetchingMessages,
+    isFetching: isFetchingMessages,
     fetchNextPage,
   } = useInfiniteQuery({
     queryKey: chatKeys.messages(),
@@ -56,6 +59,7 @@ export function ChatContextProvider({ children }: PropsWithChildren) {
     getNextPageParam: (lastPage) =>
       lastPage.data.length > 0 ? lastPage.nextCursor : undefined,
     initialPageParam: 0,
+    enabled: isSignedIn,
   });
 
   const messages = useMemo(

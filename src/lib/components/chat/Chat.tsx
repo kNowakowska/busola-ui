@@ -1,46 +1,56 @@
 "use client";
-import { useMutation } from "@tanstack/react-query";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
+import { InfiniteData, useMutation } from "@tanstack/react-query";
 
 import { useReactQueryContext } from "@/lib/providers/ReactQueryProvider";
 
 import apiClient from "@/lib/api/apiClient";
 import { chatKeys } from "@/lib/api/queryKeysFactory";
-import { useAuthContext } from "@/lib/providers/AuthProvider";
 import { useChatContext } from "@/lib/context/ChatContext";
-import { Message as MessageInterface } from "@/lib/types/chat";
+import {
+  Message as MessageInterface,
+  MessagesResponse,
+} from "@/lib/types/chat";
 
 import { ChatHeader } from "./ChatHeader";
 import { ChatInput } from "./ChatInput";
 import { MessagesContainer } from "./MessagesContainer";
 
 export function Chat() {
-  const { isOpen, setIsOpen, messages, isFetchingMessages, fetchNextPage } =
-    useChatContext();
-  const { currentUser } = useAuthContext();
+  const { isOpen, setIsOpen } = useChatContext();
 
   const { queryClient } = useReactQueryContext();
 
-  const sendMessageMutation = useMutation({
-    mutationFn: async (message: string) =>
-      apiClient<void>(
-        "/chat/message",
-        {
-          message,
-        },
-        {
-          method: "POST",
-        }
-      ),
-  });
-
-  const currentUserName = useMemo(
-    () =>
-      currentUser
-        ? `${currentUser.name} ${currentUser.lastName}`
-        : "Użytkownik",
-    [currentUser]
-  );
+  const { mutateAsync: sendMessageMutation, isPending: isSendingMessage } =
+    useMutation({
+      mutationFn: async (message: string) =>
+        apiClient<MessageInterface>(
+          "/chat/message",
+          {
+            message,
+          },
+          {
+            method: "POST",
+          }
+        ),
+      onSuccess: (data: MessageInterface) => {
+        queryClient.setQueryData(
+          chatKeys.messages(),
+          (prevData: InfiniteData<MessagesResponse>) => ({
+            pages: prevData.pages.map((page, index) =>
+              index === 0
+                ? {
+                    ...page,
+                    nextCursor: page.nextCursor + 1,
+                    data: [...page.data, data],
+                  }
+                : { ...page, nextCursor: page.nextCursor + 1 }
+            ),
+            pageParams: prevData.pageParams,
+          })
+        );
+      },
+    });
 
   const onClose = useCallback(() => {
     setIsOpen(false);
@@ -48,11 +58,7 @@ export function Chat() {
 
   const handleSubmit = useCallback(
     async (message: string) => {
-      const createdMessage = await sendMessageMutation.mutateAsync(message);
-      queryClient.setQueryData(
-        chatKeys.messages(),
-        (old: MessageInterface[]) => [...old, createdMessage]
-      );
+      await sendMessageMutation(message);
     },
     [sendMessageMutation]
   );
@@ -73,15 +79,9 @@ export function Chat() {
       >
         <ChatHeader onClose={onClose} />
 
-        <MessagesContainer
-          messages={messages}
-          currentUserName={currentUserName}
-          isOpen={isOpen}
-          isLoading={isFetchingMessages}
-          fetchNextPage={fetchNextPage}
-        />
+        <MessagesContainer />
 
-        <ChatInput handleSubmit={handleSubmit} />
+        <ChatInput handleSubmit={handleSubmit} isLoading={isSendingMessage} />
       </div>
     </>
   );

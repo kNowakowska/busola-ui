@@ -1,33 +1,43 @@
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useCallback, useEffect, useRef } from "react";
+import { subSeconds } from "date-fns";
 
-import { Message as MessageInterface } from "@/lib/types/chat";
 import { useInView } from "@/lib/hooks/useInView";
+import { useChatContext } from "@/lib/context/ChatContext";
 
 import { Message } from "./Message";
 import LoadingSpinner from "../LoadingSpinner";
 
-interface MessagesContainerProps {
-  messages: MessageInterface[];
-  currentUserName: string;
-  isOpen: boolean;
-  isLoading: boolean;
-  fetchNextPage: () => void;
-}
-
-export function MessagesContainer({
-  messages,
-  currentUserName,
-  isOpen,
-  isLoading,
-  fetchNextPage,
-}: MessagesContainerProps) {
+export function MessagesContainer() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (containerRef.current && isOpen) {
+  const {
+    isOpen,
+    messages,
+    isFetchingMessages: isLoading,
+    fetchNextPage,
+  } = useChatContext();
+
+  const scrollToBottom = useCallback(() => {
+    if (containerRef.current) {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
-  }, [containerRef, isOpen]);
+  }, [containerRef]);
+
+  useEffect(() => {
+    if (isOpen) {
+      scrollToBottom();
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    const isNewMessage = lastMessage
+      ? new Date(lastMessage.createdAt) > subSeconds(new Date(), 10)
+      : false;
+    if (isNewMessage) {
+      scrollToBottom();
+    }
+  }, [messages]);
 
   return (
     <div
@@ -44,13 +54,9 @@ export function MessagesContainer({
             containerRef={containerRef}
             onIntersection={fetchNextPage}
           />
-          {isLoading && <LoadingSpinner small />}
+          {isLoading && <LoadingSpinner size="medium" />}
           {messages.map((message) => (
-            <Message
-              key={message.uuid}
-              message={message}
-              currentUserName={currentUserName}
-            />
+            <Message key={message.uuid} message={message} />
           ))}
         </>
       )}

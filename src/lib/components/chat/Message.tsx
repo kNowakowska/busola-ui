@@ -12,10 +12,10 @@ import {
 import { useInView } from "@/lib/hooks/useInView";
 import apiClient from "@/lib/api/apiClient";
 import { chatKeys } from "@/lib/api/queryKeysFactory";
+import { useAuthContext } from "@/lib/providers/AuthProvider";
 
 interface MessageProps {
   message: MessageInterface;
-  currentUserName: string;
 }
 
 const formatDateTime = (dateString: string) => {
@@ -29,13 +29,22 @@ const formatDateTime = (dateString: string) => {
   });
 };
 
-export function Message({ message, currentUserName }: MessageProps) {
+export function Message({ message }: MessageProps) {
   const queryClient = useQueryClient();
+  const { currentUser } = useAuthContext();
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.5 }, true);
 
   const isFromCurrentUser = useMemo(
     () => !message.fromTeacher,
     [message.fromTeacher]
+  );
+
+  const currentUserName = useMemo(
+    () =>
+      currentUser
+        ? `${currentUser.name} ${currentUser.lastName}`
+        : "Użytkownik",
+    [currentUser]
   );
 
   const markMessageAsViewedMutation = useMutation({
