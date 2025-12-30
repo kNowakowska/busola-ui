@@ -8,6 +8,8 @@ import "./globals.css";
 
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
 import AuthProvider from "@/lib/providers/AuthProvider";
+import { ChatContextProvider } from "@/lib/context/ChatContext";
+
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -35,9 +37,11 @@ export default async function RootLayout({
       >
         <ReactQueryProvider>
           <AuthProvider>
-            <Header />
-            {children}
-            <Footer />
+            <ChatContextProvider>
+              <Header />
+              {children}
+              <Footer />
+            </ChatContextProvider>
           </AuthProvider>
         </ReactQueryProvider>
       </body>

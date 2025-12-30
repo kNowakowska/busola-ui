@@ -1,6 +1,8 @@
 import { PropsWithChildren } from "react";
 import { Toaster } from "react-hot-toast";
 
+import { Chat } from "../../lib/components/chat/Chat";
+
 export default function AppLayout({ children }: Readonly<PropsWithChildren>) {
   return (
     <>
@@ -8,6 +10,7 @@ export default function AppLayout({ children }: Readonly<PropsWithChildren>) {
         {children}
       </main>
       <Toaster />
+      <Chat />
     </>
   );
 }
