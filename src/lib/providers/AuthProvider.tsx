@@ -57,7 +57,7 @@ export default function AuthProvider({
   });
 
   useEffect(() => {
-    if (!!data && !isSignedIn && !isAuthPage) {
+    if (!isSignedIn && !isAuthPage) {
       router.push(Routes.signIn());
     }
   }, [isSignedIn, router]);
