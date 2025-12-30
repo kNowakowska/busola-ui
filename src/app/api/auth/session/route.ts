@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-export async function GET() {
+export async function GET(request: Request) {
   const cookieStore = await cookies();
 
-  console.log("cookieStore", cookieStore.getAll());
+  // Debug: Log all cookies and request headers
+  const allCookies = cookieStore.getAll();
+  const cookieHeader = request.headers.get("cookie");
+
+  console.log("cookieStore.getAll()", allCookies);
+  console.log("request.headers.get('cookie')", cookieHeader);
+
   const token = cookieStore.get("access_token")?.value;
 
   return NextResponse.json(
