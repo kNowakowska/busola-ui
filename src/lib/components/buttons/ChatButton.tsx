@@ -23,7 +23,7 @@ export default function ChatButton() {
         onClick={handleOpenChat}
       >
         {notViewedMessagesCount > 0 && (
-          <div className="z-index-1000 absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 align-middle text-xs">
+          <div className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 align-middle text-xs">
             {notViewedMessagesCount}
           </div>
         )}

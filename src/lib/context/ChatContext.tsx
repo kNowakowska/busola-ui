@@ -63,7 +63,7 @@ export function ChatContextProvider({ children }: PropsWithChildren) {
   });
 
   const messages = useMemo(
-    () => data?.pages.reverse().flatMap(({ data }) => data) || [],
+    () => [...(data?.pages || [])].reverse().flatMap(({ data }) => data),
     [data]
   );
 

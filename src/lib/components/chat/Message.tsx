@@ -62,10 +62,8 @@ export function Message({ message }: MessageProps) {
         (prevData: InfiniteData<MessagesResponse>) => ({
           pages: prevData.pages.map((page) => ({
             ...page,
-            data: page.data.map((message) =>
-              message.uuid === message.uuid
-                ? { ...message, isViewed: true }
-                : message
+            data: page.data.map((msg) =>
+              msg.uuid === message.uuid ? { ...msg, isViewed: true } : msg
             ),
           })),
           pageParams: prevData.pageParams,
