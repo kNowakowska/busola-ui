@@ -1,10 +1,8 @@
 "use client";
-import { createContext, useContext, useEffect, useMemo } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { createContext, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { useAuthSession } from "@/lib/hooks/useAuthSession";
-import { Routes } from "../routes/routes";
 import { authKeys } from "../api/queryKeysFactory";
 import apiClient from "../api/apiClient";
 import { User } from "../types/courses";
@@ -33,18 +31,10 @@ export default function AuthProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
-  const pathname = usePathname();
-
   const { data } = useAuthSession();
 
   const isSignedIn = Boolean(data?.isSignedIn);
   const token = data?.token || "";
-
-  const isAuthPage = useMemo(
-    () => pathname.includes("/auth") || pathname === "/",
-    [pathname]
-  );
 
   const {
     data: currentUser,
@@ -55,12 +45,6 @@ export default function AuthProvider({
     queryFn: () => apiClient<User>("/dashboard/current-user"),
     enabled: isSignedIn,
   });
-
-  useEffect(() => {
-    if (!isSignedIn && !isAuthPage) {
-      router.push(Routes.signIn());
-    }
-  }, [isSignedIn, router]);
 
   return (
     <AuthProviderContext.Provider
