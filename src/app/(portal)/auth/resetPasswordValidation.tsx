@@ -26,3 +26,20 @@ export const confirmPasswordValidationSchema = z
       });
     }
   });
+
+export const resetInitialPasswordValidationSchema = z
+  .object({
+    password: password(),
+    confirmPassword: z.string().min(8, "Hasło musi mieć co najmniej 8 znaków"),
+    name: z.string().min(1, "Imię jest wymagane"),
+    lastName: z.string().min(1, "Nazwisko jest wymagane"),
+  })
+  .superRefine((data, ctx) => {
+    if (data.password !== data.confirmPassword) {
+      ctx.addIssue({
+        path: ["confirmPassword"],
+        code: z.ZodIssueCode.custom,
+        message: "Hasła nie są identyczne",
+      });
+    }
+  });
