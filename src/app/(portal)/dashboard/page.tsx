@@ -17,5 +17,9 @@ export default function Dashboard() {
   if (isLoadingCurrentUser) {
     return <LoadingSpinner message="Wczytywanie kursów" />;
   }
-  return <CoursesList courses={currentUser?.courses || []} />;
+  return (
+    <div className="mt-20 h-full w-full">
+      <CoursesList courses={currentUser?.courses || []} />
+    </div>
+  );
 }

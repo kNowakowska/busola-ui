@@ -32,7 +32,7 @@ export default async function RootLayout({
       <body
         className={clsx(
           montserrat.className,
-          "flex min-h-screen w-full flex-col justify-between"
+          "flex h-screen w-full flex-col justify-between"
         )}
       >
         <ReactQueryProvider>
