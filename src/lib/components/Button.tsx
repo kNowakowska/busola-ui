@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { ButtonHTMLAttributes } from "react";
 
 type Props = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> & {
@@ -20,9 +21,12 @@ export const Button = ({
     <button
       type={type}
       onClick={onClick}
-      className={`rounded-xl p-3 md:p-5 md:text-base mt-2 font-medium tracking-wide ${
-        !disabled && "hoverScaleSmall"
-      } ${className}`}
+      className={clsx(
+        `mt-2 rounded-xl p-3 font-medium tracking-wide md:p-5 md:text-base ${
+          !disabled && "hoverScaleSmall"
+        }`,
+        className
+      )}
       disabled={disabled}
       {...props}
     >

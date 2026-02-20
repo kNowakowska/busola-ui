@@ -2,6 +2,7 @@ import { PropsWithChildren } from "react";
 
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 
 import clsx from "clsx";
 import "./globals.css";
@@ -39,6 +40,7 @@ export default async function RootLayout({
           <AuthProvider>
             <ChatContextProvider>
               <Header />
+              <Toaster />
               {children}
               <Footer />
             </ChatContextProvider>
