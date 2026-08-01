@@ -24,3 +24,11 @@ export const lessonKeys = {
   tasksFile: (lessonUuid: string, cmsId: string) =>
     [...lessonKeys.details(lessonUuid), "tasksFile", cmsId] as const,
 };
+
+export const chatKeys = {
+  all: ["chat"] as const,
+  messages: () => [...chatKeys.all, "messages"] as const,
+  details: (uuid: string) => [...chatKeys.all, "details", uuid] as const,
+  publishMessage: (uuid: string) =>
+    [...chatKeys.details(uuid), "publish"] as const,
+};

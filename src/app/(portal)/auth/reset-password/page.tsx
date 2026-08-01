@@ -8,7 +8,7 @@ import { ResetPasswordForm } from "./ResetPasswordForm";
 export default function ResetPassword() {
   return (
     <AuthFormContainer
-      title="Zapomniałeś hasło?"
+      title="Zapomniałeś hasła?"
       description="Podaj swój adres e-mail, aby odzyskać hasło"
     >
       <ResetPasswordForm />

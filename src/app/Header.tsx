@@ -3,7 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useMediaQuery } from "react-responsive";
 
-import { useAuthProviderContext } from "@/lib/providers/AuthProvider";
+import { useAuthContext } from "@/lib/providers/AuthProvider";
+import { isLoginEnabled } from "@/lib/config/features";
 
 import Logo from "@/lib/components/Logo";
 import WebsiteTitle from "@/lib/components/website/WebsiteTitle";
@@ -11,13 +12,14 @@ import LoginButton from "@/lib/components/website/LoginButton";
 import LogoutButton from "@/lib/components/website/LogoutButton";
 import Navigation from "@/lib/components/website/navigation/Navigation";
 import MobileNavigation from "@/lib/components/website/navigation/MobileNavigation";
+import ChatButton from "@/lib/components/buttons/ChatButton";
 
 export default function Header() {
   const pathname = usePathname();
 
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const { isSignedIn } = useAuthProviderContext();
+  const { isSignedIn } = useAuthContext();
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
   const isMainPage = useMemo(() => pathname === "/", [pathname]);
@@ -28,16 +30,21 @@ export default function Header() {
       return <div></div>;
     }
     if (isMobile && isMainPage) {
-      return <MobileNavigation />;
+      return <MobileNavigation isLoginEnabled={isLoginEnabled} />;
     }
     if (isMainPage) {
-      return <LoginButton />;
+      return isLoginEnabled ? <LoginButton /> : <div></div>;
     }
     if (isSignedIn) {
-      return <LogoutButton />;
+      return (
+        <div className="flex flex-row items-center gap-0 md:gap-6">
+          <ChatButton />
+          <LogoutButton />
+        </div>
+      );
     }
 
-    return <LoginButton />;
+    return isLoginEnabled ? <LoginButton /> : <div></div>;
   }, [isSignedIn, isAuthPage, isMobile, isMainPage]);
 
   useEffect(() => {
@@ -53,7 +60,7 @@ export default function Header() {
 
   return (
     <header
-      className={`w-full px-5 md:px-12 py-6 flex flex-row justify-between items-center sticky top-0 bg-white z-20  ${
+      className={`sticky top-0 z-20 flex w-full flex-row items-center justify-between bg-white px-5 py-6 md:px-12 ${
         isScrolled ? "shadow-md" : ""
       }`}
     >

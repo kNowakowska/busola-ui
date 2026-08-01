@@ -13,10 +13,10 @@ export default function Footer() {
     <div className="flex h-auto w-full flex-col space-y-10 border-t border-gray-200 py-10 text-center md:space-y-0">
       <div className="mx-auto flex h-full w-8/10 flex-col space-y-10 md:flex-row md:space-y-0">
         <div className="flex h-full w-full flex-col items-center justify-center space-y-5 md:w-1/3">
-          <Logo isMobile={false} />
+          <Logo isMobile={isMobile} />
         </div>
         <div className="flex h-full w-full flex-col items-center justify-center md:w-1/3">
-          <ul className="space-y-2 text-sm md:text-base">
+          <ul className="space-y-2 text-xs md:text-base">
             <li>
               <h5 className="text-base font-bold md:text-lg">
                 Grzegorz Natanek
@@ -37,7 +37,7 @@ export default function Footer() {
           </ul>
         </div>
         <div className="flex h-full w-full flex-col items-center justify-center space-y-5 md:w-1/3">
-          <ul className="space-y-2 text-sm md:text-base">
+          <ul className="space-y-2 text-xs md:text-base">
             <li className="hoverScaleSmall hover:font-bold">
               <a href="#">Polityka prywatności</a>
             </li>
@@ -70,7 +70,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="text-center text-xs md:text-sm">
+      <div className="mt-5 text-center text-xs md:text-sm">
         © Copyright 2025 Busola. All rights reserved.
       </div>
     </div>
