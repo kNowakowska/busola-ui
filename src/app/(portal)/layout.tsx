@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { PropsWithChildren } from "react";
 
 import { Chat } from "../../lib/components/chat/Chat";
