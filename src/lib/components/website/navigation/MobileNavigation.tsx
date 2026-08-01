@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 import { useAuthContext } from "@/lib/providers/AuthProvider";
+import { shopUrl } from "@/lib/config/features";
 import CloseIcon from "@/lib/icons/CloseIcon";
 import { Routes } from "@/lib/routes/routes";
 
@@ -60,6 +61,12 @@ export default function MobileNavigation({
         <a href="#contact" className="text-base" onClick={handleCloseMenu}>
           Kontakt
         </a>
+
+        {shopUrl && (
+          <a href={shopUrl} className="text-base" onClick={handleCloseMenu}>
+            Sklep
+          </a>
+        )}
 
         {isLoginEnabled && (
           <a

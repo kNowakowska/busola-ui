@@ -317,6 +317,9 @@ CONTACT_TO_EMAIL=your_inbox@example.com
 
 # Student portal login (disabled by default, including in production)
 NEXT_PUBLIC_ENABLE_LOGIN=false
+
+# External shop URL (leave empty to hide the navigation link)
+NEXT_PUBLIC_SHOP_URL=https://shop.example.com
 ```
 
 ### Where to get these values:
@@ -343,6 +346,9 @@ NEXT_PUBLIC_ENABLE_LOGIN=false
 #### Login feature flag
 - Set `NEXT_PUBLIC_ENABLE_LOGIN=true` to show the login controls and enable the authentication pages.
 - Leave it unset or set it to `false` to hide the controls and return a 404 for `/auth/*` routes. Because it is a `NEXT_PUBLIC_` variable, set it when building the application.
+
+#### Shop link
+- Set `NEXT_PUBLIC_SHOP_URL` to the external shop address. The **Sklep** link is hidden when it is not configured. Because it is a `NEXT_PUBLIC_` variable, set it when building the application.
 
 ## 💻 Development
 
