@@ -306,6 +306,17 @@ NEXT_PUBLIC_BUSOLA_CMS_API_KEY=your_contentful_access_token
 
 # Backend API URL
 NEXT_PUBLIC_API_URL=http://localhost:your_backend_port
+
+# Contact form delivery. Use `route-handler` on Vercel to send via Resend.
+NEXT_PUBLIC_CONTACT_MESSAGE_DELIVERY=external-backend
+
+# Required only for `route-handler`. Keep these server-only: do not use NEXT_PUBLIC_.
+RESEND_API_KEY=your_resend_api_key
+CONTACT_FROM_EMAIL=Busola <contact@your-domain.com>
+CONTACT_TO_EMAIL=your_inbox@example.com
+
+# Student portal login (disabled by default, including in production)
+NEXT_PUBLIC_ENABLE_LOGIN=false
 ```
 
 ### Where to get these values:
@@ -323,6 +334,15 @@ NEXT_PUBLIC_API_URL=http://localhost:your_backend_port
 - Set `NEXT_PUBLIC_API_URL` to your backend server URL
 - For local development: `http://localhost:PORT`
 - For production: Your deployed backend URL
+
+#### Contact form delivery
+- `NEXT_PUBLIC_CONTACT_MESSAGE_DELIVERY=external-backend` preserves the existing `POST /contact/message` request to `NEXT_PUBLIC_API_URL`.
+- Set it to `route-handler` to use `POST /api/contact` deployed with the Next.js app on Vercel. The route sends the email through Resend, so set `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, and `CONTACT_TO_EMAIL` in Vercel Project Settings. `CONTACT_FROM_EMAIL` must use a verified Resend domain.
+- `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, and `CONTACT_TO_EMAIL` must never have the `NEXT_PUBLIC_` prefix; add them for Production (and Preview if you intend to submit from preview deployments), then redeploy.
+
+#### Login feature flag
+- Set `NEXT_PUBLIC_ENABLE_LOGIN=true` to show the login controls and enable the authentication pages.
+- Leave it unset or set it to `false` to hide the controls and return a 404 for `/auth/*` routes. Because it is a `NEXT_PUBLIC_` variable, set it when building the application.
 
 ## 💻 Development
 

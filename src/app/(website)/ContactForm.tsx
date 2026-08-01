@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 
 import apiClient from "@/lib/api/apiClient";
+import { contactMessageDelivery } from "@/lib/config/features";
 import FormInput from "@/lib/components/form/FormInput";
 import { Button } from "@/lib/components/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +14,27 @@ import Form from "@/lib/components/form/Form";
 import { contactFormValidationSchema } from "./contactFormValidation";
 
 type ContactFormValues = z.infer<typeof contactFormValidationSchema>;
+
+async function sendMessageWithRouteHandler(data: ContactFormValues) {
+  const response = await fetch("/api/contact", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const responseData = (await response.json().catch(() => null)) as {
+    error?: string;
+  } | null;
+
+  if (!response.ok) {
+    throw new Error(
+      responseData?.error ||
+        "Nie udało się wysłać wiadomości. Spróbuj ponownie później."
+    );
+  }
+}
 
 export default function ContactForm() {
   const {
@@ -27,10 +49,12 @@ export default function ContactForm() {
   });
 
   const { mutateAsync: sendMessage, isPending } = useMutation({
-    mutationFn: async (data: ContactFormValues) =>
-      apiClient<void>("/contact/message", data, {
-        method: "POST",
-      }),
+    mutationFn: (data: ContactFormValues) =>
+      contactMessageDelivery === "route-handler"
+        ? sendMessageWithRouteHandler(data)
+        : apiClient<void>("/contact/message", data, {
+            method: "POST",
+          }),
   });
 
   const onSubmit: SubmitHandler<ContactFormValues> = useCallback(
@@ -58,7 +82,7 @@ export default function ContactForm() {
         console.error("Error sending message");
       }
     },
-    []
+    [reset, sendMessage]
   );
 
   return (

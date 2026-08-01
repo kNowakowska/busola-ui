@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useMediaQuery } from "react-responsive";
 
 import { useAuthContext } from "@/lib/providers/AuthProvider";
+import { isLoginEnabled } from "@/lib/config/features";
 
 import Logo from "@/lib/components/Logo";
 import WebsiteTitle from "@/lib/components/website/WebsiteTitle";
@@ -29,10 +30,10 @@ export default function Header() {
       return <div></div>;
     }
     if (isMobile && isMainPage) {
-      return <MobileNavigation />;
+      return <MobileNavigation isLoginEnabled={isLoginEnabled} />;
     }
     if (isMainPage) {
-      return <LoginButton />;
+      return isLoginEnabled ? <LoginButton /> : <div></div>;
     }
     if (isSignedIn) {
       return (
@@ -43,7 +44,7 @@ export default function Header() {
       );
     }
 
-    return <LoginButton />;
+    return isLoginEnabled ? <LoginButton /> : <div></div>;
   }, [isSignedIn, isAuthPage, isMobile, isMainPage]);
 
   useEffect(() => {

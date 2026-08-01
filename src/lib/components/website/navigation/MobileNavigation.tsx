@@ -8,7 +8,13 @@ import { Routes } from "@/lib/routes/routes";
 
 import MobileMenuButton from "../MobileMenuButton";
 
-export default function MobileNavigation() {
+type MobileNavigationProps = {
+  isLoginEnabled: boolean;
+};
+
+export default function MobileNavigation({
+  isLoginEnabled,
+}: MobileNavigationProps) {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const { isSignedIn } = useAuthContext();
   const [isOpen, setIsOpen] = useState(false);
@@ -55,12 +61,14 @@ export default function MobileNavigation() {
           Kontakt
         </a>
 
-        <a
-          href={isSignedIn ? Routes.dashboard() : Routes.signIn()}
-          className="text-base"
-        >
-          {isSignedIn ? "Twoje kursy" : "Zaloguj się"}
-        </a>
+        {isLoginEnabled && (
+          <a
+            href={isSignedIn ? Routes.dashboard() : Routes.signIn()}
+            className="text-base"
+          >
+            {isSignedIn ? "Twoje kursy" : "Zaloguj się"}
+          </a>
+        )}
       </nav>
     </>
   );
