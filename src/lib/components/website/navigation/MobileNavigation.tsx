@@ -54,6 +54,14 @@ export default function MobileNavigation({
           Oferta
         </a>
 
+        <a
+          href="#matura-course"
+          className="text-base"
+          onClick={handleCloseMenu}
+        >
+          Kurs maturalny
+        </a>
+
         <a href="#testimony" className="text-base" onClick={handleCloseMenu}>
           Opinie
         </a>

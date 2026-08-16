@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
 import clsx from "clsx";
@@ -14,9 +14,15 @@ import { ChatContextProvider } from "@/lib/context/ChatContext";
 import Header from "./Header";
 import Footer from "./Footer";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "700", "800", "900"],
+const inter = Inter({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-sans",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-serif",
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -32,8 +38,9 @@ export default async function RootLayout({
     <html lang="pl">
       <body
         className={clsx(
-          montserrat.className,
-          "flex h-screen w-full flex-col justify-between"
+          inter.variable,
+          cormorant.variable,
+          "flex min-h-screen w-full flex-col justify-between font-sans"
         )}
       >
         <ReactQueryProvider>

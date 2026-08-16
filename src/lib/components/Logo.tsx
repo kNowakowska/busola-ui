@@ -4,8 +4,8 @@ import Image from "next/image";
 import { Routes } from "../routes/routes";
 import { useMemo } from "react";
 
-export default function Logo({ isMobile }: { isMobile: boolean }) {
-  const logoSize = useMemo(() => (isMobile ? 100 : 150), [isMobile]);
+export default function Logo({ isMobile = false }: { isMobile?: boolean }) {
+  const logoSize = useMemo(() => (isMobile ? 80 : 120), [isMobile]);
   return (
     <div>
       <a href={Routes.home()}>
