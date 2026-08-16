@@ -5,11 +5,5 @@ export default function Container({
   children: React.ReactNode;
   className?: string;
 }) {
-  return (
-    <div
-      className={`container w-full md:w-[70vw] mx-auto p-6 text-center ${className}`}
-    >
-      {children}
-    </div>
-  );
+  return <div className={`container-shell ${className || ""}`}>{children}</div>;
 }

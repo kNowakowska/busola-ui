@@ -1,3 +1,5 @@
+"use client";
+
 import z from "zod";
 import { useCallback } from "react";
 import { toast } from "react-hot-toast";
@@ -89,7 +91,7 @@ export default function ContactForm() {
     <Form
       name="resetInitialPasswordForm"
       onSubmit={handleSubmit(onSubmit)}
-      className="items-start"
+      className="items-start !space-y-4 !py-0"
     >
       <FormInput
         type="text"
@@ -98,6 +100,8 @@ export default function ContactForm() {
         id="name"
         error={errors.name}
         containerClassName="text-start"
+        labelClassName="mb-2 block text-sm font-semibold !text-[#24364a]"
+        inputClassName="h-12 border-[#ddd2c6] bg-white px-4 font-normal outline-none transition placeholder:text-[#9aa1a8] focus:border-[var(--dark-beige)]"
         disabled={isPending}
         {...register("name")}
       />
@@ -108,6 +112,8 @@ export default function ContactForm() {
         id="email"
         error={errors.email}
         containerClassName="text-start"
+        labelClassName="mb-2 block text-sm font-semibold !text-[#24364a]"
+        inputClassName="h-12 border-[#ddd2c6] bg-white px-4 font-normal outline-none transition placeholder:text-[#9aa1a8] focus:border-[var(--dark-beige)]"
         disabled={isPending}
         {...register("email")}
       />
@@ -118,6 +124,8 @@ export default function ContactForm() {
         id="phone"
         error={errors.phone}
         containerClassName="text-start"
+        labelClassName="mb-2 block text-sm font-semibold !text-[#24364a]"
+        inputClassName="h-12 border-[#ddd2c6] bg-white px-4 font-normal outline-none transition placeholder:text-[#9aa1a8] focus:border-[var(--dark-beige)]"
         disabled={isPending}
         {...register("phone")}
       />
@@ -129,6 +137,8 @@ export default function ContactForm() {
         id="message"
         error={errors.message}
         containerClassName="text-start"
+        labelClassName="mb-2 block text-sm font-semibold !text-[#24364a]"
+        inputClassName="resize-none border-[#ddd2c6] bg-white p-4 font-normal outline-none transition placeholder:text-[#9aa1a8] focus:border-[var(--dark-beige)]"
         disabled={isPending}
         min={4}
         max={4}
@@ -137,7 +147,7 @@ export default function ContactForm() {
 
       <Button
         type="submit"
-        className="w-[150px] self-center !p-4"
+        className="button-primary !mt-2 !w-auto self-start !p-3"
         disabled={isPending}
       >
         {isPending ? "Wysyłanie..." : "Wyślij"}

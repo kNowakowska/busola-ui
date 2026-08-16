@@ -33,7 +33,14 @@ export default function Header() {
       return <MobileNavigation isLoginEnabled={isLoginEnabled} />;
     }
     if (isMainPage) {
-      return isLoginEnabled ? <LoginButton /> : <div></div>;
+      return (
+        <div className="flex items-center gap-3">
+          {isLoginEnabled && <LoginButton />}
+          <a href="#contact" className="button-primary hidden md:inline-flex">
+            Napisz do mnie
+          </a>
+        </div>
+      );
     }
     if (isSignedIn) {
       return (
@@ -60,8 +67,8 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-20 flex w-full flex-row items-center justify-between bg-white px-5 py-6 md:px-12 ${
-        isScrolled ? "shadow-md" : ""
+      className={`sticky top-0 z-20 flex h-[90px] w-full flex-row items-center justify-between border-b border-black/5 bg-white/95 px-5 backdrop-blur-xl md:h-[130px] md:px-12 ${
+        isScrolled ? "shadow-sm" : ""
       }`}
     >
       <Logo isMobile={isMobile} />

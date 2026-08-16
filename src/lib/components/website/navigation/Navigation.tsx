@@ -2,35 +2,44 @@ import { shopUrl } from "@/lib/config/features";
 
 export default function Navigation() {
   return (
-    <nav className="items-center space-x-8 md:flex">
+    <nav
+      className="hidden items-center gap-7 lg:flex"
+      aria-label="Główna nawigacja"
+    >
       <a
         href="#about-me"
-        className="hover:pointer hoverScaleSmall text-lg font-normal hover:font-bold"
+        className="text-sm font-semibold text-[#24364a] transition hover:text-[var(--dark-beige)]"
       >
         O mnie
       </a>
       <a
         href="#services"
-        className="hover:pointer hoverScaleSmall text-lg font-normal hover:font-bold"
+        className="text-sm font-semibold text-[#24364a] transition hover:text-[var(--dark-beige)]"
       >
         Oferta
       </a>
       <a
+        href="#matura-course"
+        className="text-sm font-semibold text-[#24364a] transition hover:text-[var(--dark-beige)]"
+      >
+        Kurs maturalny
+      </a>
+      <a
         href="#testimony"
-        className="hover:pointer hoverScaleSmall text-lg font-normal hover:font-bold"
+        className="text-sm font-semibold text-[#24364a] transition hover:text-[var(--dark-beige)]"
       >
         Opinie
       </a>
       <a
         href="#contact"
-        className="hover:pointer hoverScaleSmall text-lg font-normal hover:font-bold"
+        className="text-sm font-semibold text-[#24364a] transition hover:text-[var(--dark-beige)]"
       >
         Kontakt
       </a>
       {shopUrl && (
         <a
           href={shopUrl}
-          className="hover:pointer hoverScaleSmall text-lg font-normal hover:font-bold"
+          className="text-sm font-semibold text-[#24364a] transition hover:text-[var(--dark-beige)]"
         >
           Sklep
         </a>

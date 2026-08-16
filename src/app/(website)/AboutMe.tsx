@@ -1,35 +1,73 @@
 import Image from "next/image";
 
-import Container from "@/lib/components/website/Container";
+const highlights = [
+  { value: "10+", label: "lat doświadczenia" },
+  { value: "100+", label: "kursantów" },
+  { value: "72%", label: "średni wynik uczniów na maturze" },
+];
 
 export default function AboutMe() {
   return (
-    <div id="about-me" className="h-auto w-full">
-      <Container className="md:space-y-20 space-y-10 md:py-20 py-10">
-        <h2 className="md:text-4xl text-3xl font-black tracking-wide">
-          Kim jestem?
-        </h2>
-        <div className="flex md:flex-row flex-col items-center gap-5">
-          <div className="md:w-2/5 w-full">
+    <section id="about-me" className="py-24 sm:py-32">
+      <div className="container-shell grid items-center gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
+        <div className="relative mx-auto w-full max-w-[480px]">
+          <div className="absolute -bottom-5 -left-5 h-[32%] w-[58%] bg-[var(--dark-beige)]" />
+          <div className="absolute top-12 -left-10 grid grid-cols-4 gap-2 opacity-50">
+            {Array.from({ length: 24 }).map((_, index) => (
+              <span
+                key={index}
+                className="size-1 rounded-full bg-[var(--dark-beige)]"
+              />
+            ))}
+          </div>
+          <div className="relative aspect-[4/5] overflow-hidden bg-[var(--dark-blue)]">
             <Image
-              src="/pwil0171gs.jpg"
-              alt="Grzegorz Natanek"
-              width={400}
-              height={400}
-              className="shadow"
+              src="/images/about-chair.jpg"
+              alt="Grzegorz Natanek — nauczyciel geografii"
+              fill
+              className="object-cover object-top"
+              sizes="(max-width: 1024px) 90vw, 40vw"
             />
           </div>
-          <div className="md:w-3/5 w-full">
-            <p className="bg-[var(--dark-beige)] md:p-15 p-10 rounded-xl whiteText md:text-xl text-base font-medium tracking-wider leading-6 customShadow">
+        </div>
+        <div className="max-w-[610px] text-left">
+          <p className="section-kicker">O mnie</p>
+          <h2 className="mt-3 font-serif text-4xl leading-[1.05] font-semibold text-[var(--dark-blue)] sm:text-5xl">
+            Nauczanie to moja pasja.
+          </h2>
+          <div className="mt-5 h-px w-10 bg-[var(--dark-beige)]" />
+          <div className="mt-8 space-y-5 text-[0.98rem] leading-7 text-[#5c6875]">
+            <p>
               Cześć! Nazywam się Grzegorz Natanek i od ponad 10 lat pomagam
-              uczniom osiągać sukcesy w nauce geografii. Ukończyłem Uniwersytet
-              Komisji Edukacji Narodowej, a jako egzaminator maturalny z
-              geografii doskonale wiem, na co zwracają uwagę sprawdzający matury
-              i jak najlepiej przygotować się do egzaminu.
+              uczniom osiągać sukcesy w nauce geografii.
+            </p>
+            <p>
+              Ukończyłem Uniwersytet Komisji Edukacji Narodowej, a jako
+              egzaminator maturalny z geografii wiem, na co zwracają uwagę
+              sprawdzający i jak najlepiej przygotować się do egzaminu.
+            </p>
+            <p>
+              Stawiam na zrozumienie, logiczne myślenie i praktyczne przykłady,
+              które zostają w głowie na dłużej.
             </p>
           </div>
+          <div className="mt-8 grid grid-cols-3 gap-4">
+            {highlights.map((highlight) => (
+              <div
+                key={highlight.value}
+                className="border-l border-[#e2d7cb] pl-4"
+              >
+                <div className="font-serif text-3xl font-semibold text-[var(--dark-blue)]">
+                  {highlight.value}
+                </div>
+                <div className="mt-1 text-xs text-[#697582]">
+                  {highlight.label}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </Container>
-    </div>
+      </div>
+    </section>
   );
 }

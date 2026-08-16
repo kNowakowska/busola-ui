@@ -1,91 +1,159 @@
-"use client";
-import { useCallback } from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { shopUrl } from "@/lib/config/features";
 
-import { Button } from "@/lib/components/Button";
-import Container from "@/lib/components/website/Container";
+const tutoring = [
+  "Zajęcia online 1:1",
+  "Przygotowanie do matury i sprawdzianów",
+  "Analiza arkuszy i strategii egzaminacyjnych",
+  "Google Meet + MS OneNote",
+  "Od 100 zł / 60 minut",
+];
 
-export default function Services() {
-  const router = useRouter();
+const course = [
+  "Uporządkowany plan przygotowań",
+  "Najważniejsze działy wymagane na maturze",
+  "Mapy, schematy i zadania maturalne",
+  "Strategie rozwiązywania zadań",
+  "Materiały do samodzielnej powtórki",
+];
 
-  const handleClick = useCallback(() => {
-    router.push("#");
-  }, [router]);
-
+function OfferCard({
+  id,
+  dark = false,
+  icon,
+  label,
+  title,
+  description,
+  items,
+  action,
+  href,
+}: {
+  id?: string;
+  dark?: boolean;
+  icon: string;
+  label: string;
+  title: string;
+  description: string;
+  items: string[];
+  action: string;
+  href: string;
+}) {
   return (
-    <div
-      id="services"
-      className="h-auto w-full bg-linear-to-t from-[var(--light-blue)] to-white"
+    <article
+      id={id}
+      className={`group relative overflow-hidden rounded-xl border p-7 shadow-[0_20px_70px_rgba(31,41,55,.04)] sm:p-9 ${
+        dark
+          ? "border-[var(--dark-blue)] bg-[var(--dark-blue)] text-white shadow-[0_20px_70px_rgba(16,42,69,.13)]"
+          : "border-[var(--line)] bg-white"
+      }`}
     >
-      <Container className="md:space-y-20 space-y-10 md:py-20 py-10">
-        <h2 className="md:text-4xl text-3xl font-black tracking-wide">
-          Co mogę Ci zaproponować?
-        </h2>
-        <div className="flex md:flex-row flex-col items-center md:gap-10 gap-5">
-          <div className="md:w-3/5 w-full md:px-10 px-5">
-            <div className="md:p-15 p-5 rounded-xl md:text-xl text-base font-medium tracking-wider leading-6 customShadow flex flex-col md:space-y-10 space-y-5 items-center bg-white">
-              <h4 className="md:text-2xl text-xl font-bold tracking-wide">
-                Indywidualne korepetycje online
-              </h4>
-              <ul className="space-y-5">
-                <ServiceItem
-                  title="Skuteczne przygotowanie do matury"
-                  description="omówienie zagadnień, analiza arkuszy, strategie egzaminacyjne"
-                />
-                <ServiceItem
-                  title="Oszczędność czasu na dojazdy"
-                  description="zajęcia prowadzone online na platformach Google Meet i MS OneNote"
-                />
-                <ServiceItem
-                  title="Indywidualne podejście"
-                  description="dostosowanie tempa i metod nauczania do ucznia"
-                />
-                <ServiceItem
-                  title="Sprawdzone metody"
-                  description="moi uczniowie regularnie osiągają wysokie wyniki na maturze"
-                />
-                <ServiceItem
-                  title="Przystępna cena"
-                  description="Od 100 zł za 60 min lekcji"
-                />
-              </ul>
-              <Button onClick={handleClick} className="w-[200px]">
-                UMÓW SIĘ!
-              </Button>
-            </div>
-          </div>
-          <div className="md:w-2/5 w-full">
-            <Image
-              src="/pwil0313g.jpg"
-              alt="Grzegorz Natanek"
-              width={400}
-              height={400}
-              className="shadow"
-            />
-          </div>
-        </div>
-      </Container>
-    </div>
+      {dark && (
+        <>
+          <div className="absolute -top-16 -right-16 size-52 rounded-full border border-white/10" />
+          <div className="absolute top-6 -right-4 size-32 rounded-full border border-white/10" />
+        </>
+      )}
+      <div className="relative flex items-start justify-between gap-4">
+        <span
+          aria-hidden="true"
+          className={`grid size-16 place-items-center rounded-full text-3xl ${
+            dark
+              ? "bg-white/10 text-[#d9b992]"
+              : "bg-[var(--cream-strong)] text-[#9b673b]"
+          }`}
+        >
+          {icon}
+        </span>
+        <span
+          className={`rounded-full px-3 py-1 text-[0.7rem] font-bold tracking-[0.16em] uppercase ${
+            dark
+              ? "border border-white/15 bg-white/5 text-[#e5c9aa]"
+              : "bg-[var(--cream)] text-[var(--dark-beige)]"
+          }`}
+        >
+          {label}
+        </span>
+      </div>
+      <h3
+        className={`relative mt-7 font-serif text-3xl font-semibold ${
+          dark ? "!text-white" : "text-[var(--dark-blue)]"
+        }`}
+      >
+        {title}
+      </h3>
+      <p
+        className={`relative mt-3 text-sm leading-6 ${dark ? "!text-white/70" : "text-[#697582]"}`}
+      >
+        {description}
+      </p>
+      <ul className="relative mt-7 space-y-3">
+        {items.map((item) => (
+          <li
+            key={item}
+            className={`flex gap-3 text-sm ${dark ? "text-white/90" : "text-[#3d4c5b]"}`}
+          >
+            <span className={dark ? "text-[#d9b992]" : "text-[#a66f3d]"}>
+              ✓
+            </span>
+            {item}
+          </li>
+        ))}
+      </ul>
+      <a
+        href={href}
+        className={`relative mt-8 inline-flex items-center gap-2 text-sm font-bold ${
+          dark ? "text-[#e5c9aa]" : "text-[var(--dark-beige)]"
+        }`}
+      >
+        {action}{" "}
+        <span
+          aria-hidden="true"
+          className="transition group-hover:translate-x-1"
+        >
+          →
+        </span>
+      </a>
+    </article>
   );
 }
 
-function ServiceItem({
-  title,
-  description,
-}: {
-  title: string;
-  description: string;
-}) {
+export default function Services() {
   return (
-    <li className="flex items-start md:gap-5 gap-3">
-      <span
-        aria-hidden
-        className="grow-0 shrink-0 inline-block w-[15px] h-[15px] mt-2 bg-[url('/globe-icon.svg')] bg-cover bg-no-repeat "
-      />
-      <p className="grow text-left">
-        <b>{title}</b> – {description}
-      </p>
-    </li>
+    <section id="services" className="bg-[var(--cream)] py-24 sm:py-32">
+      <div className="container-shell">
+        <div className="text-center">
+          <p className="section-kicker">Oferta</p>
+          <h2 className="mt-3 font-serif text-4xl font-semibold text-[var(--dark-blue)] sm:text-5xl">
+            Jak mogę Ci pomóc?
+          </h2>
+          <div className="mx-auto mt-5 h-px w-10 bg-[var(--dark-beige)]" />
+          <p className="mx-auto mt-6 max-w-[650px] text-sm leading-7 text-[#697582]">
+            Dwie ścieżki, jeden cel: uporządkować materiał, zbudować pewność
+            siebie i przygotować się do egzaminu bez niepotrzebnego stresu.
+          </p>
+        </div>
+        <div className="mx-auto mt-12 grid max-w-[1000px] gap-6 lg:grid-cols-2">
+          <OfferCard
+            icon="♙"
+            label="1:1 online"
+            title="Korepetycje indywidualne"
+            description="Najlepszy wybór, jeśli potrzebujesz regularnej pracy dopasowanej dokładnie do Twojego poziomu i celu."
+            items={tutoring}
+            action="Umów pierwsze zajęcia"
+            href="#contact"
+          />
+          <OfferCard
+            id="matura-course"
+            dark
+            icon="⌑"
+            label="Matura"
+            title="Kurs maturalny"
+            description="Kompleksowe przygotowanie dla uczniów, którzy chcą przejść przez materiał w uporządkowany sposób i dobrze wykorzystać czas do matury."
+            items={course}
+            action={shopUrl ? "Przejdź do kursu" : "Zapytaj o kurs"}
+            href={shopUrl || "#contact"}
+          />
+        </div>
+      </div>
+    </section>
   );
 }

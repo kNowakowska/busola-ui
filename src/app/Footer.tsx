@@ -1,78 +1,113 @@
-"use client";
-
-import { useMediaQuery } from "react-responsive";
-
 import Logo from "@/lib/components/Logo";
 import EmailIcon from "@/lib/icons/EmailIcon";
 import FacebookIcon from "@/lib/icons/FacebookIcon";
 import InstagramIcon from "@/lib/icons/InstagramIcon";
+import PhoneIcon from "@/lib/icons/PhoneIcon";
+import { shopUrl } from "@/lib/config/features";
+
+const links = [
+  { label: "O mnie", href: "/#about-me" },
+  { label: "Oferta", href: "/#services" },
+  { label: "Kurs maturalny", href: "/#matura-course" },
+  { label: "Opinie", href: "/#testimony" },
+  { label: "Kontakt", href: "/#contact" },
+];
 
 export default function Footer() {
-  const isMobile = useMediaQuery({ maxWidth: 768 });
   return (
-    <div className="flex h-auto w-full flex-col space-y-10 border-t border-gray-200 py-10 text-center md:space-y-0">
-      <div className="mx-auto flex h-full w-8/10 flex-col space-y-10 md:flex-row md:space-y-0">
-        <div className="flex h-full w-full flex-col items-center justify-center space-y-5 md:w-1/3">
-          <Logo isMobile={isMobile} />
+    <footer className="border-t border-[#ece4dc] bg-white py-12">
+      <div className="container-shell grid gap-10 text-left md:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
+        <div>
+          <Logo />
+          <p className="mt-5 max-w-[280px] text-xs leading-6 text-[#77818a]">
+            Indywidualne korepetycje z geografii i przygotowanie do matury —
+            online.
+          </p>
         </div>
-        <div className="flex h-full w-full flex-col items-center justify-center md:w-1/3">
-          <ul className="space-y-2 text-xs md:text-base">
+        <div>
+          <h2 className="text-[0.7rem] font-bold tracking-[0.18em] text-[#24364a] uppercase">
+            Kontakt
+          </h2>
+          <ul className="mt-4 space-y-3 text-xs text-[#687381]">
             <li>
-              <h5 className="text-base font-bold md:text-lg">
-                Grzegorz Natanek
-              </h5>
+              <a
+                href="tel:508808422"
+                className="flex items-center gap-2 hover:text-[var(--dark-beige)]"
+              >
+                <PhoneIcon size={14} /> 508 808 422
+              </a>
             </li>
             <li>
-              <p>Korepetycje z geografii</p>
+              <a
+                href="mailto:korkizgegry.krakow@gmail.com"
+                className="flex items-center gap-2 hover:text-[var(--dark-beige)]"
+              >
+                <EmailIcon size={14} /> korkizgegry.krakow@gmail.com
+              </a>
             </li>
-            <li>
-              <p>NIP: 1234567890</p>
-            </li>
-            <li>
-              <p>508 808 422</p>
-            </li>
-            <li>
-              <p>korkizgegry.krakow@gmail.com</p>
-            </li>
+            <li>Online (Google Meet)</li>
+            <li>NIP: 1234567890</li>
           </ul>
         </div>
-        <div className="flex h-full w-full flex-col items-center justify-center space-y-5 md:w-1/3">
-          <ul className="space-y-2 text-xs md:text-base">
-            <li className="hoverScaleSmall hover:font-bold">
-              <a href="#">Polityka prywatności</a>
-            </li>
-            <li className="hoverScaleSmall hover:font-bold">
-              <a href="#">Regulamin</a>
-            </li>
+        <div>
+          <h2 className="text-[0.7rem] font-bold tracking-[0.18em] text-[#24364a] uppercase">
+            Szybkie linki
+          </h2>
+          <ul className="mt-4 space-y-2 text-xs text-[#687381]">
+            {links.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className="transition hover:text-[var(--dark-beige)]"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            {shopUrl && (
+              <li>
+                <a
+                  href={shopUrl}
+                  className="transition hover:text-[var(--dark-beige)]"
+                >
+                  Sklep
+                </a>
+              </li>
+            )}
           </ul>
-          <div className="flex flex-row items-center justify-center space-x-5">
-            <div>
-              <a href="https://www.facebook.com/busolakorepetycja">
-                <FacebookIcon
-                  size={isMobile ? 20 : 30}
-                  fill="var(--dark-beige)"
-                />
-              </a>
-            </div>
-            <div>
-              <a href="https://www.instagram.com/busolakorepetycja">
-                <InstagramIcon
-                  size={isMobile ? 20 : 30}
-                  fill="var(--dark-beige)"
-                />
-              </a>
-            </div>
-            <div>
-              <a href="mailto:korkizgegry.krakow@gmail.com">
-                <EmailIcon size={isMobile ? 20 : 30} fill="var(--dark-beige)" />
-              </a>
-            </div>
+        </div>
+        <div>
+          <h2 className="text-[0.7rem] font-bold tracking-[0.18em] text-[#24364a] uppercase">
+            O firmie
+          </h2>
+          <p className="mt-4 text-xs leading-6 text-[#687381]">
+            Busola Korepetycje z geografii to indywidualne podejście, skuteczne
+            metody i pasja do nauczania.
+          </p>
+          <div className="mt-5 flex gap-3">
+            <a
+              href="https://www.facebook.com/busolakorepetycja"
+              aria-label="Facebook"
+            >
+              <FacebookIcon size={18} fill="var(--dark-beige)" />
+            </a>
+            <a
+              href="https://www.instagram.com/busolakorepetycja"
+              aria-label="Instagram"
+            >
+              <InstagramIcon size={18} fill="var(--dark-beige)" />
+            </a>
           </div>
         </div>
       </div>
-      <div className="mt-5 text-center text-xs md:text-sm">
-        © Copyright 2025 Busola. All rights reserved.
+      <div className="container-shell mt-10 flex flex-col justify-between gap-3 border-t border-[#ece4dc] pt-6 text-xs text-[#899198] sm:flex-row">
+        <p>
+          © 2026 Busola Korepetycje z geografii. Wszelkie prawa zastrzeżone.
+        </p>
+        <a href="#" className="hover:text-[var(--dark-beige)]">
+          Polityka prywatności
+        </a>
       </div>
-    </div>
+    </footer>
   );
 }
