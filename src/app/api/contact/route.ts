@@ -37,7 +37,7 @@ function createEmailContent({
 
   return {
     html: `
-      <h1>Nowa wiadomość z formularza Busola</h1>
+      <h2>Nowa wiadomość z formularza kontaktowego</h2>
       <ul>
         ${fields
           .map(
@@ -46,7 +46,7 @@ function createEmailContent({
           )
           .join("")}
       </ul>
-      <h2>Wiadomość</h2>
+      <h3>Wiadomość</h3>
       <p>${escapeHtml(message).replace(/\n/g, "<br />")}</p>
     `,
     text: `Nowa wiadomość z formularza Busola\n\nImię: ${name}\nE-mail: ${email}\nTelefon: ${phone || "Nie podano"}\n\nWiadomość:\n${message}`,
