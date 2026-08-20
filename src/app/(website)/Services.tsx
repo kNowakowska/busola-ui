@@ -89,12 +89,14 @@ function OfferCard({
         {items.map((item) => (
           <li
             key={item}
-            className={`flex gap-3 text-sm ${dark ? "text-white/90" : "text-[#3d4c5b]"}`}
+            className={`flex items-start gap-3 text-left text-sm ${dark ? "text-white/90" : "text-[#3d4c5b]"}`}
           >
-            <span className={dark ? "text-[#d9b992]" : "text-[#a66f3d]"}>
+            <span
+              className={`shrink-0 ${dark ? "text-[#d9b992]" : "text-[#a66f3d]"}`}
+            >
               ✓
             </span>
-            {item}
+            <span className="min-w-0">{item}</span>
           </li>
         ))}
       </ul>
