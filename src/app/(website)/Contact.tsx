@@ -13,17 +13,17 @@ const contactItems = [
   },
   {
     icon: <EmailIcon size={18} fill="#dfbc94" />,
-    href: "mailto:korkizgegry.krakow@gmail.com",
-    text: "korkizgegry.krakow@gmail.com",
+    href: "mailto:geografia@kierunekmatura.com",
+    text: "geografia@kierunekmatura.com",
   },
   {
     icon: <FacebookIcon size={18} fill="#dfbc94" />,
-    href: "https://www.facebook.com/busolakorepetycja",
+    href: "https://www.facebook.com/kierunekmatura.geografia",
     text: "Busola Facebook",
   },
   {
     icon: <InstagramIcon size={18} fill="#dfbc94" />,
-    href: "https://www.instagram.com/busolakorepetycja",
+    href: "https://www.instagram.com/kierunekmatura_geografia/",
     text: "Busola Instagram",
   },
 ];

@@ -39,10 +39,10 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="mailto:korkizgegry.krakow@gmail.com"
+                href="mailto:geografia@kierunekmatura.com"
                 className="flex items-center gap-2 hover:text-[var(--dark-beige)]"
               >
-                <EmailIcon size={14} /> korkizgegry.krakow@gmail.com
+                <EmailIcon size={14} /> geografia@kierunekmatura.com
               </a>
             </li>
             <li>Online (Google Meet)</li>
@@ -86,13 +86,13 @@ export default function Footer() {
           </p>
           <div className="mt-5 flex gap-3">
             <a
-              href="https://www.facebook.com/busolakorepetycja"
+              href="https://www.facebook.com/kierunekmatura.geografia"
               aria-label="Facebook"
             >
               <FacebookIcon size={18} fill="var(--dark-beige)" />
             </a>
             <a
-              href="https://www.instagram.com/busolakorepetycja"
+              href="https://www.instagram.com/kierunekmatura_geografia/"
               aria-label="Instagram"
             >
               <InstagramIcon size={18} fill="var(--dark-beige)" />

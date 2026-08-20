@@ -5,7 +5,7 @@ const tutoring = [
   "Przygotowanie do matury i sprawdzianów",
   "Analiza arkuszy i strategii egzaminacyjnych",
   "Google Meet + MS OneNote",
-  "Od 100 zł / 60 minut",
+  "Elastyczne terminy zajęć",
 ];
 
 const course = [
@@ -133,15 +133,6 @@ export default function Services() {
         </div>
         <div className="mx-auto mt-12 grid max-w-[1000px] gap-6 lg:grid-cols-2">
           <OfferCard
-            icon="♙"
-            label="1:1 online"
-            title="Korepetycje indywidualne"
-            description="Najlepszy wybór, jeśli potrzebujesz regularnej pracy dopasowanej dokładnie do Twojego poziomu i celu."
-            items={tutoring}
-            action="Umów pierwsze zajęcia"
-            href="#contact"
-          />
-          <OfferCard
             id="matura-course"
             dark
             icon="⌑"
@@ -151,6 +142,15 @@ export default function Services() {
             items={course}
             action={shopUrl ? "Przejdź do kursu" : "Zapytaj o kurs"}
             href={shopUrl || "#contact"}
+          />
+          <OfferCard
+            icon="♙"
+            label="1:1 online"
+            title="Korepetycje indywidualne"
+            description="Najlepszy wybór, jeśli potrzebujesz regularnej pracy dopasowanej dokładnie do Twojego poziomu i celu."
+            items={tutoring}
+            action="Umów pierwsze zajęcia"
+            href="#contact"
           />
         </div>
       </div>
