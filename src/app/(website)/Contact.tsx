@@ -13,8 +13,8 @@ const contactItems = [
   },
   {
     icon: <EmailIcon size={18} fill="#dfbc94" />,
-    href: "mailto:geografia@kierunekmatura.com",
-    text: "geografia@kierunekmatura.com",
+    href: "mailto:biuro@kierunekmatura.com",
+    text: "biuro@kierunekmatura.com",
   },
   {
     icon: <FacebookIcon size={18} fill="#dfbc94" />,

@@ -39,10 +39,10 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="mailto:geografia@kierunekmatura.com"
+                href="mailto:biuro@kierunekmatura.com"
                 className="flex items-center gap-2 hover:text-[var(--dark-beige)]"
               >
-                <EmailIcon size={14} /> geografia@kierunekmatura.com
+                <EmailIcon size={14} /> biuro@kierunekmatura.com
               </a>
             </li>
             <li>Online (Google Meet)</li>
